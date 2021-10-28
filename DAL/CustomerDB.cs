@@ -17,7 +17,7 @@ namespace DAL
             Configuration = conf;
         }
 
-        public void addCustomer(Customer customer)
+        public Customer addCustomer(Customer customer)
         {
             throw new NotImplementedException();
         }

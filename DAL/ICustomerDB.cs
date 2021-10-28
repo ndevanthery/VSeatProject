@@ -13,7 +13,7 @@ namespace DAL
 
         public Customer GetCustomer(string name, string surname);
 
-        public void addCustomer(Customer customer); 
+        public Customer addCustomer(Customer customer); 
 
     }
 }
