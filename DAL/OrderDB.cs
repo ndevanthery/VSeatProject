@@ -56,7 +56,7 @@ namespace DAL
             {
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
-                    string query = "Select * from ORDER WHERE WHERE ID_ORDER= @ID_ORDER";
+                    string query = "Select * from ORDER WHERE ID_ORDER= @ID_ORDER";
                     SqlCommand cmd = new SqlCommand(query, cn);
                     cmd.Parameters.AddWithValue("@ID_ORDER", orderID);
                     
