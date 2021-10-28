@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DAL
 {
-    interface IStaffDB
+    public interface IStaffDB
     {
 
         public List<Staff> GetStaffs();

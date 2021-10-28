@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DAL
 {
-    interface IRestaurantDB
+    public interface IRestaurantDB
     {
         public List<Restaurant> GetRestaurants();
 

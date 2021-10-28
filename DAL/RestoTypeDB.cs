@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace DAL
 {
-    class RestoTypeDB : IRestoTypeDB
+    public class RestoTypeDB : IRestoTypeDB
     {
 
         private IConfiguration Configuration { get; }

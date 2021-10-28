@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace DAL
 {
-    class RestaurantDB : IRestaurantDB
+    public class RestaurantDB : IRestaurantDB
     {
 
         private IConfiguration Configuration { get; }

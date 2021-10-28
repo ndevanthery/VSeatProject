@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DAL
 {
-    interface IRestoTypeDB
+    public interface IRestoTypeDB
     {
 
         public List<RestoType> GetRestoTypes();
