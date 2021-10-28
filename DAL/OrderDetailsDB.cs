@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace DAL
 {
-    class OrderDetailsDB : IOrderDetailsDB
+    public class OrderDetailsDB : IOrderDetailsDB
     {
 
         private IConfiguration Configuration { get; }

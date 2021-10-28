@@ -7,7 +7,7 @@ using DTO;
 
 namespace DAL
 {
-    interface ICityDB
+    public interface ICityDB
     {
 
         public List<City> GetCities();

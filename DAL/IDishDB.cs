@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DAL
 {
-    interface IDishDB
+    public interface IDishDB
     {
         public List<Dish> GetDishes();
 

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DAL
 {
-    class CustomerDB : ICustomerDB
+    public class CustomerDB : ICustomerDB
     {
         private IConfiguration Configuration { get; }
 

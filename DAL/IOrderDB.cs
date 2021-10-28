@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DAL
 {
-    interface IOrderDB
+    public interface IOrderDB
     {
         public List<Order> GetOrders();
 
