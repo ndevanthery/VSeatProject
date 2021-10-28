@@ -16,9 +16,22 @@ namespace BLL
 
         public OrderManager(IConfiguration conf)
         {
-           
+            orderDB = new OrderDB(conf);
         }
 
 
+        public List<Order> GetOrders()
+        {
+            return orderDB.GetOrders();
+        }
+        public Order GetOrder(int orderID)
+        {
+            return orderDB.GetOrder(orderID);
+        }
+
+        public void addOrder(Order order)
+        {
+            return orderDB.addOrder(order);
+        }
     }
 }

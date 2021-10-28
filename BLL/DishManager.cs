@@ -1,5 +1,5 @@
-﻿using DAL;
-using DTO;
+﻿using DTO;
+using DAL;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,14 +10,12 @@ namespace BLL
 {
     class DishManager
     {
-        private IDishDB  dishDB { get; }
 
-
+        private IDishDB dishDB { get; }
         public List<Dish> GetDishes()
         {
             return dishDB.GetDishes();
         }
-
         public Dish GetDish(string name)
         {
             return dishDB.GetDish(name);
@@ -27,5 +25,6 @@ namespace BLL
         {
             return dishDB.addDish(dish);
         }
+
     }
 }

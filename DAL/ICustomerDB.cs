@@ -7,10 +7,11 @@ using DTO;
 
 namespace DAL
 {
-   public interface ICustomerDB
-    {
+
+    public interface ICustomerDB
+    { 
         public List<Customer> GetCustomers();
-        
+   
         public Customer GetCustomer(string name, string surname);
 
         public Customer addCustomer(Customer customer); 
