@@ -19,7 +19,7 @@ namespace DAL
         }
 
         public Staff GetStaff(string username)
-        {
+        { 
             Staff staff = null;
             string connectionString = Configuration.GetConnectionString("DefaultConnection");
 
@@ -47,7 +47,6 @@ namespace DAL
                         staff.PHONENUMBER = (string)dr["PHONENUMBER"];
                         staff.PASSWORD = (string)dr["PASSWORD"];
                         staff.USERNAME = (string)dr["USERNAME"];
-
 
                     }
                 }
