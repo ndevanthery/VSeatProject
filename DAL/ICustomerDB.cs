@@ -10,7 +10,7 @@ namespace DAL
     interface ICustomerDB
     { // test
         public List<Customer> GetCustomers();
-
+         // test
         public Customer GetCustomer(string name, string surname);
 
         public void addCustomer(Customer customer); 
