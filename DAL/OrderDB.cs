@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace DAL
 {
-    class OrderDB : IOrderDB
+   public  class OrderDB : IOrderDB
     {
 
         private IConfiguration Configuration { get; }
@@ -18,9 +18,33 @@ namespace DAL
         {
             Configuration = conf;
         }
-        public void addOrder(Order order)
+        public Order addOrder(Order order)
         {
-            throw new NotImplementedException();
+            string connectionString = Configuration.GetConnectionString("DefaultConnection");
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(connectionString))
+                {
+                    string query = "Insert into ORDER(ID_ORDER,ORDERDATE,DELIVERYTIME,DISCOUNT,TOTALPRICE) values(@ORDERDATE,@DELIVERYTIME,@DISCOUNT,@TOTALPRICE); SELECT SCOPE_IDENTITY()";
+                    SqlCommand cmd = new SqlCommand(query, cn);
+                    cmd.Parameters.AddWithValue("@ID_ORDER", order.ID_ORDER);
+                    cmd.Parameters.AddWithValue("@ORDERDATE", order.ORDERDATE);
+                    cmd.Parameters.AddWithValue("@DELIVERYTIME", order.DELIVERYTIME);
+                    cmd.Parameters.AddWithValue("@DISCOUNT", order.DISCOUNT);
+                    cmd.Parameters.AddWithValue("@PHONENUMBER", order.TOTALPRICE);
+
+                    cn.Open();
+
+                    order.ID_ORDER = Convert.ToInt32(cmd.ExecuteScalar());
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+
+            return order;
+
         }
 
         public Order GetOrder(int orderID)
@@ -66,7 +90,47 @@ namespace DAL
 
         public List<Order> GetOrders()
         {
-            throw new NotImplementedException();
+            List<Order> results = null;
+            string connectionString = Configuration.GetConnectionString("DefaultConnection");
+
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(connectionString))
+                {
+                    string query = "Select * from ORDER";
+                    SqlCommand cmd = new SqlCommand(query, cn);
+
+                    cn.Open();
+
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            if (results == null)
+                                results = new List<Order>();
+
+                            Order order = new Order();
+
+                            order.ID_ORDER = (int)dr["ID_ORDER"];
+                            order.ORDERDATE = (DateTime)dr["ORDERDATE"];
+                            order.DELIVERYTIME = (DateTime)dr["DELIVERYTIME"];
+                            order.DISCOUNT = (int)dr["DISCOUNT"];
+                            order.TOTALPRICE = (double)dr["TOTALPRICE"];
+                            
+
+                            results.Add(order);
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+
+            return results;
+
         }
+    }
     }
 }
