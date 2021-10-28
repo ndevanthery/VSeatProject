@@ -12,6 +12,8 @@ namespace DAL
 
         public List<City> GetCities();
 
-        public void AddCity(City city);
+        public City AddCity(City city);
+
+        public City GetCity(string cityName);
     }
 }

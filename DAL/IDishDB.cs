@@ -13,6 +13,6 @@ namespace DAL
 
         public Dish GetDish(string name);
 
-        public void addDish(Dish dish);
+        public Dish addDish(Dish dish);
     }
 }

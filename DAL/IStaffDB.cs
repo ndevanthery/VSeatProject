@@ -17,5 +17,7 @@ namespace DAL
         public Staff GetStaff(string name, string surname);
 
 
+        public Staff AddStaff(Staff staff);
+
     }
 }
