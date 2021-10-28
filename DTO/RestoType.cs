@@ -10,7 +10,7 @@ namespace DTO
     {
         public int IDTYPE { get; set; }
 
-        public int TYPENAME { get; set; }
+        public string TYPENAME { get; set; }
 
 
         public override string ToString()

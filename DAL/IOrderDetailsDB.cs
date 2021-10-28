@@ -13,7 +13,7 @@ namespace DAL
 
         public OrderDetails GetOrderDetails(int orderId);
 
-        public void addOrderDetails(OrderDetails orderDetails);
+        public OrderDetails addOrderDetails(OrderDetails orderDetails);
 
 
     }

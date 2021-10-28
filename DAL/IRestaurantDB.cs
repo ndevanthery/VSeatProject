@@ -13,7 +13,7 @@ namespace DAL
 
         public Restaurant GetRestaurant(string name , string adress);
 
-        public void addRestaurant(Restaurant restaurant);
+        public Restaurant addRestaurant(Restaurant restaurant);
 
 
 

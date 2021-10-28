@@ -14,7 +14,7 @@ namespace DAL
 
         public RestoType GetRestoType(string typeName);
 
-        public void addrestoType(RestoType restoType);
+        public RestoType addRestoType(RestoType restoType);
 
 
     }
