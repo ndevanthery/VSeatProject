@@ -82,7 +82,7 @@ namespace DAL
             }
             catch (Exception e)
             {
-                throw;
+                throw e;
             }
 
             return order;

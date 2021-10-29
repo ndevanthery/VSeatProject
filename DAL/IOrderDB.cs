@@ -14,7 +14,7 @@ namespace DAL
         public Order GetOrder(int orderID);
 
 
-        public void addOrder(Order order);
+        public Order addOrder(Order order);
 
     }
 }

@@ -26,8 +26,6 @@ namespace DAL
             {
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
-                    //quand la personne va crée son compte elle ne va pas savoir quoi mettre dans ID_CITY car elle ne connait pas
-                    //L'id de sa ville, ajouter un attribut "CITY" ?
                     string query = "Insert into CUSTOMER(ID_CUSTOMER,ID_CITY,NAME,SURNAME,ADRESS,POSTALCODE,PHONENUMBER,PASSWORD) values(ID_CITY,NAME,SURNAME,ADRESS,POSTALCODE,PHONENUMBER,PASSWORD); SELECT SCOPE_IDENTITY()";
                     SqlCommand cmd = new SqlCommand(query, cn);
                     cmd.Parameters.AddWithValue("@ID_CITY", customer.ID_CITY);
