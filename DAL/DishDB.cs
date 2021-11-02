@@ -69,12 +69,101 @@ namespace DAL
 
         public List<Dish> GetDishes(int idRestaurant)
         {
-            throw new NotImplementedException();
+            List<Dish> results = null;
+            string connectionString = Configuration.GetConnectionString("DefaultConnection");
+
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(connectionString))
+                {
+                    string query = "Select * from DISH WHERE ID_RESTAURANT = @Id_restaurant";
+                     
+                    SqlCommand cmd = new SqlCommand(query, cn);
+                    cmd.Parameters.AddWithValue("@Id_restaurant", idRestaurant);
+
+                    cn.Open();
+
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            if (results == null)
+                                results = new List<Dish>();
+
+                            Dish dish = new Dish();
+
+                            dish.ID_DISH = (int)dr["ID_DISH"];
+
+                            dish.ID_RESTAURANT = (int)dr["ID_RESTAURANT"];
+
+                            dish.IMAGE = (ImageFormat)dr["IMAGE"];
+
+                            dish.NAME = (string)dr["NAME"];
+
+                            dish.COST_PRICE = (double)dr["COST_PRICE"];
+
+                            dish.SELL_PRICE = (double)dr["SELL_PRICE"];
+
+                            results.Add(dish);
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+
+            return results;
         }
 
-        public List<Dishes> GetDishesUnderPrice(int maxPrice)
+        public List<Dish> GetDishesUnderPrice(int maxPrice)
         {
-            throw new NotImplementedException();
+            List<Dish> results = null;
+            string connectionString = Configuration.GetConnectionString("DefaultConnection");
+
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(connectionString))
+                {
+                    string query = "Select * from DISH WHERE SELL_PRICE <= @Sell_price";
+                    SqlCommand cmd = new SqlCommand(query, cn);
+                    cmd.Parameters.AddWithValue("@SELL_PRICE", maxPrice);
+
+                    cn.Open();
+
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            if (results == null)
+                                results = new List<Dish>();
+
+                            Dish dish = new Dish();
+
+                            dish.ID_DISH = (int)dr["ID_DISH"];
+
+                            dish.ID_RESTAURANT = (int)dr["ID_RESTAURANT"];
+
+                            dish.IMAGE = (ImageFormat)dr["IMAGE"];
+
+                            dish.NAME = (string)dr["NAME"];
+
+                            dish.COST_PRICE = (double)dr["COST_PRICE"];
+
+                            dish.SELL_PRICE = (double)dr["SELL_PRICE"];
+
+                            results.Add(dish);
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+
+            return results;
         }
 
         public Dish GetDish(string name)
