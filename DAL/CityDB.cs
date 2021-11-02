@@ -124,5 +124,42 @@ namespace DAL
 
 
 
+        public City GetCity(int idCity)
+        {
+            City city = null;
+            string connectionString = Configuration.GetConnectionString("DefaultConnection");
+
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(connectionString))
+                {
+                    string query = "Select * from CITY WHERE ID_CITY = @idCity";
+                    SqlCommand cmd = new SqlCommand(query, cn);
+                    cmd.Parameters.AddWithValue("@idCity", idCity);
+
+
+                    cn.Open();
+
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+
+                        city = new City();
+
+                        city.ID_CITY = (int)dr["ID_CITY"];
+
+                        city.CITYNAME = (string)dr["CITYNAME"];
+
+                        
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+
+            return city;
+        }
+
     }
 }

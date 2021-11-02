@@ -16,7 +16,7 @@ namespace DAL
 
         public City GetCity(string cityName);
 
-        public City GetCity(idCity);
+        public City GetCity(int idCity);
 
        
     }

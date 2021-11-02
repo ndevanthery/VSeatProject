@@ -131,6 +131,179 @@ namespace DAL
             return results;
 
         }
+    
+        public List<Order> GetOrders(DateTime orderDate)
+        {
+            List<Order> results = null;
+            string connectionString = Configuration.GetConnectionString("DefaultConnection");
+
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(connectionString))
+                {
+                    string query = "Select * from ORDER WHERE ORDERDATE = @orderDate";
+                    SqlCommand cmd = new SqlCommand(query, cn);
+                    cmd.Parameters.AddWithValue("@orderDate", orderDate);
+                    cn.Open();
+
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            if (results == null)
+                                results = new List<Order>();
+
+                            Order order = new Order();
+
+                            order.ID_ORDER = (int)dr["ID_ORDER"];
+                            order.ORDERDATE = (DateTime)dr["ORDERDATE"];
+                            order.DELIVERYTIME = (DateTime)dr["DELIVERYTIME"];
+                            order.DISCOUNT = (int)dr["DISCOUNT"];
+                            order.TOTALPRICE = (double)dr["TOTALPRICE"];
+                            
+
+                            results.Add(order);
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+
+            return results;        
+        }
+
+        public List<Order> GetOrdersByDiscount(int discount)
+        {
+            List<Order> results = null;
+            string connectionString = Configuration.GetConnectionString("DefaultConnection");
+
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(connectionString))
+                {
+                    string query = "Select * from ORDER WHERE DISCOUNT = @discount";
+                    SqlCommand cmd = new SqlCommand(query, cn);
+                    cmd.Parameters.AddWithValue("@disount", discount);
+                    cn.Open();
+
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            if (results == null)
+                                results = new List<Order>();
+
+                            Order order = new Order();
+
+                            order.ID_ORDER = (int)dr["ID_ORDER"];
+                            order.ORDERDATE = (DateTime)dr["ORDERDATE"];
+                            order.DELIVERYTIME = (DateTime)dr["DELIVERYTIME"];
+                            order.DISCOUNT = (int)dr["DISCOUNT"];
+                            order.TOTALPRICE = (double)dr["TOTALPRICE"];
+                            
+
+                            results.Add(order);
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+
+            return results;                }
+
+        public List<Order> GetOrdersByMinTotalPrice(double totalPrice)
+        {
+            List<Order> results = null;
+            string connectionString = Configuration.GetConnectionString("DefaultConnection");
+
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(connectionString))
+                {
+                    string query = "Select * from ORDER WHERE TOTALPRICE > @total";
+                    SqlCommand cmd = new SqlCommand(query, cn);
+                    cmd.Parameters.AddWithValue("@total", totalPrice);
+                    cn.Open();
+
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            if (results == null)
+                                results = new List<Order>();
+
+                            Order order = new Order();
+
+                            order.ID_ORDER = (int)dr["ID_ORDER"];
+                            order.ORDERDATE = (DateTime)dr["ORDERDATE"];
+                            order.DELIVERYTIME = (DateTime)dr["DELIVERYTIME"];
+                            order.DISCOUNT = (int)dr["DISCOUNT"];
+                            order.TOTALPRICE = (double)dr["TOTALPRICE"];
+                            
+
+                            results.Add(order);
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+
+            return results;        
+        }
+
+        public List<Order> GetOrdersByMaxTotalPrice(double totalPrice)
+        {
+        List<Order> results = null;
+            string connectionString = Configuration.GetConnectionString("DefaultConnection");
+
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(connectionString))
+                {
+                    string query = "Select * from ORDER WHERE TOTALPRICE < @total";
+                    SqlCommand cmd = new SqlCommand(query, cn);
+                    cmd.Parameters.AddWithValue("@total", totalPrice);
+                    cn.Open();
+
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            if (results == null)
+                                results = new List<Order>();
+
+                            Order order = new Order();
+
+                            order.ID_ORDER = (int)dr["ID_ORDER"];
+                            order.ORDERDATE = (DateTime)dr["ORDERDATE"];
+                            order.DELIVERYTIME = (DateTime)dr["DELIVERYTIME"];
+                            order.DISCOUNT = (int)dr["DISCOUNT"];
+                            order.TOTALPRICE = (double)dr["TOTALPRICE"];
+                            
+
+                            results.Add(order);
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+
+            return results;           
+        }
+
+
     }
     }
 }

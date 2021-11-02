@@ -148,6 +148,52 @@ namespace DAL
             return results;
         }
 
+        public List<Staff> GetStaffs(int idRestaurant)
+        {
+            List<Staff> results = null;
+            string connectionString = Configuration.GetConnectionString("DefaultConnection");
+
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(connectionString))
+                {
+                    string query = "Select * from STAFF WHERE ID_RESTAURANT = @idRestaurant";
+                    SqlCommand cmd = new SqlCommand(query, cn);
+                    cmd.Parameters.AddWithValue("@idRestaurant", idRestaurant);
+                    cn.Open();
+
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            if (results == null)
+                                results = new List<Staff>();
+
+                            Staff staff = new Staff();
+
+                            staff.ID_STAFF = (int)dr["ID_STAFF"];
+                            staff.ID_RESTAURANT = (int)dr["ID_RESTAURANT"];
+                            staff.NAME = (string)dr["NAME"];
+                            staff.SURNAME = (string)dr["SURNAME"];
+                            staff.ADRESS = (string)dr["ADRESS"];
+                            staff.POSTALCODE = (string)dr["POSTALCODE"];
+                            staff.PHONENUMBER = (string)dr["PHONENUMBER"];
+                            staff.PASSWORD = (string)dr["PASSWORD"];
+                            staff.USERNAME = (string)dr["USERNAME"];
+
+                            results.Add(staff);
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+
+            return results;        }
+
+
         public Staff AddStaff(Staff staff)
         {
             string connectionString = Configuration.GetConnectionString("DefaultConnection");

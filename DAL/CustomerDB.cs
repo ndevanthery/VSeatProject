@@ -50,7 +50,7 @@ namespace DAL
 
         }
 
-        public Customer GetCustomer(string name, string surname)
+        public Customer GetCustomerByName(string name, string surname)
         {
             Customer customer = null;
             string connectionString = Configuration.GetConnectionString("DefaultConnection");
@@ -97,5 +97,17 @@ namespace DAL
         {
             throw new NotImplementedException();
         }
+    
+       public Customer GetCustomerByEmail(string email)
+       {
+            throw new NotImplementedException();
+       }
+
+        public List<Customer> GetCustomers(int id_city)
+        {
+            throw new NotImplementedException();
+        }
+    
+    
     }
 }

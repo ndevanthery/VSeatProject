@@ -67,6 +67,16 @@ namespace DAL
             return results;
         }
 
+        public List<Dish> GetDishes(int idRestaurant)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Dishes> GetDishesUnderPrice(int maxPrice)
+        {
+            throw new NotImplementedException();
+        }
+
         public Dish GetDish(string name)
         {
             Dish dish = null;
@@ -140,5 +150,7 @@ namespace DAL
 
             return dish;
         }
+    
+        
     }
 }

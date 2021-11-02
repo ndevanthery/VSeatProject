@@ -81,6 +81,46 @@ namespace DAL
             return restoType;
         }
 
+                
+        
+        public RestoType GetRestoType(int idType)
+        {
+             RestoType restoType = null;
+            string connectionString = Configuration.GetConnectionString("DefaultConnection");
+
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(connectionString))
+                {
+                    string query = "Select * from RESTOTYPE WHERE IDTYPE = @idType";
+                    SqlCommand cmd = new SqlCommand(query, cn);
+                    cmd.Parameters.AddWithValue("@idType", idType);
+
+
+                    cn.Open();
+
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+
+                        restoType = new RestoType();
+
+                        restoType.IDTYPE = (int)dr["IDTYPE"];
+
+                        restoType.TYPENAME = (string)dr["TYPENAME"];
+
+
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+
+            return restoType;
+        }
+
+
         public List<RestoType> GetRestoTypes()
         {
             List<RestoType> results = null;
