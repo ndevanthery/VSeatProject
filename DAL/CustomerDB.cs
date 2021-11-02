@@ -96,7 +96,7 @@ namespace DAL
         }
 
         public List<Customer> GetCustomers()
-         {
+        {
             List<Customer> results = null;
             string connectionString = Configuration.GetConnectionString("DefaultConnection");
 
@@ -141,8 +141,8 @@ namespace DAL
 
             return results;
         }
-    //ATTENTION L'ATTRIBUT "EMAIL" N AS PAS ETE AJOUTE
-       public Customer GetCustomerByEmail(string email)
+        //ATTENTION L'ATTRIBUT "EMAIL" N AS PAS ETE AJOUTE
+        public Customer GetCustomerByEmail(string email)
         {
             Customer customer = null;
             string connectionString = Configuration.GetConnectionString("DefaultConnection");
@@ -237,4 +237,149 @@ namespace DAL
 
 
         }
+
+        public Customer updateCustomerAdress(int id_customer, string adress)
+        {
+            Customer customer = null;
+            string connectionString = Configuration.GetConnectionString("DefaultConnection");
+
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(connectionString))
+                {
+                    string query = "UPDATE CUSTOMER SET ADRESS = @ADRESS WHERE ID_CUSTOMER = @Id_customer";
+                    SqlCommand cmd = new SqlCommand(query, cn);
+                    cmd.Parameters.AddWithValue("@ADRESS", adress);
+                    cmd.Parameters.AddWithValue("@Id_customer", id_customer);
+
+                    cn.Open();
+
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        
+                        
+
+                        customer = new Customer();
+
+                        customer.ID_CUSTOMER = (int)dr["ID_CUSTOMER"];
+                        customer.ID_CITY = (int)dr["ID_CITY"];
+                        customer.NAME = (string)dr["NAME"];
+                        customer.SURNAME = (string)dr["SURNAME"];
+                        customer.ADRESS = (string)dr["ADRESS"];
+                        customer.POSTALCODE = (string)dr["POSTALCODE"];
+                        customer.PHONENUMBER = (string)dr["PHONENUMBER"];
+                        customer.PASSWORD = (string)dr["PASSWORD"];
+                        // EMAIL PAS ENCORE AJOUTEE
+                        customer.EMAIL = (string)dr["EMAIL"];
+                        // Changement d'adresse
+                        cmd.Parameters.AddWithValue("@ADRESS", customer.ADRESS);
+
+                        
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+
+            return customer;
+        }
+
+        public Customer updateCustomerPhoneNumber(int id_customer, string phoneNumber)
+        {
+            Customer customer = null;
+            string connectionString = Configuration.GetConnectionString("DefaultConnection");
+
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(connectionString))
+                {
+                    string query = "UPDATE CUSTOMER SET PHONENUMBER = @Phonenumber WHERE ID_CUSTOMER = @Id_customer";
+                    SqlCommand cmd = new SqlCommand(query, cn);
+                    cmd.Parameters.AddWithValue("@ADRESS", phoneNumber);
+                    cmd.Parameters.AddWithValue("@Id_customer", id_customer);
+
+                    cn.Open();
+
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+
+
+
+                        customer = new Customer();
+
+                        customer.ID_CUSTOMER = (int)dr["ID_CUSTOMER"];
+                        customer.ID_CITY = (int)dr["ID_CITY"];
+                        customer.NAME = (string)dr["NAME"];
+                        customer.SURNAME = (string)dr["SURNAME"];
+                        customer.ADRESS = (string)dr["ADRESS"];
+                        customer.POSTALCODE = (string)dr["POSTALCODE"];
+                        customer.PHONENUMBER = (string)dr["PHONENUMBER"];
+                        customer.PASSWORD = (string)dr["PASSWORD"];
+                        // EMAIL PAS ENCORE AJOUTEE
+                        customer.EMAIL = (string)dr["EMAIL"];
+                        // Changement de numéro de téléphone
+                        cmd.Parameters.AddWithValue("@PHONENUMBER", customer.PHONENUMBER);
+
+
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+
+            return customer;
+        }
+
+        public Customer updateCustomerPassword(int id_customer, string password)
+        {
+            Customer customer = null;
+            string connectionString = Configuration.GetConnectionString("DefaultConnection");
+
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(connectionString))
+                {
+                    string query = "UPDATE CUSTOMER SET PASSWORD = @Password WHERE ID_CUSTOMER = @Id_customer";
+                    SqlCommand cmd = new SqlCommand(query, cn);
+                    cmd.Parameters.AddWithValue("@PASSWORD", password);
+                    cmd.Parameters.AddWithValue("@Id_customer", id_customer);
+
+                    cn.Open();
+
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+
+
+
+                        customer = new Customer();
+
+                        customer.ID_CUSTOMER = (int)dr["ID_CUSTOMER"];
+                        customer.ID_CITY = (int)dr["ID_CITY"];
+                        customer.NAME = (string)dr["NAME"];
+                        customer.SURNAME = (string)dr["SURNAME"];
+                        customer.ADRESS = (string)dr["ADRESS"];
+                        customer.POSTALCODE = (string)dr["POSTALCODE"];
+                        customer.PHONENUMBER = (string)dr["PHONENUMBER"];
+                        customer.PASSWORD = (string)dr["PASSWORD"];
+                        // EMAIL PAS ENCORE AJOUTEE
+                        customer.EMAIL = (string)dr["EMAIL"];
+                        // Changement de numéro de téléphone
+                        cmd.Parameters.AddWithValue("@PASSWORD", customer.PASSWORD);
+
+
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+
+            return customer;
+        }
+    }
 }
