@@ -11,6 +11,10 @@ namespace DAL
     {
         public List<Dish> GetDishes();
 
+        public List<Dish> GetDishes(int idRestaurant);
+
+        public List<Dishes> GetDishesUnderPrice(int maxPrice);
+
         public Dish GetDish(string name);
 
         public Dish addDish(Dish dish);

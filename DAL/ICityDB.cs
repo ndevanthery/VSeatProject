@@ -15,5 +15,9 @@ namespace DAL
         public City AddCity(City city);
 
         public City GetCity(string cityName);
+
+        public City GetCity(idCity);
+
+       
     }
 }

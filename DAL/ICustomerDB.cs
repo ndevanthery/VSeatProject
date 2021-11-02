@@ -12,9 +12,15 @@ namespace DAL
     { 
         public List<Customer> GetCustomers();
    
-        public Customer GetCustomer(string name, string surname);
+        public Customer GetCustomerByName(string name, string surname);
+
+        public Customer GetCustomerByEmail(string email);
+
+        public List<Customer> GetCustomers(int id_city);
 
         public Customer addCustomer(Customer customer); 
+
+       
 
     }
 }

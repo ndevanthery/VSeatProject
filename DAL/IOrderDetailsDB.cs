@@ -11,9 +11,13 @@ namespace DAL
     {
         public List<OrderDetails> GetOrdersDetails();
 
+        public List<OrderDetails> GetOrderDetails(int id_dish);
+
         public OrderDetails GetOrderDetails(int orderId);
 
         public OrderDetails addOrderDetails(OrderDetails orderDetails);
+
+
 
 
     }
