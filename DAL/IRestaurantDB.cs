@@ -15,8 +15,6 @@ namespace DAL
 
         public List<Restaurant> GetRestaurantsByType(int id_type);
 
-        public Restaurant GetRestaurant(string name);
-
         public Restaurant GetRestaurant(string name , string adress);
 
         public Restaurant addRestaurant(Restaurant restaurant);

@@ -88,6 +88,94 @@ namespace DAL
             return restaurant;
         }
 
+        public List<Restaurant> GetRestaurantsByCity(int id_city)
+        {
+            List<Restaurant> results = null;
+            string connectionString = Configuration.GetConnectionString("DefaultConnection");
+
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(connectionString))
+                {
+                    string query = "Select * from RESTAURANT WHERE ID_CITY = @idCity";
+                    SqlCommand cmd = new SqlCommand(query, cn);
+                    cmd.Parameters.AddWithValue("@idCity", id_city);
+
+                    cn.Open();
+
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            if (results == null)
+                                results = new List<Restaurant>();
+
+                            Restaurant restaurant = new Restaurant();
+
+                            restaurant.ID_RESTAURANT = (int)dr["ID_RESTAURANT"];
+                            restaurant.ID_CITY = (int)dr["ID_CITY"];
+                            restaurant.IDTYPE = (int)dr["IDTYPE"];
+                            restaurant.NAME = (string)dr["NAME"];
+                            restaurant.ADRESS = (string)dr["ADRESS"];
+                            restaurant.PHONENUMBER = (string)dr["PHONENUMBER"];
+
+                            results.Add(restaurant);
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+
+            return results;        }
+
+        public List<Restaurant> GetRestaurantsByType(int id_type)
+        {
+            List<Restaurant> results = null;
+            string connectionString = Configuration.GetConnectionString("DefaultConnection");
+
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(connectionString))
+                {
+                    string query = "Select * from RESTAURANT WHERE IDTYPE = @idType";
+                    SqlCommand cmd = new SqlCommand(query, cn);
+                    cmd.Parameters.AddWithValue("@idType", id_type);
+
+                    cn.Open();
+
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            if (results == null)
+                                results = new List<Restaurant>();
+
+                            Restaurant restaurant = new Restaurant();
+
+                            restaurant.ID_RESTAURANT = (int)dr["ID_RESTAURANT"];
+                            restaurant.ID_CITY = (int)dr["ID_CITY"];
+                            restaurant.IDTYPE = (int)dr["IDTYPE"];
+                            restaurant.NAME = (string)dr["NAME"];
+                            restaurant.ADRESS = (string)dr["ADRESS"];
+                            restaurant.PHONENUMBER = (string)dr["PHONENUMBER"];
+
+                            results.Add(restaurant);
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+
+            return results;
+
+        }
+
         public List<Restaurant> GetRestaurants()
         {
             List<Restaurant> results = null;
@@ -131,5 +219,7 @@ namespace DAL
             return results;
 
         }
+    
+        
     }
 }

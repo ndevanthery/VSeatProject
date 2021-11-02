@@ -116,5 +116,10 @@ namespace DAL
 
             return results;
         }
+    
+        public List<OrderDetails> GetOrderDetails(int id_dish)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
