@@ -12,7 +12,7 @@ namespace BLL
     class OrderManager
     {
         private IOrderDB orderDB { get; }
-    
+
 
         public OrderManager(IConfiguration conf)
         {
@@ -24,14 +24,39 @@ namespace BLL
         {
             return orderDB.GetOrders();
         }
+
+        public List<Order> GetOrders(DateTime orderDate)
+        {
+            return orderDB.GetOrders(orderDate);
+        }
+
+        public List<Order> GetOrdersByDiscount(int discount)
+        {
+            return orderDB.GetOrdersByDiscount(discount);
+        }
+
+        public List<Order> GetOrdersByMinTotalPrice(double totalPrice)
+        {
+            return orderDB.GetOrdersByMinTotalPrice(totalPrice);
+        }
+
+        public List<Order> GetOrdersByMaxTotalPrice(double totalPrice)
+        {
+            return orderDB.GetOrdersByMaxTotalPrice(totalPrice);
+        }
+
+
         public Order GetOrder(int orderID)
         {
             return orderDB.GetOrder(orderID);
         }
 
-        public void addOrder(Order order)
+
+        public Order addOrder(Order order)
         {
             return orderDB.addOrder(order);
         }
+        
+
     }
 }

@@ -24,6 +24,11 @@ namespace BLL
             return staffDB.GetStaffs();
         }
 
+        public List<Staff> GetStaffs(int idRestaurant)
+        {
+            return staffDB.GetStaffs(idRestaurant);
+        }
+
         public Staff GetStaff(string username)
         {
             return staffDB.GetStaff(username);
