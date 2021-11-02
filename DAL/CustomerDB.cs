@@ -35,7 +35,8 @@ namespace DAL
                     cmd.Parameters.AddWithValue("@POSTALCODE", customer.POSTALCODE);
                     cmd.Parameters.AddWithValue("@PHONENUMBER", customer.PHONENUMBER);
                     cmd.Parameters.AddWithValue("@PASSWORD", customer.PASSWORD);
-
+                    // EMAIL PAS ENCORE AJOUTEE
+                    customer.EMAIL = (string)dr["EMAIL"];
                     cn.Open();
 
                     customer.ID_CUSTOMER = Convert.ToInt32(cmd.ExecuteScalar());
@@ -79,7 +80,8 @@ namespace DAL
                         customer.POSTALCODE = (string)dr["POSTALCODE"];
                         customer.PHONENUMBER = (string)dr["PHONENUMBER"];
                         customer.PASSWORD = (string)dr["PASSWORD"];
-                       
+                        // EMAIL PAS ENCORE AJOUTEE
+                        customer.EMAIL = (string)dr["EMAIL"];
 
 
                     }
@@ -94,20 +96,145 @@ namespace DAL
         }
 
         public List<Customer> GetCustomers()
-        {
-            throw new NotImplementedException();
+         {
+            List<Customer> results = null;
+            string connectionString = Configuration.GetConnectionString("DefaultConnection");
+
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(connectionString))
+                {
+                    string query = "Select * from CUSTOMER";
+                    SqlCommand cmd = new SqlCommand(query, cn);
+
+                    cn.Open();
+
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            if (results == null)
+                                results = new List<Customer>();
+
+                            Customer customer = new Customer();
+
+                            customer.ID_CUSTOMER = (int)dr["ID_CUSTOMER"];
+                            customer.ID_CITY = (int)dr["ID_CITY"];
+                            customer.NAME = (string)dr["NAME"];
+                            customer.SURNAME = (string)dr["SURNAME"];
+                            customer.ADRESS = (string)dr["ADRESS"];
+                            customer.POSTALCODE = (string)dr["POSTALCODE"];
+                            customer.PHONENUMBER = (string)dr["PHONENUMBER"];
+                            customer.PASSWORD = (string)dr["PASSWORD"];
+                            // EMAIL PAS ENCORE AJOUTEE
+                            customer.EMAIL = (string)dr["EMAIL"];
+
+                            results.Add(customer);
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+
+            return results;
         }
-    
+    //ATTENTION L'ATTRIBUT "EMAIL" N AS PAS ETE AJOUTE
        public Customer GetCustomerByEmail(string email)
-       {
-            throw new NotImplementedException();
-       }
+        {
+            Customer customer = null;
+            string connectionString = Configuration.GetConnectionString("DefaultConnection");
+
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(connectionString))
+                {
+                    string query = "Select * from CUSTOMER WHERE EMAIL = @Email";
+                    SqlCommand cmd = new SqlCommand(query, cn);
+                    cmd.Parameters.AddWithValue("@Email", email);
+
+
+                    cn.Open();
+
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+
+                        customer = new Customer();
+
+                        customer.ID_CUSTOMER = (int)dr["ID_CUSTOMER"];
+                        customer.ID_CITY = (int)dr["ID_CITY"];
+                        customer.NAME = (string)dr["NAME"];
+                        customer.SURNAME = (string)dr["SURNAME"];
+                        customer.ADRESS = (string)dr["ADRESS"];
+                        customer.POSTALCODE = (string)dr["POSTALCODE"];
+                        customer.PHONENUMBER = (string)dr["PHONENUMBER"];
+                        customer.PASSWORD = (string)dr["PASSWORD"];
+                        // EMAIL PAS ENCORE AJOUTEE
+                        customer.EMAIL = (string)dr["EMAIL"];
+
+
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+
+            return customer;
+        }
 
         public List<Customer> GetCustomers(int id_city)
         {
-            throw new NotImplementedException();
+            {
+                List<Customer> results = null;
+                string connectionString = Configuration.GetConnectionString("DefaultConnection");
+
+                try
+                {
+                    using (SqlConnection cn = new SqlConnection(connectionString))
+                    {
+                        string query = "Select * from CUSTOMER WHERE ID_CITY = @Id_city";
+                        SqlCommand cmd = new SqlCommand(query, cn);
+                        cmd.Parameters.AddWithValue("@Id_city", id_city);
+
+                        cn.Open();
+
+                        using (SqlDataReader dr = cmd.ExecuteReader())
+                        {
+                            while (dr.Read())
+                            {
+                                if (results == null)
+                                    results = new List<Customer>();
+
+                                Customer customer = new Customer();
+
+                                customer.ID_CUSTOMER = (int)dr["ID_CUSTOMER"];
+                                customer.ID_CITY = (int)dr["ID_CITY"];
+                                customer.NAME = (string)dr["NAME"];
+                                customer.SURNAME = (string)dr["SURNAME"];
+                                customer.ADRESS = (string)dr["ADRESS"];
+                                customer.POSTALCODE = (string)dr["POSTALCODE"];
+                                customer.PHONENUMBER = (string)dr["PHONENUMBER"];
+                                customer.PASSWORD = (string)dr["PASSWORD"];
+                                // EMAIL PAS ENCORE AJOUTEE
+                                customer.EMAIL = (string)dr["EMAIL"];
+
+                                results.Add(customer);
+                            }
+                        }
+                    }
+                }
+                catch (Exception e)
+                {
+                    throw e;
+                }
+
+                return results;
+            }
+
+
         }
-    
-    
-    }
 }
