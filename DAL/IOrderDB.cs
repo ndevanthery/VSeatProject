@@ -15,6 +15,8 @@ namespace DAL
 
         public List<Order> GetOrdersByDiscount(int discount);
 
+        // public List<Order> GetOrdersByUsername(int discount);
+
         public List<Order> GetOrdersByMinTotalPrice(double totalPrice);
         
         public List<Order> GetOrdersByMaxTotalPrice(double totalPrice);

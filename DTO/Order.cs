@@ -19,6 +19,8 @@ namespace DTO
 
         public double TOTALPRICE { get; set; }
 
+        // ajouter un CustomerID dans order ! 
+
         public override string ToString()
         {
             return "ID ORDER : " + ID_ORDER +
@@ -27,5 +29,6 @@ namespace DTO
                    "DISCOUNT : " + DISCOUNT +
                    "TOTAL PRICE : " + TOTALPRICE;
         }
+
     }
 }
