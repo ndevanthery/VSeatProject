@@ -41,7 +41,7 @@ namespace DAL
             return orderDetails;
         }
 
-        public OrderDetails GetOrderDetails(int orderId)
+        public OrderDetails GetOrderDetailsWithOrderId(int orderId)
         {
             OrderDetails orderDetails = null;
             string connectionString = Configuration.GetConnectionString("DefaultConnection");
@@ -117,9 +117,44 @@ namespace DAL
             return results;
         }
     
-        public List<OrderDetails> GetOrderDetails(int id_dish)
+        public List<OrderDetails> GetOrderDetailsWithIdDish(int id_dish)
         {
-            throw new NotImplementedException();
+            List<OrderDetails> results = null;
+            string connectionString = Configuration.GetConnectionString("DefaultConnection");
+
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(connectionString))
+                {
+                    string query = "Select * from ORDERDETAILS WHERE ID_DISH = @id_dish";
+                    SqlCommand cmd = new SqlCommand(query, cn);
+                    cmd.Parameters.AddWithValue("@ID_DISH", id_dish);
+
+                    cn.Open();
+
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            if (results == null)
+                                results = new List<OrderDetails>();
+
+                            OrderDetails orderDetails = new OrderDetails();
+
+                            orderDetails.ID_DISH = (int)dr["ID_DISH"];
+                            orderDetails.ID_ORDER = (int)dr["ID_ORDER"];
+
+                            results.Add(orderDetails);
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+
+            return results;
         }
     }
 }
