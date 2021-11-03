@@ -20,13 +20,8 @@ namespace DAL
 
         public Customer addCustomer(Customer customer);
         // COMMENT UPDATE L ADDRESSE TOUT EN UPDATANT L ID_CITY ??
-        public Customer updateCustomerAdress(int id_customer,string adress);
 
-        public Customer updateCustomerPhoneNumber(int id_customer, string phoneNumber);
-
-        public Customer updateCustomerPassword(int id_customer, string password);
-
-        
+        public Customer updateCustomer(int id_customer);
 
 
     }
