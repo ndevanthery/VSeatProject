@@ -8,14 +8,17 @@ namespace DTO
 {
     public class City
     {
-        public int ID_CITY  { get; set; }
+        public int IDCITY  { get; set; }
 
         public string CITYNAME { get; set; }
+
+        public int NPA { get; set; }
 
         public override string ToString()
         {
             return "ID_CITY : " + ID_CITY +
-                    "CityName : " + CITYNAME;
+                    "CityName : " + CITYNAME +
+                    "NPA : " + NPA;
         }
 
     }

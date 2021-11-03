@@ -25,7 +25,7 @@ namespace BLL
 
         public Customer GetCustomer(string name, string surname)
         {
-            return customerDB.GetCustomer(name, surname);
+            return customerDB.GetCustomerByName(name, surname);
         }
 
         public Customer addCustomer(Customer customer)

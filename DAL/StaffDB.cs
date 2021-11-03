@@ -40,10 +40,9 @@ namespace DAL
                         staff = new Staff();
                         staff.ID_STAFF = (int)dr["ID_STAFF"];
                         staff.ID_RESTAURANT = (int)dr["ID_RESTAURANT"];
-                        staff.NAME = (string)dr["NAME"];
-                        staff.SURNAME = (string)dr["SURNAME"];
+                        staff.FIRSTNAME = (string)dr["FIRSTNAME"];
+                        staff.LASTNAME = (string)dr["LASTNAME"];
                         staff.ADRESS = (string)dr["ADRESS"];
-                        staff.POSTALCODE = (string)dr["POSTALCODE"];
                         staff.PHONENUMBER = (string)dr["PHONENUMBER"];
                         staff.PASSWORD = (string)dr["PASSWORD"];
                         staff.USERNAME = (string)dr["USERNAME"];
@@ -53,13 +52,13 @@ namespace DAL
             }
             catch (Exception e)
             {
-                throw e;
+                Console.WriteLine(e.Message);
             }
 
             return staff;
         }
 
-        public Staff GetStaff(string name, string surname)
+        public Staff GetStaff(string firstname, string lastname)
         {
             Staff staff = null;
             string connectionString = Configuration.GetConnectionString("DefaultConnection");
@@ -68,10 +67,10 @@ namespace DAL
             {
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
-                    string query = "Select * from STAFF WHERE NAME = @Name AND SURNAME = @Surname";
+                    string query = "Select * from STAFF WHERE FIRSTNAME = @firstname AND LASTNAME = @lastname";
                     SqlCommand cmd = new SqlCommand(query, cn);
-                    cmd.Parameters.AddWithValue("@Name", name);
-                    cmd.Parameters.AddWithValue("@Surname", surname);
+                    cmd.Parameters.AddWithValue("@firstname", firstname);
+                    cmd.Parameters.AddWithValue("@lastname", lastname);
 
 
                     cn.Open();
@@ -82,10 +81,9 @@ namespace DAL
                         staff = new Staff();
                         staff.ID_STAFF = (int)dr["ID_STAFF"];
                         staff.ID_RESTAURANT = (int)dr["ID_RESTAURANT"];
-                        staff.NAME = (string)dr["NAME"];
-                        staff.SURNAME = (string)dr["SURNAME"];
+                        staff.FIRSTNAME = (string)dr["FIRSTNAME"];
+                        staff.LASTNAME = (string)dr["LASTNAME"];
                         staff.ADRESS = (string)dr["ADRESS"];
-                        staff.POSTALCODE = (string)dr["POSTALCODE"];
                         staff.PHONENUMBER = (string)dr["PHONENUMBER"];
                         staff.PASSWORD = (string)dr["PASSWORD"];
                         staff.USERNAME = (string)dr["USERNAME"];
@@ -96,7 +94,7 @@ namespace DAL
             }
             catch (Exception e)
             {
-                throw e;
+                Console.WriteLine(e.Message);
             }
 
             return staff;
@@ -127,10 +125,9 @@ namespace DAL
 
                             staff.ID_STAFF = (int)dr["ID_STAFF"];
                             staff.ID_RESTAURANT = (int)dr["ID_RESTAURANT"];
-                            staff.NAME = (string)dr["NAME"];
-                            staff.SURNAME = (string)dr["SURNAME"];
+                            staff.FIRSTNAME = (string)dr["FIRSTNAME"];
+                            staff.LASTNAME = (string)dr["LASTNAME"];
                             staff.ADRESS = (string)dr["ADRESS"];
-                            staff.POSTALCODE = (string)dr["POSTALCODE"];
                             staff.PHONENUMBER = (string)dr["PHONENUMBER"];
                             staff.PASSWORD = (string)dr["PASSWORD"];
                             staff.USERNAME = (string)dr["USERNAME"];
@@ -142,7 +139,7 @@ namespace DAL
             }
             catch (Exception e)
             {
-                throw e;
+                Console.WriteLine(e.Message);
             }
 
             return results;
@@ -173,10 +170,9 @@ namespace DAL
 
                             staff.ID_STAFF = (int)dr["ID_STAFF"];
                             staff.ID_RESTAURANT = (int)dr["ID_RESTAURANT"];
-                            staff.NAME = (string)dr["NAME"];
-                            staff.SURNAME = (string)dr["SURNAME"];
+                            staff.FIRSTNAME = (string)dr["FIRSTNAME"];
+                            staff.LASTNAME = (string)dr["LASTNAME"];
                             staff.ADRESS = (string)dr["ADRESS"];
-                            staff.POSTALCODE = (string)dr["POSTALCODE"];
                             staff.PHONENUMBER = (string)dr["PHONENUMBER"];
                             staff.PASSWORD = (string)dr["PASSWORD"];
                             staff.USERNAME = (string)dr["USERNAME"];
@@ -188,7 +184,7 @@ namespace DAL
             }
             catch (Exception e)
             {
-                throw e;
+                Console.WriteLine(e.Message);
             }
 
             return results;        }
@@ -201,13 +197,12 @@ namespace DAL
             {
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
-                    string query = "Insert into STAFF(ID_STAFF,ID_RESTAURANT,NAME,SURNAME,ADRESS,POSTALCODE,PHONENUMBER,PASSWORD,USERNAME) values(@ID_RESTAURANT,@NAME,@SURNAME,@ADRESS,@POSTALCODE,@PHONENUMBER,@PASSWORD,@USERNAME); SELECT SCOPE_IDENTITY()";
+                    string query = "Insert into STAFF(ID_RESTAURANT,FIRSTNAME,LASTNAME,ADRESS,PHONENUMBER,USERNAME,PASSWORD) values(@ID_RESTAURANT,@FIRSTNAME,@LASTNAME,@ADRESS,@PHONENUMBER,@USERNAME,@PASSWORD); SELECT SCOPE_IDENTITY()";
                     SqlCommand cmd = new SqlCommand(query, cn);
                     cmd.Parameters.AddWithValue("@ID_RESTAURANT", staff.ID_RESTAURANT);
-                    cmd.Parameters.AddWithValue("@NAME", staff.NAME);
-                    cmd.Parameters.AddWithValue("@SURNAME", staff.SURNAME);
+                    cmd.Parameters.AddWithValue("@FIRSTNAME", staff.FIRSTNAME);
+                    cmd.Parameters.AddWithValue("@LASTNAME", staff.LASTNAME);
                     cmd.Parameters.AddWithValue("@ADRESS", staff.ADRESS);
-                    cmd.Parameters.AddWithValue("@POSTALCODE", staff.POSTALCODE);
                     cmd.Parameters.AddWithValue("@PHONENUMBER", staff.PHONENUMBER);
                     cmd.Parameters.AddWithValue("@PASSWORD", staff.PASSWORD);
                     cmd.Parameters.AddWithValue("@USERNAME", staff.USERNAME);
@@ -219,7 +214,7 @@ namespace DAL
             }
             catch (Exception e)
             {
-                throw e;
+                Console.WriteLine(e.Message);
             }
 
             return staff;

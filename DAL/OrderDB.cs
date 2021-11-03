@@ -25,13 +25,13 @@ namespace DAL
             {
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
-                    string query = "Insert into ORDER(ID_ORDER,ORDERDATE,DELIVERYTIME,DISCOUNT,TOTALPRICE) values(@ORDERDATE,@DELIVERYTIME,@DISCOUNT,@TOTALPRICE); SELECT SCOPE_IDENTITY()";
+                    string query = "Insert into ORDER(ID_CUSTOMER,ORDERDATE,ORDERTIME,DISCOUNT,TOTALPRICE) values(@ID_CUSTOMER ,@ORDERDATE,@ORDERTIME,@DISCOUNT,@TOTALPRICE); SELECT SCOPE_IDENTITY()";
                     SqlCommand cmd = new SqlCommand(query, cn);
-                    cmd.Parameters.AddWithValue("@ID_ORDER", order.ID_ORDER);
+                    cmd.Parameters.AddWithValue("@ID_CUSTOMER", order.ID_CUSTOMER);
                     cmd.Parameters.AddWithValue("@ORDERDATE", order.ORDERDATE);
-                    cmd.Parameters.AddWithValue("@DELIVERYTIME", order.DELIVERYTIME);
+                    cmd.Parameters.AddWithValue("@ORDERTIME", order.ORDERTIME);
                     cmd.Parameters.AddWithValue("@DISCOUNT", order.DISCOUNT);
-                    cmd.Parameters.AddWithValue("@PHONENUMBER", order.TOTALPRICE);
+                    cmd.Parameters.AddWithValue("@TOTALPRICE", order.TOTALPRICE);
 
                     cn.Open();
 
@@ -40,7 +40,7 @@ namespace DAL
             }
             catch (Exception e)
             {
-                throw e;
+                Console.WriteLine(e.Message);
             }
 
             return order;
@@ -69,20 +69,18 @@ namespace DAL
 
                         order = new Order();
                         order.ID_ORDER = (int)dr["ID_ORDER"];
+                        order.ID_CUSTOMER = (int)dr["ID_CUSTOMER"];
                         order.ORDERDATE = (DateTime)dr["ORDERDATE"];
-                        order.DELIVERYTIME = (DateTime)dr["DELIVERYTIME"];
+                        order.ORDERTIME = (DateTime)dr["ORDERTIME"];
                         order.DISCOUNT = (int)dr["DISCOUNT"];
                         order.TOTALPRICE = (double)dr["TOTALPRICE"];
-                        
-
-
 
                     }
                 }
             }
             catch (Exception e)
             {
-                throw e;
+                Console.WriteLine(e.Message);
             }
 
             return order;
@@ -112,11 +110,12 @@ namespace DAL
                             Order order = new Order();
 
                             order.ID_ORDER = (int)dr["ID_ORDER"];
+                            order.ID_CUSTOMER = (int)dr["ID_CUSTOMER"];
                             order.ORDERDATE = (DateTime)dr["ORDERDATE"];
-                            order.DELIVERYTIME = (DateTime)dr["DELIVERYTIME"];
+                            order.ORDERTIME = (DateTime)dr["ORDERTIME"];
                             order.DISCOUNT = (int)dr["DISCOUNT"];
                             order.TOTALPRICE = (double)dr["TOTALPRICE"];
-                            
+
 
                             results.Add(order);
                         }
@@ -125,7 +124,7 @@ namespace DAL
             }
             catch (Exception e)
             {
-                throw e;
+                Console.WriteLine(e.Message);
             }
 
             return results;
@@ -156,11 +155,12 @@ namespace DAL
                             Order order = new Order();
 
                             order.ID_ORDER = (int)dr["ID_ORDER"];
+                            order.ID_CUSTOMER = (int)dr["ID_CUSTOMER"];
                             order.ORDERDATE = (DateTime)dr["ORDERDATE"];
-                            order.DELIVERYTIME = (DateTime)dr["DELIVERYTIME"];
+                            order.ORDERTIME = (DateTime)dr["ORDERTIME"];
                             order.DISCOUNT = (int)dr["DISCOUNT"];
                             order.TOTALPRICE = (double)dr["TOTALPRICE"];
-                            
+
 
                             results.Add(order);
                         }
@@ -169,7 +169,7 @@ namespace DAL
             }
             catch (Exception e)
             {
-                throw e;
+                Console.WriteLine(e.Message);
             }
 
             return results;        
@@ -199,11 +199,12 @@ namespace DAL
                             Order order = new Order();
 
                             order.ID_ORDER = (int)dr["ID_ORDER"];
+                            order.ID_CUSTOMER = (int)dr["ID_CUSTOMER"];
                             order.ORDERDATE = (DateTime)dr["ORDERDATE"];
-                            order.DELIVERYTIME = (DateTime)dr["DELIVERYTIME"];
+                            order.ORDERTIME = (DateTime)dr["ORDERTIME"];
                             order.DISCOUNT = (int)dr["DISCOUNT"];
                             order.TOTALPRICE = (double)dr["TOTALPRICE"];
-                            
+
 
                             results.Add(order);
                         }
@@ -212,7 +213,7 @@ namespace DAL
             }
             catch (Exception e)
             {
-                throw e;
+                Console.WriteLine(e.Message);
             }
 
             return results;                }
@@ -241,11 +242,11 @@ namespace DAL
                             Order order = new Order();
 
                             order.ID_ORDER = (int)dr["ID_ORDER"];
+                            order.ID_CUSTOMER = (int)dr["ID_CUSTOMER"];
                             order.ORDERDATE = (DateTime)dr["ORDERDATE"];
-                            order.DELIVERYTIME = (DateTime)dr["DELIVERYTIME"];
+                            order.ORDERTIME = (DateTime)dr["ORDERTIME"];
                             order.DISCOUNT = (int)dr["DISCOUNT"];
                             order.TOTALPRICE = (double)dr["TOTALPRICE"];
-                            
 
                             results.Add(order);
                         }
@@ -254,7 +255,7 @@ namespace DAL
             }
             catch (Exception e)
             {
-                throw e;
+                Console.WriteLine(e.Message);
             }
 
             return results;        
@@ -284,11 +285,12 @@ namespace DAL
                             Order order = new Order();
 
                             order.ID_ORDER = (int)dr["ID_ORDER"];
+                            order.ID_CUSTOMER = (int)dr["ID_CUSTOMER"];
                             order.ORDERDATE = (DateTime)dr["ORDERDATE"];
-                            order.DELIVERYTIME = (DateTime)dr["DELIVERYTIME"];
+                            order.ORDERTIME = (DateTime)dr["ORDERTIME"];
                             order.DISCOUNT = (int)dr["DISCOUNT"];
                             order.TOTALPRICE = (double)dr["TOTALPRICE"];
-                            
+
 
                             results.Add(order);
                         }
@@ -297,7 +299,7 @@ namespace DAL
             }
             catch (Exception e)
             {
-                throw e;
+                Console.WriteLine(e.Message);
             }
 
             return results;           
@@ -306,4 +308,3 @@ namespace DAL
 
     }
     }
-}

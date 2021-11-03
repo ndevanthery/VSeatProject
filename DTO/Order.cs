@@ -11,9 +11,11 @@ namespace DTO
 
         public int ID_ORDER { get; set; }
 
+        public int ID_CUSTOMER { get; set; }
+
         public DateTime ORDERDATE { get; set; }
 
-        public DateTime DELIVERYTIME { get; set; }
+        public DateTime ORDERTIME { get; set; }
 
         public int DISCOUNT { get; set; }
 
@@ -24,6 +26,7 @@ namespace DTO
         public override string ToString()
         {
             return "ID ORDER : " + ID_ORDER +
+                    "ID CUSTOMER : " + ID_CUSTOMER +
                    "ORDER DATE : " + ORDERDATE +
                    "DELIVERY TIME : " + DELIVERYTIME +
                    "DISCOUNT : " + DISCOUNT +

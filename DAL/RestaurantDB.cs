@@ -25,13 +25,18 @@ namespace DAL
             {
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
-                    string query = "Insert into RESTAURANT(ID_RESTAURANT,ID_CITY,IDTYPE,NAME,ADRESS,PHONENUMBER) values(@ID_CITY,@IDTYPE,@NAME,@ADRESS,@PHONENUMBER); SELECT SCOPE_IDENTITY()";
+                    string query = "Insert into RESTAURANT(IDTYPE,IDCITY,NAME,ADRESS,PHONENUMBER,USERNAME,PASSWORD) values(@IDTYPE,@IDCITY,@NAME,@ADRESS,@PHONENUMBER,@USERNAME,@PASSWORD); SELECT SCOPE_IDENTITY()";
                     SqlCommand cmd = new SqlCommand(query, cn);
-                    cmd.Parameters.AddWithValue("@ID_CITY", restaurant.ID_CITY);
                     cmd.Parameters.AddWithValue("@IDTYPE", restaurant.IDTYPE);
+
+                    cmd.Parameters.AddWithValue("@IDCITY", restaurant.IDCITY);
                     cmd.Parameters.AddWithValue("@NAME", restaurant.NAME);
                     cmd.Parameters.AddWithValue("@ADRESS", restaurant.ADRESS);
                     cmd.Parameters.AddWithValue("@PHONENUMBER", restaurant.PHONENUMBER);
+                    cmd.Parameters.AddWithValue("@USERNAME", restaurant.USERNAME);
+                    cmd.Parameters.AddWithValue("@ID_CITY", restaurant.PASSWORD);
+
+
 
                     cn.Open();
 
@@ -40,7 +45,7 @@ namespace DAL
             }
             catch (Exception e)
             {
-                throw e;
+                Console.WriteLine(e.Message);
             }
 
             return restaurant;
@@ -69,11 +74,13 @@ namespace DAL
 
                         restaurant = new Restaurant();
                         restaurant.ID_RESTAURANT = (int)dr["ID_RESTAURANT"];
-                        restaurant.ID_CITY = (int)dr["ID_CITY"];
+                        restaurant.IDCITY = (int)dr["IDCITY"];
                         restaurant.IDTYPE = (int)dr["IDTYPE"];
                         restaurant.NAME = (string)dr["NAME"];
                         restaurant.ADRESS = (string)dr["ADRESS"];
                         restaurant.PHONENUMBER = (string)dr["PHONENUMBER"];
+                        restaurant.USERNAME = (string)dr["USERNAME"];
+                        restaurant.PASSWORD = (string)dr["PASSWORD"];
 
 
 
@@ -82,7 +89,7 @@ namespace DAL
             }
             catch (Exception e)
             {
-                throw e;
+                Console.WriteLine(e.Message);
             }
 
             return restaurant;
@@ -97,7 +104,7 @@ namespace DAL
             {
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
-                    string query = "Select * from RESTAURANT WHERE ID_CITY = @idCity";
+                    string query = "Select * from RESTAURANT WHERE IDCITY = @idCity";
                     SqlCommand cmd = new SqlCommand(query, cn);
                     cmd.Parameters.AddWithValue("@idCity", id_city);
 
@@ -113,11 +120,13 @@ namespace DAL
                             Restaurant restaurant = new Restaurant();
 
                             restaurant.ID_RESTAURANT = (int)dr["ID_RESTAURANT"];
-                            restaurant.ID_CITY = (int)dr["ID_CITY"];
+                            restaurant.IDCITY = (int)dr["IDCITY"];
                             restaurant.IDTYPE = (int)dr["IDTYPE"];
                             restaurant.NAME = (string)dr["NAME"];
                             restaurant.ADRESS = (string)dr["ADRESS"];
                             restaurant.PHONENUMBER = (string)dr["PHONENUMBER"];
+                            restaurant.USERNAME = (string)dr["USERNAME"];
+                            restaurant.PASSWORD = (string)dr["PASSWORD"];
 
                             results.Add(restaurant);
                         }
@@ -126,7 +135,7 @@ namespace DAL
             }
             catch (Exception e)
             {
-                throw e;
+                Console.WriteLine(e.Message);
             }
 
             return results;        }
@@ -156,11 +165,13 @@ namespace DAL
                             Restaurant restaurant = new Restaurant();
 
                             restaurant.ID_RESTAURANT = (int)dr["ID_RESTAURANT"];
-                            restaurant.ID_CITY = (int)dr["ID_CITY"];
+                            restaurant.IDCITY = (int)dr["IDCITY"];
                             restaurant.IDTYPE = (int)dr["IDTYPE"];
                             restaurant.NAME = (string)dr["NAME"];
                             restaurant.ADRESS = (string)dr["ADRESS"];
                             restaurant.PHONENUMBER = (string)dr["PHONENUMBER"];
+                            restaurant.USERNAME = (string)dr["USERNAME"];
+                            restaurant.PASSWORD = (string)dr["PASSWORD"];
 
                             results.Add(restaurant);
                         }
@@ -169,7 +180,7 @@ namespace DAL
             }
             catch (Exception e)
             {
-                throw e;
+                Console.WriteLine(e.Message);
             }
 
             return results;
@@ -200,11 +211,13 @@ namespace DAL
                             Restaurant restaurant = new Restaurant();
 
                             restaurant.ID_RESTAURANT = (int)dr["ID_RESTAURANT"];
-                            restaurant.ID_CITY = (int)dr["ID_CITY"];
+                            restaurant.IDCITY = (int)dr["IDCITY"];
                             restaurant.IDTYPE = (int)dr["IDTYPE"];
                             restaurant.NAME = (string)dr["NAME"];
                             restaurant.ADRESS = (string)dr["ADRESS"];
                             restaurant.PHONENUMBER = (string)dr["PHONENUMBER"];
+                            restaurant.USERNAME = (string)dr["USERNAME"];
+                            restaurant.PASSWORD = (string)dr["PASSWORD"];
 
                             results.Add(restaurant);
                         }
@@ -213,7 +226,7 @@ namespace DAL
             }
             catch (Exception e)
             {
-                throw e;
+                Console.WriteLine(e.Message);
             }
 
             return results;

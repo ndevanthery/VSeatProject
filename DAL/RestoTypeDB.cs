@@ -27,7 +27,7 @@ namespace DAL
             {
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
-                    string query = "Insert into RESTOTYPE(ID_TYPE, TYPENAME) values(@Typename); SELECT SCOPE_IDENTITY()";
+                    string query = "Insert into RESTOTYPE(TYPENAME) values(@Typename); SELECT SCOPE_IDENTITY()";
                     SqlCommand cmd = new SqlCommand(query, cn);
                     cmd.Parameters.AddWithValue("@Typename", restoType.TYPENAME);
 
@@ -38,7 +38,7 @@ namespace DAL
             }
             catch (Exception e)
             {
-                throw e;
+                Console.WriteLine(e.Message);
             }
 
             return restoType;
@@ -75,7 +75,7 @@ namespace DAL
             }
             catch (Exception e)
             {
-                throw e;
+                Console.WriteLine(e.Message);
             }
 
             return restoType;
@@ -114,7 +114,7 @@ namespace DAL
             }
             catch (Exception e)
             {
-                throw e;
+                Console.WriteLine(e.Message);
             }
 
             return restoType;
@@ -155,7 +155,7 @@ namespace DAL
             }
             catch (Exception e)
             {
-                throw e;
+                Console.WriteLine(e.Message);
             }
 
             return results;

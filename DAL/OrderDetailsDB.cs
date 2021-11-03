@@ -41,7 +41,7 @@ namespace DAL
             return orderDetails;
         }
 
-        public OrderDetails GetOrderDetails(int orderId)
+        public OrderDetails GetOrderDetail(int orderId)
         {
             OrderDetails orderDetails = null;
             string connectionString = Configuration.GetConnectionString("DefaultConnection");
@@ -116,8 +116,8 @@ namespace DAL
 
             return results;
         }
-    
-        public List<OrderDetails> GetOrderDetails(int id_dish)
+
+        List<OrderDetails> IOrderDetailsDB.GetOrderDetails(int id_dish)
         {
             throw new NotImplementedException();
         }

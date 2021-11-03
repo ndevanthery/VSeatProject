@@ -11,12 +11,23 @@ namespace DAL
 {
     public class CustomerDB : ICustomerDB
     {
+
+        //configuration
         private IConfiguration Configuration { get; }
 
         public CustomerDB(IConfiguration conf)
         {
             Configuration = conf;
         }
+
+
+
+
+
+
+        //---------------------------------------------------
+        // ADD METHODS
+        //---------------------------------------------------
 
         public Customer addCustomer(Customer customer)
         {
@@ -26,15 +37,17 @@ namespace DAL
             {
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
-                    string query = "Insert into CUSTOMER(ID_CUSTOMER,ID_CITY,NAME,SURNAME,ADRESS,POSTALCODE,PHONENUMBER,PASSWORD) values(ID_CITY,NAME,SURNAME,ADRESS,POSTALCODE,PHONENUMBER,PASSWORD); SELECT SCOPE_IDENTITY()";
+                    string query = "Insert into CUSTOMER(IDCITY,NAME,FIRSTNAME,LASTNAME,ADRESS,PHONENUMBER,USERNAME,PASSWORD,EMAIL) values(@IDCITY,@NAME,@FIRSTNAME,@LASTNAME,@ADRESS,@PHONENUMBER,@USERNAME,@PASSWORD,@EMAIL); SELECT SCOPE_IDENTITY()";
                     SqlCommand cmd = new SqlCommand(query, cn);
-                    cmd.Parameters.AddWithValue("@ID_CITY", customer.ID_CITY);
-                    cmd.Parameters.AddWithValue("@NAME", customer.NAME);
-                    cmd.Parameters.AddWithValue("@SURNAME", customer.SURNAME);
+                    cmd.Parameters.AddWithValue("@ID_CITY", customer.IDCITY);
+                    cmd.Parameters.AddWithValue("@NAME", customer.FIRSTNAME);
+                    cmd.Parameters.AddWithValue("@SURNAME", customer.LASTNAME);
                     cmd.Parameters.AddWithValue("@ADRESS", customer.ADRESS);
-                    cmd.Parameters.AddWithValue("@POSTALCODE", customer.POSTALCODE);
                     cmd.Parameters.AddWithValue("@PHONENUMBER", customer.PHONENUMBER);
+                    cmd.Parameters.AddWithValue("@USERNAME", customer.USERNAME);
                     cmd.Parameters.AddWithValue("@PASSWORD", customer.PASSWORD);
+                    cmd.Parameters.AddWithValue("@EMAIL", customer.EMAIL);
+
 
                     cn.Open();
 
@@ -43,14 +56,38 @@ namespace DAL
             }
             catch (Exception e)
             {
-                throw e;
+                Console.WriteLine(e.Message);
             }
 
             return customer;
 
         }
 
-        public Customer GetCustomerByName(string name, string surname)
+
+
+
+        //---------------------------------------------------
+        // GET by Lists METHODS
+        //---------------------------------------------------
+
+
+        public List<Customer> GetCustomers()
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Customer> GetCustomers(int id_city)
+        {
+            throw new NotImplementedException();
+        }
+
+
+
+        //---------------------------------------------------
+        // GET by one METHODS
+        //---------------------------------------------------
+
+        public Customer GetCustomerByName(string firstname, string lastname)
         {
             Customer customer = null;
             string connectionString = Configuration.GetConnectionString("DefaultConnection");
@@ -59,10 +96,10 @@ namespace DAL
             {
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
-                    string query = "Select * from CUSTOMER WHERE NAME = @name AND SURNAME=@surname";
+                    string query = "Select * from CUSTOMER WHERE FIRSTNAME = @firstname AND LASTNAME=@lastname";
                     SqlCommand cmd = new SqlCommand(query, cn);
-                    cmd.Parameters.AddWithValue("@name", name);
-                    cmd.Parameters.AddWithValue("@surname", surname);
+                    cmd.Parameters.AddWithValue("@firstname", firstname);
+                    cmd.Parameters.AddWithValue("@lastname", lastname);
 
 
                     cn.Open();
@@ -72,14 +109,16 @@ namespace DAL
 
                         customer = new Customer();
                         customer.ID_CUSTOMER = (int)dr["ID_CUSTOMER"];
-                        customer.ID_CITY = (int)dr["ID_CITY"];
-                        customer.NAME = (string)dr["NAME"];
-                        customer.SURNAME = (string)dr["SURNAME"];
+                        customer.IDCITY = (int)dr["IDCITY"];
+                        customer.FIRSTNAME = (string)dr["NAME"];
+                        customer.LASTNAME = (string)dr["SURNAME"];
                         customer.ADRESS = (string)dr["ADRESS"];
-                        customer.POSTALCODE = (string)dr["POSTALCODE"];
                         customer.PHONENUMBER = (string)dr["PHONENUMBER"];
+                        customer.USERNAME = (string)dr["USERNAME"];
                         customer.PASSWORD = (string)dr["PASSWORD"];
-                       
+                        customer.EMAIL  = (string)dr["EMAIL"];
+
+
 
 
                     }
@@ -87,27 +126,20 @@ namespace DAL
             }
             catch (Exception e)
             {
-                throw e;
+                Console.WriteLine(e.Message);
             }
 
             return customer;
         }
 
-        public List<Customer> GetCustomers()
-        {
-            throw new NotImplementedException();
-        }
-    
        public Customer GetCustomerByEmail(string email)
        {
             throw new NotImplementedException();
        }
 
-        public List<Customer> GetCustomers(int id_city)
-        {
-            throw new NotImplementedException();
-        }
-    
+
+
+       
     
     }
 }

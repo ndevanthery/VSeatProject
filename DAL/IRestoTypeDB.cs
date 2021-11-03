@@ -10,14 +10,25 @@ namespace DAL
     public interface IRestoTypeDB
     {
 
+
+        //add RestoType
+
+        public RestoType addRestoType(RestoType restoType);
+
+        //get Lists
+
         public List<RestoType> GetRestoTypes();
+
+
+
+        //get RestoType
+        public RestoType GetRestoType(int idType);
 
         public RestoType GetRestoType(string typeName);
 
-        public RestoType GetRestoType(int idType);
 
-        public RestoType addRestoType(RestoType restoType);
 
 
     }
 }
+
