@@ -32,14 +32,14 @@ namespace BLL
 
         public List<Restaurant> GetRestaurantsByType(int id_type)
         {
-           return restaurantDB.GetRestaurantsByType(int id_type);
+           return restaurantDB.GetRestaurantsByType(id_type);
 
         }
 
 
-        public Restaurant GetRestaurant(string name, string adress)
+        public Restaurant GetRestaurant(int idRestaurant)
         {
-            return restaurantDB.GetRestaurant(name, adress);
+            return restaurantDB.GetRestaurant(idRestaurant);
         }
 
         public Restaurant addRestaurant(Restaurant restaurant)

@@ -299,5 +299,15 @@ namespace DAL
 
             return results;        
         }
+
+        public Staff getStaff(int idStaff)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Staff UpdateStaff(int idStaff, Staff newStaff)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
