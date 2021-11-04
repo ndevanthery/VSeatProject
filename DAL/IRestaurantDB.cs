@@ -26,8 +26,6 @@ namespace DAL
 
         //get Restaurant
 
-        public Restaurant GetRestaurant(string name , string adress);
-
         public Restaurant GetRestaurant(int idRestaurant);
 
 

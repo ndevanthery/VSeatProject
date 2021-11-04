@@ -24,8 +24,6 @@ namespace DAL
         //get RestoType
         public RestoType GetRestoType(int idType);
 
-        public RestoType GetRestoType(string typeName);
-
 
         //update RestoType
 

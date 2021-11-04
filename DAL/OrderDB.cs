@@ -11,6 +11,9 @@ namespace DAL
 {
    public  class OrderDB : IOrderDB
     {
+        //---------------------------------------------------
+        // CONFIGURATION
+        //---------------------------------------------------
 
         private IConfiguration Configuration { get; }
 
@@ -18,6 +21,12 @@ namespace DAL
         {
             Configuration = conf;
         }
+
+        //---------------------------------------------------
+        // ADD METHOD
+        //---------------------------------------------------
+
+
         public Order addOrder(Order order)
         {
             string connectionString = Configuration.GetConnectionString("DefaultConnection");
@@ -47,6 +56,19 @@ namespace DAL
 
         }
 
+
+        //---------------------------------------------------
+        // GET lists METHODS
+        //---------------------------------------------------
+
+
+
+
+
+        //---------------------------------------------------
+        // GET ONE METHODS
+        //---------------------------------------------------
+
         public Order GetOrder(int orderID)
         {
             Order order = null;
@@ -59,7 +81,7 @@ namespace DAL
                     string query = "Select * from ORDER WHERE ID_ORDER= @ID_ORDER";
                     SqlCommand cmd = new SqlCommand(query, cn);
                     cmd.Parameters.AddWithValue("@ID_ORDER", orderID);
-                    
+
 
 
                     cn.Open();
@@ -85,6 +107,22 @@ namespace DAL
 
             return order;
         }
+
+
+
+        //---------------------------------------------------
+        // UPDATE METHOD
+        //---------------------------------------------------
+
+
+
+
+        //---------------------------------------------------
+        // DELETE METHOD
+        //---------------------------------------------------
+
+
+
 
         public List<Order> GetOrders()
         {

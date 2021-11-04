@@ -24,10 +24,6 @@ namespace DAL
 
         //get Staff
 
-        public Staff GetStaff(string username);
-
-        public Staff GetStaff(string name, string surname);
-
         public Staff getStaff(int idStaff);
 
 

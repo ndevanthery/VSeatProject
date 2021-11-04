@@ -26,10 +26,6 @@ namespace DAL
 
         //get Customers
 
-        public Customer GetCustomerByName(string name, string surname);
-
-        public Customer GetCustomerByEmail(string email);
-
         public Customer GetCustomer(int idCustomer);
 
 
