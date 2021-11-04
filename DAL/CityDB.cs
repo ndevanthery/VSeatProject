@@ -203,8 +203,41 @@ namespace DAL
         }
 
         public City UpdateCity(int idCityToChange, City newCity)
-        {
-            throw new NotImplementedException();
+         {
+            City city = null;
+            string connectionString = Configuration.GetConnectionString("DefaultConnection");
+
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(connectionString))
+                {
+                    string query = "UPDATE CITY SET IDCITY = @IDCITY , CITYNAME= @CITYNAME , NPA = @NPA WHERE IDCITY = @IDcityOld";
+                    SqlCommand cmd = new SqlCommand(query, cn);
+                    cmd.Parameters.AddWithValue("@IDCITY", newCity.ID_CUSTOMER);
+                    cmd.Parameters.AddWithValue("@CITYNAME", newCity.ORDERDATE);
+                    cmd.Parameters.AddWithValue("@NPA", newCity.ORDERTIME);
+
+                    cmd.Parameters.AddWithValue("@IDcityOld", idCityToChange);
+
+                    cn.Open();
+
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+
+                        city = new City();
+                        city.IDCITY = (int)dr["IDCITY"];
+                        city.CITYNAME = (string)dr["CITYNAME"];
+                        city.NPA = (int)dr["NPA"];
+
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+
+            return city;
         }
 
         public City DeleteCity(int idCity)
@@ -219,7 +252,6 @@ namespace DAL
                     string query = "DELETE FROM CITY WHERE IDCITY = @idcity";
                     SqlCommand cmd = new SqlCommand(query, cn);
                     cmd.Parameters.AddWithValue("@idcity", idCity);
-
 
                     cn.Open();
 
