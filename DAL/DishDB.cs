@@ -137,9 +137,7 @@ namespace DAL
 
                             dish.NAME = (string)dr["NAME"];
 
-                            dish.COST_PRICE = (double)dr["COST_PRICE"];
-
-                            dish.SELL_PRICE = (double)dr["SELL_PRICE"];
+                            dish.PRICE = (double)dr["PRICE"];
 
                             results.Add(dish);
                         }
@@ -186,9 +184,7 @@ namespace DAL
 
                             dish.NAME = (string)dr["NAME"];
 
-                            dish.COST_PRICE = (double)dr["COST_PRICE"];
-
-                            dish.SELL_PRICE = (double)dr["SELL_PRICE"];
+                            dish.PRICE = (double)dr["PRICE"];
 
                             results.Add(dish);
                         }
@@ -231,7 +227,6 @@ namespace DAL
 
                         dish = new Dish();
 
-
                         dish.ID_DISH = (int)dr["ID_DISH"];
 
                         dish.ID_RESTAURANT = (int)dr["ID_RESTAURANT"];
@@ -241,8 +236,6 @@ namespace DAL
                         dish.NAME = (string)dr["NAME"];
 
                         dish.PRICE = (double)dr["PRICE"];
-
-
 
                     }
                 }
@@ -255,7 +248,56 @@ namespace DAL
             return dish;
         }
 
-        
+        public Dish getDish(int idDish)
+        {
+            Dish dish = null;
+            string connectionString = Configuration.GetConnectionString("DefaultConnection");
 
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(connectionString))
+                {
+                    string query = "Select * from DISH WHERE ID_DISH = @Id_dish";
+                    SqlCommand cmd = new SqlCommand(query, cn);
+                    cmd.Parameters.AddWithValue("@Id_dish", idDish);
+
+
+                    cn.Open();
+
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+
+                        dish = new Dish();
+
+                        dish.ID_DISH = (int)dr["ID_DISH"];
+
+                        dish.ID_RESTAURANT = (int)dr["ID_RESTAURANT"];
+
+                        dish.IMAGE = (ImageFormat)dr["IMAGE"];
+
+                        dish.NAME = (string)dr["NAME"];
+
+                        dish.PRICE = (double)dr["PRICE"];
+
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+
+            return dish;
+        }
+
+        public Dish UpdateDish(int idDish, Dish newDish)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Dish DeleteDish(int idDish)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -161,5 +161,42 @@ namespace DAL
             return results;
 
         }
+
+        public RestoType UpdateRestoType(int idType, RestoType newRestoType)
+        {
+            throw new NotImplementedException();
+        }
+
+        public RestoType DeleteRestotype(int idType)
+        {
+            RestoType restoType = null;
+            string connectionString = Configuration.GetConnectionString("DefaultConnection");
+
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(connectionString))
+                {
+                    string query = "DELETE FROM RESTOTYPE WHERE IDCITY = @idType";
+                    SqlCommand cmd = new SqlCommand(query, cn);
+                    cmd.Parameters.AddWithValue("@idType", idType);
+
+
+                    cn.Open();
+
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        restoType = new RestoType();
+                        restoType.IDTYPE = (int)dr["IDTYPE"];
+                        restoType.TYPENAME = (string)dr["TYPENAME"];
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+
+            return restoType;
+        }
     }
 }
