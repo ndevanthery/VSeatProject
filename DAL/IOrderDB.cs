@@ -33,5 +33,14 @@ namespace DAL
         public Order GetOrder(int orderID);
 
 
+        //update Order
+
+        public Order UpdateOrder(int idOrder, Order newOrder);
+
+        //delete Order
+
+        public Order DeleteOrder(int idOrder);
+
+
     }
 }

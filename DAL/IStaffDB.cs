@@ -31,5 +31,14 @@ namespace DAL
         public Staff getStaff(int idStaff);
 
 
+        //update Staff
+
+        public Staff UpdateStaff(int idStaff, Staff newStaff);
+
+        //delete Staff
+
+        public Staff DeleteStaff(int idStaff);
+
+
     }
 }

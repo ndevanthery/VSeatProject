@@ -24,6 +24,17 @@ namespace DAL
 
         public City GetCity(int idCity);
 
+
+        //update City
+
+        public City UpdateCity(int idCityToChange, City newCity);
+
+
+        //delete city
+
+        public City DeleteCity(int idCity);
+
+
        
     }
 }

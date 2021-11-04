@@ -30,11 +30,18 @@ namespace DAL
 
         public Customer GetCustomerByEmail(string email);
 
-
-
-        public Customer updateCustomer(int id_customer);
-      
         public Customer GetCustomer(int idCustomer);
+
+
+
+        //update customer
+        public Customer updateCustomer(int id_customer , Customer newCustomer);
+
+
+
+        //delete customer
+
+        public Customer deleteCustomer(int id_customer);
 
 
     }

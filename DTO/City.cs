@@ -16,7 +16,7 @@ namespace DTO
 
         public override string ToString()
         {
-            return "ID_CITY : " + ID_CITY +
+            return "ID_CITY : " + IDCITY +
                     "CityName : " + CITYNAME +
                     "NPA : " + NPA;
         }

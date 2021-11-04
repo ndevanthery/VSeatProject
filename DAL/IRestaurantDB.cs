@@ -32,5 +32,16 @@ namespace DAL
 
 
 
+        //update Restaurant
+
+        public Restaurant UpdateRestaurant(int idRestaurant, Restaurant newRestaurant);
+
+
+        //delete Restaurant
+
+        public Restaurant DeleteRestaurant(int idRestaurant);
+
+
+
     }
 }

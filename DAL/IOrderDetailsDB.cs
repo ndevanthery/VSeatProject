@@ -27,6 +27,11 @@ namespace DAL
 
         public OrderDetails GetOrderDetail(int orderId);
 
+
+
+        //delete OrderDetails
+
+        public OrderDetails DeleteOrderDetails(int orderId, int id_dish);
       
 
 

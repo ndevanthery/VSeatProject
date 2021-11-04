@@ -25,5 +25,15 @@ namespace DAL
         public Dish GetDish(string name);
 
 
+        //update Dish
+
+        public Dish UpdateDish(int idDish, Dish newDish);
+
+
+        //delete Dish
+
+        public Dish DeleteDish(int idDish);
+
+
     }
 }

@@ -28,7 +28,7 @@ namespace DTO
             return "ID ORDER : " + ID_ORDER +
                     "ID CUSTOMER : " + ID_CUSTOMER +
                    "ORDER DATE : " + ORDERDATE +
-                   "DELIVERY TIME : " + DELIVERYTIME +
+                   "ORDER TIME : " + ORDERTIME +
                    "DISCOUNT : " + DISCOUNT +
                    "TOTAL PRICE : " + TOTALPRICE;
         }
