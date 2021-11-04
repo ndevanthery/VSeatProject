@@ -9,10 +9,16 @@ namespace DAL
 {
     public interface ICityDB
     {
+        //add City
+        public City AddCity(City city);
 
+
+
+        //get Lists
         public List<City> GetCities();
 
-        public City AddCity(City city);
+
+        //get City
 
         public City GetCity(string cityName);
 

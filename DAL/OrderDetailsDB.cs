@@ -41,7 +41,7 @@ namespace DAL
             return orderDetails;
         }
 
-        public OrderDetails GetOrderDetailsWithOrderId(int orderId)
+        public OrderDetails GetOrderDetail(int orderId)
         {
             OrderDetails orderDetails = null;
             string connectionString = Configuration.GetConnectionString("DefaultConnection");
@@ -116,8 +116,10 @@ namespace DAL
 
             return results;
         }
+
     
         public List<OrderDetails> GetOrderDetailsWithIdDish(int id_dish)
+
         {
             List<OrderDetails> results = null;
             string connectionString = Configuration.GetConnectionString("DefaultConnection");

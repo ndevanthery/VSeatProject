@@ -9,14 +9,21 @@ namespace DAL
 {
     public interface IDishDB
     {
+        //add Dish
+
+        public Dish addDish(Dish dish);
+
+        //get Lists
         public List<Dish> GetDishes();
 
         public List<Dish> GetDishes(int idRestaurant);
-        //"Dishes" to "Dish"
+
         public List<Dish> GetDishesUnderPrice(int maxPrice);
+
+        //get Dish
 
         public Dish GetDish(string name);
 
-        public Dish addDish(Dish dish);
+
     }
 }

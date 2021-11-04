@@ -17,9 +17,8 @@ namespace DTO
 
         public string NAME { get; set; }
 
-        public double COST_PRICE { get; set; }
+        public double PRICE { get; set; }
 
-        public double SELL_PRICE { get; set; }
 
 
         public override string ToString()
@@ -27,8 +26,7 @@ namespace DTO
             return "ID DISH : " + ID_DISH +
                    "ID RESTAURANT : " + ID_RESTAURANT +
                    "NAME : " + NAME +
-                   "COST PRICE : " + COST_PRICE +
-                   "SELL PRICE : " + SELL_PRICE;
+                   "COST PRICE : " + COST_PRICE;
         }
     }
 }

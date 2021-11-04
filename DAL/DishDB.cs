@@ -12,12 +12,51 @@ namespace DAL
 {
     public class DishDB : IDishDB
     {
+
+        //configuration
         private IConfiguration Configuration { get; }
 
         public DishDB(IConfiguration conf)
         {
             Configuration = conf;
         }
+
+        //---------------------------------------------------
+        // ADD METHODS
+        //---------------------------------------------------
+
+        public Dish addDish(Dish dish)
+        {
+            string connectionString = Configuration.GetConnectionString("DefaultConnection");
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(connectionString))
+                {
+                    string query = "Insert into DISH(ID_RESTAURANT,IMAGE,NAME,PRICE) values(@ID_RESTAURANT,@IMAGE,@NAME,PRICE); SELECT SCOPE_IDENTITY()";
+                    SqlCommand cmd = new SqlCommand(query, cn);
+                    cmd.Parameters.AddWithValue("@ID_RESTAURANT", dish.ID_RESTAURANT);
+                    cmd.Parameters.AddWithValue("@IMAGE", dish.IMAGE);
+                    cmd.Parameters.AddWithValue("@NAME", dish.NAME);
+                    cmd.Parameters.AddWithValue("@PRICE", dish.PRICE);
+
+                    cn.Open();
+
+                    dish.ID_DISH = Convert.ToInt32(cmd.ExecuteScalar());
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+
+            return dish;
+        }
+
+
+        //---------------------------------------------------
+        // GET by Lists METHODS
+        //---------------------------------------------------
+
 
         public List<Dish> GetDishes()
         {
@@ -50,9 +89,7 @@ namespace DAL
 
                             dish.NAME = (string)dr["NAME"];
 
-                            dish.COST_PRICE = (double)dr["COST_PRICE"];
-
-                            dish.SELL_PRICE = (double)dr["SELL_PRICE"];
+                            dish.PRICE = (double)dr["PRICE"];
 
                             results.Add(dish);
                         }
@@ -61,7 +98,7 @@ namespace DAL
             }
             catch (Exception e)
             {
-                throw e;
+                Console.WriteLine(e.Message);
             }
 
             return results;
@@ -166,6 +203,13 @@ namespace DAL
             return results;
         }
 
+
+
+
+        //---------------------------------------------------
+        // GET one METHODS
+        //---------------------------------------------------
+
         public Dish GetDish(string name)
         {
             Dish dish = null;
@@ -196,9 +240,8 @@ namespace DAL
 
                         dish.NAME = (string)dr["NAME"];
 
-                        dish.COST_PRICE = (double)dr["COST_PRICE"];
+                        dish.PRICE = (double)dr["PRICE"];
 
-                        dish.SELL_PRICE = (double)dr["SELL_PRICE"];
 
 
                     }
@@ -206,40 +249,13 @@ namespace DAL
             }
             catch (Exception e)
             {
-                throw e;
+                Console.WriteLine(e.Message);
             }
 
             return dish;
         }
 
-        public Dish addDish(Dish dish)
-        {
-            string connectionString = Configuration.GetConnectionString("DefaultConnection");
-            try
-            {
-                using (SqlConnection cn = new SqlConnection(connectionString))
-                {
-                    string query = "Insert into DISH(ID_DISH,ID_RESTAURANT,IMAGE,NAME,COST_PRICE,SELL_PRICE) values(@ID_RESTAURANT,@IMAGE,@NAME,@COST_PRICE,@SELL_PRICE); SELECT SCOPE_IDENTITY()";
-                    SqlCommand cmd = new SqlCommand(query, cn);
-                    cmd.Parameters.AddWithValue("@ID_RESTAURANT", dish.ID_RESTAURANT);
-                    cmd.Parameters.AddWithValue("@IMAGE", dish.IMAGE);
-                    cmd.Parameters.AddWithValue("@NAME", dish.NAME);
-                    cmd.Parameters.AddWithValue("@COST_PRICE", dish.COST_PRICE);
-                    cmd.Parameters.AddWithValue("@SELL_PRICE", dish.SELL_PRICE);
-
-                    cn.Open();
-
-                    dish.ID_DISH = Convert.ToInt32(cmd.ExecuteScalar());
-                }
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
-
-            return dish;
-        }
-    
         
+
     }
 }

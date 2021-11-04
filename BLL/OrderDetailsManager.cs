@@ -26,7 +26,7 @@ namespace BLL
 
         public OrderDetails GetOrderDetails(int orderId)
         {
-            return orderDetailsDB.GetOrderDetails(orderId);
+            return orderDetailsDB.GetOrderDetail(orderId);
         }
 
         public OrderDetails addOrderDetails(OrderDetails orderDetails)

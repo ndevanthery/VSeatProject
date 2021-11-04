@@ -10,30 +10,32 @@ namespace DTO
     {
         public int ID_CUSTOMER { get; set; }
 
-        public int ID_CITY { get; set; }
+        public int IDCITY { get; set; }
 
-        public string NAME { get; set; }
+        public string FIRSTNAME { get; set; }
 
-        public string SURNAME { get; set; }
+        public string LASTNAME { get; set; }
 
         public string ADRESS { get; set; }
 
-        public string POSTALCODE { get; set; }
-
         public string PHONENUMBER { get; set; }
+
+        public string USERNAME { get; set; }
 
         public string PASSWORD { get; set; }
 
+        public string EMAIL { get; set; }
         public override string ToString()
         {
             return "ID_CUSTOMER : " + ID_CUSTOMER +
-                    "ID_CITY : " + ID_CITY +
-                    "name : " + NAME +
-                    "surname : " + SURNAME +
-                    "adress : " + ADRESS +
-                    "postal code : " + POSTALCODE +
+                    "IDCITY : " + IDCITY +
+                    "firstname : " + FIRSTNAME +
+                    "LASTNAME : " + LASTNAME +
+                    "ADRESS : " + ADRESS +
                     "phone number : " + PHONENUMBER +
-                    "password : " + PASSWORD;
+                    "USERNAME" + USERNAME+
+                    "password : " + PASSWORD+
+                    "EMAIL : " + EMAIL;
         }
 
     }

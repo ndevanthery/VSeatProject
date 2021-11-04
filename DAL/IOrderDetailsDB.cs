@@ -9,13 +9,26 @@ namespace DAL
 {
     public interface IOrderDetailsDB
     {
-        public List<OrderDetails> GetOrdersDetails();
-
-        public List<OrderDetails> GetOrderDetailsWithIdDish(int id_dish);
-
-        public OrderDetails GetOrderDetailsWithOrderId(int orderId);
+        //add OrderDetails
 
         public OrderDetails addOrderDetails(OrderDetails orderDetails);
+
+
+        //get Lists
+
+
+        public List<OrderDetails> GetOrdersDetails();
+
+        public List<OrderDetails> GetOrderDetailsByDish(int id_dish);
+
+        public List<OrderDetails> GetOrderDetailsByOrder(int orderId);
+
+        // get OrderDetails
+
+        public OrderDetails GetOrderDetail(int orderId);
+
+      
+
 
 
 

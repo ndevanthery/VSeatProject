@@ -12,12 +12,20 @@ namespace DAL
     public class CityDB : ICityDB
     {
 
+
+        //configuration
         private IConfiguration Configuration { get; }
 
         public CityDB(IConfiguration conf)
         {
             Configuration =conf;
         }
+
+
+
+        //---------------------------------------------------
+        // ADD METHODS
+        //---------------------------------------------------
 
         public City AddCity(City city)
         {
@@ -26,23 +34,38 @@ namespace DAL
             {
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
-                    string query = "Insert into CITY(ID_CITY, CITYNAME) values(@cityName); SELECT SCOPE_IDENTITY()";
+                    string query = "Insert into CITY(CITYNAME,NPA) values(@cityName,@npa); SELECT SCOPE_IDENTITY()";
                     SqlCommand cmd = new SqlCommand(query, cn);
                     cmd.Parameters.AddWithValue("@cityName", city.CITYNAME);
+                    cmd.Parameters.AddWithValue("@npa", city.NPA);
 
                     cn.Open();
 
-                    city.ID_CITY = Convert.ToInt32(cmd.ExecuteScalar());
+                    city.IDCITY = Convert.ToInt32(cmd.ExecuteScalar());
                 }
             }
             catch (Exception e)
             {
-                throw e;
+                Console.WriteLine(e.Message);
             }
 
             return city;
 
         }
+
+
+
+
+
+
+
+
+
+
+
+        //---------------------------------------------------
+        // GET by Lists METHODS
+        //---------------------------------------------------
 
         public List<City> GetCities()
         {
@@ -67,9 +90,12 @@ namespace DAL
 
                             City city = new City();
 
-                            city.ID_CITY = (int)dr["ID_CITY"];
+                            city.IDCITY = (int)dr["IDCITY"];
 
                             city.CITYNAME = (string)dr["CITYNAME"];
+
+                            city.NPA = (int)dr["NPA"];
+
 
                             results.Add(city);
                         }
@@ -78,12 +104,21 @@ namespace DAL
             }
             catch (Exception e)
             {
-                throw e;
+                Console.WriteLine(e.Message);
             }
 
             return results;
         }
 
+
+
+
+
+
+
+        //---------------------------------------------------
+        // GET by one METHODS
+        //---------------------------------------------------
 
         public City GetCity(string cityName)
         {
@@ -106,21 +141,25 @@ namespace DAL
 
                         city = new City();
 
-                        city.ID_CITY = (int)dr["ID_CITY"];
+                        city.IDCITY = (int)dr["IDCITY"];
 
                         city.CITYNAME = (string)dr["CITYNAME"];
 
-                        
+                        city.NPA = (int)dr["NPA"];
+
+
+
                     }
                 }
             }
             catch (Exception e)
             {
-                throw e;
+                Console.WriteLine(e.Message);
             }
 
             return city;
         }
+
 
 
 
@@ -133,7 +172,7 @@ namespace DAL
             {
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
-                    string query = "Select * from CITY WHERE ID_CITY = @idCity";
+                    string query = "Select * from CITY WHERE IDCITY = @idCity";
                     SqlCommand cmd = new SqlCommand(query, cn);
                     cmd.Parameters.AddWithValue("@idCity", idCity);
 
@@ -145,9 +184,11 @@ namespace DAL
 
                         city = new City();
 
-                        city.ID_CITY = (int)dr["ID_CITY"];
+                        city.IDCITY = (int)dr["IDCITY"];
 
                         city.CITYNAME = (string)dr["CITYNAME"];
+
+                        city.NPA = (int)dr["NPA"];
 
                         
                     }
@@ -155,7 +196,7 @@ namespace DAL
             }
             catch (Exception e)
             {
-                throw e;
+                Console.WriteLine(e.Message);
             }
 
             return city;

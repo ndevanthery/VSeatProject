@@ -51,7 +51,6 @@ namespace BLL
             return orderDB.GetOrder(orderID);
         }
 
-
         public Order addOrder(Order order)
         {
             return orderDB.addOrder(order);
