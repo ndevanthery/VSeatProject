@@ -15,13 +15,6 @@ namespace DAL
         public Restaurant addRestaurant(Restaurant restaurant);
 
 
-        //get lists
-
-        public List<Restaurant> GetRestaurants();
-
-        public List<Restaurant> GetRestaurantsByCity(int id_city);
-
-        public List<Restaurant> GetRestaurantsByType(int id_type);
 
 
         //get Restaurant
@@ -38,6 +31,15 @@ namespace DAL
         //delete Restaurant
 
         public Restaurant DeleteRestaurant(int idRestaurant);
+
+
+        //get lists
+
+        public List<Restaurant> GetRestaurants();
+
+        public List<Restaurant> GetRestaurantsByCity(int id_city);
+
+        public List<Restaurant> GetRestaurantsByType(int id_type);
 
 
 
