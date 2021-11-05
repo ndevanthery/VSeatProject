@@ -13,7 +13,7 @@ namespace DAL
     {
 
 
-        //configuration
+        //configuration .
         private IConfiguration Configuration { get; }
 
         public CityDB(IConfiguration conf)
