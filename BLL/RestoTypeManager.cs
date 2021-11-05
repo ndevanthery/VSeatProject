@@ -9,7 +9,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace BLL
 {
-    class RestoTypeManager
+    public class RestoTypeManager
     {
         private IRestoTypeDB restoTypeDB { get; }
 
@@ -31,6 +31,16 @@ namespace BLL
         public RestoType addRestoType(RestoType restoType)
         {
             return restoTypeDB.addRestoType(restoType);
+        }
+
+        public RestoType UpdateRestoType(int idType, RestoType newRestoType)
+        {
+            return restoTypeDB.UpdateRestoType(idType, newRestoType);
+        }
+
+        public RestoType DeleteRestoType(int idType)
+        {
+            return restoTypeDB.DeleteRestotype(idType);
         }
 
     }

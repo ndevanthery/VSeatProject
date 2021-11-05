@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -122,8 +123,92 @@ namespace VSeat
 
         public void DishTest()
         {
+            //test Staff
+            Console.WriteLine("==========================================");
+            Console.WriteLine("Test DISH");
+            Console.WriteLine("==========================================");
 
+            DishManager dishManager = new DishManager(Configuration);
+            Dish testDish = new Dish()
+            {
+                ID_RESTAURANT = 1,
+                NAME = "donerbox",
+                PRICE = 10.50
+            };
+
+
+            //add staff in database
+
+            Dish temp = dishManager.addDish(testDish);
+
+            Console.WriteLine("ADD METHOD WORKING");
+
+            testDish.ID_DISH = temp.ID_DISH;
+
+            Console.WriteLine(testDish.ToString());
+
+
+            //see if it is in the list of restaurants
+
+            var dishes = dishManager.GetDishes();
+            foreach (var dish in dishes)
+            {
+                if (dish.ID_DISH == testDish.ID_DISH)
+                {
+                    Console.WriteLine("ADD METHOD WORKING");
+                    Console.WriteLine("GET ALL METHOD WORKING");
+                }
+            }
+
+            // test get restaurant with ID
+            if (dishManager.GetDish(testDish.ID_DISH) != null)
+            {
+                Console.WriteLine("GET WITH ID WORKING");
+            }
+
+            // test get dishes in jetPizza
+            var dishesinJetPizza = dishManager.GetDishes(1);
+            foreach (var dish in dishesinJetPizza)
+            {
+                if (dish.ID_DISH == dish.ID_DISH)
+                {
+                    Console.WriteLine("GET DISH IN RESTAURANT WORKING");
+                }
+            }
+
+            // test update
+            Dish myUpdatedDish = new Dish()
+            {
+                ID_RESTAURANT = 1,
+                NAME = "donerbox",
+                PRICE = 9.20
+            };
+            dishManager.UpdateDish(testDish.ID_DISH, myUpdatedDish);
+
+            // test if it was updated
+            if (dishManager.GetDish(testDish.ID_DISH).PRICE == 9.20)
+            {
+                Console.WriteLine("UPDATE WORKING");
+            }
+
+
+            dishManager.DeleteDish(testDish.ID_DISH);
+            // test if the user is still in the list
+            dishes = dishManager.GetDishes();
+            foreach (var dish in dishes)
+            {
+                if (dish.ID_DISH == testDish.ID_DISH)
+                {
+                    Console.WriteLine("ERROR : THE USER IS STILL THERE");
+                }
+            }
+            Console.WriteLine("DELETE WORKING");
+
+            Console.WriteLine("==========================================");
+            Console.WriteLine("END TEST DISH");
+            Console.WriteLine("==========================================");
         }
+    
 
         public void OrderTest()
         {
@@ -138,18 +223,282 @@ namespace VSeat
 
         public void RestaurantTest()
         {
+            //test Staff
+            Console.WriteLine("==========================================");
+            Console.WriteLine("Test RESTAURANT");
+            Console.WriteLine("==========================================");
 
+            RestaurantManager restaurantManager = new RestaurantManager(Configuration);
+            Restaurant testRestaurant = new Restaurant
+            {
+                IDCITY = 3,
+                IDTYPE = 1,
+                NAME = "le mix",
+                ADRESS = "pl. Centrale 5",
+                PHONENUMBER = "0244715550",
+                USERNAME = "leMix",
+                PASSWORD = "leMix"
+            };
+
+
+            //add staff in database
+
+            Restaurant temp = restaurantManager.AddRestaurant(testRestaurant);
+
+            Console.WriteLine("ADD METHOD WORKING");
+
+            testRestaurant.ID_RESTAURANT = temp.ID_RESTAURANT;
+
+            Console.WriteLine(testRestaurant.ToString());
+
+
+            //see if it is in the list of restaurants
+
+            var restaurants = restaurantManager.GetRestaurants();
+            foreach (var restaurant in restaurants)
+            {
+                if (restaurant.ID_RESTAURANT == testRestaurant.ID_RESTAURANT)
+                {
+                    Console.WriteLine("ADD METHOD WORKING");
+                    Console.WriteLine("GET ALL METHOD WORKING");
+                }
+            }
+
+            // test get restaurant with ID
+            if (restaurantManager.GetRestaurant(testRestaurant.ID_RESTAURANT) != null)
+            {
+                Console.WriteLine("GET WITH ID WORKING");
+            }
+
+            // test get restaurants in city
+            var restaurantsInMonthey = restaurantManager.GetRestaurantsByCity(3);
+            foreach (var restaurant in restaurantsInMonthey)
+            {
+                if (restaurant.ID_RESTAURANT == testRestaurant.ID_RESTAURANT)
+                {
+                    Console.WriteLine("GET RESTAURANT IN RESTAURANT WORKING");
+                }
+            }
+
+            // test get restaurants in city
+            var kebabs = restaurantManager.GetRestaurantsByType(1);
+            foreach (var kebab in kebabs)
+            {
+                if (kebab.ID_RESTAURANT == testRestaurant.ID_RESTAURANT)
+                {
+                    Console.WriteLine("GET RESTAURANT IN RESTAURANT WORKING");
+                }
+            }
+
+            // test update
+            Restaurant myUpdatedRestaurant = new Restaurant
+            {
+                IDCITY = 3,
+                IDTYPE = 1,
+                NAME = "le mix modified",
+                ADRESS = "pl. Centrale 5",
+                PHONENUMBER = "0244715550",
+                USERNAME = "leMix",
+                PASSWORD = "leMix"
+            };
+
+            restaurantManager.UpdateRestaurant(testRestaurant.ID_RESTAURANT, myUpdatedRestaurant);
+
+            // test if it was updated
+            if (restaurantManager.GetRestaurant(testRestaurant.ID_RESTAURANT).NAME == "le mix modified")
+            {
+                Console.WriteLine("UPDATE WORKING");
+            }
+
+
+            restaurantManager.DeleteRestaurant(testRestaurant.ID_RESTAURANT);
+            // test if the user is still in the list
+            restaurants = restaurantManager.GetRestaurants();
+            foreach (var restaurant in restaurants)
+            {
+                if (restaurant.ID_RESTAURANT == testRestaurant.ID_RESTAURANT)
+                {
+                    Console.WriteLine("ERROR : THE USER IS STILL THERE");
+                }
+            }
+            Console.WriteLine("DELETE WORKING");
+
+            Console.WriteLine("==========================================");
+            Console.WriteLine("END TEST RESTAURANT");
+            Console.WriteLine("==========================================");
         }
 
 
         public void RestoTypeTest()
         {
+            //test restoType
+            Console.WriteLine("==========================================");
+            Console.WriteLine("Test RestoType");
+            Console.WriteLine("==========================================");
 
+            RestoTypeManager restoTypeManager = new RestoTypeManager(Configuration);
+            RestoType testRestoType = new RestoType
+            {
+                TYPENAME = "typeTest"
+            };
+
+
+            //add restoType in database
+
+            RestoType temp = restoTypeManager.addRestoType(testRestoType);
+
+            Console.WriteLine("ADD METHOD WORKING");
+
+            testRestoType.IDTYPE = temp.IDTYPE;
+
+            Console.WriteLine(testRestoType.ToString());
+
+
+            //see if it is in the list of restoType
+
+            var restoTypes = restoTypeManager.GetRestoTypes();
+            foreach (var restoType in restoTypes)
+            {
+                if (restoType.IDTYPE == restoType.IDTYPE)
+                {
+                    Console.WriteLine("ADD METHOD WORKING");
+                    Console.WriteLine("GET ALL METHOD WORKING");
+                }
+            }
+
+            // test get restotype with ID
+            if (restoTypeManager.GetRestoType(testRestoType.IDTYPE) != null)
+            {
+                Console.WriteLine("GET WITH ID WORKING");
+            }
+
+            // test update
+            RestoType myUpdatedrRestoType = new RestoType
+            {
+                TYPENAME = "modifiedType"
+            };
+
+            restoTypeManager.UpdateRestoType(testRestoType.IDTYPE, myUpdatedrRestoType);
+
+            // test if it was updated
+            if (restoTypeManager.GetRestoType(testRestoType.IDTYPE).TYPENAME == "modifiedType")
+            {
+                Console.WriteLine("UPDATE WORKING");
+            }
+
+
+            restoTypeManager.DeleteRestoType(testRestoType.IDTYPE);
+            // test if the user is still in the list
+            restoTypes = restoTypeManager.GetRestoTypes();
+            foreach (var restoType in restoTypes)
+            {
+                if (restoType.IDTYPE == testRestoType.IDTYPE)
+                {
+                    Console.WriteLine("ERROR : THE USER IS STILL THERE");
+                }
+            }
+            Console.WriteLine("DELETE WORKING");
+
+            Console.WriteLine("==========================================");
+            Console.WriteLine("END TEST RESTOTYPE");
+            Console.WriteLine("==========================================");
         }
 
         public void StaffTest()
         {
+            //test Staff
+            Console.WriteLine("==========================================");
+            Console.WriteLine("Test STAFF");
+            Console.WriteLine("==========================================");
 
+            StaffManager staffManager = new StaffManager(Configuration);
+            Staff testStaff = new Staff
+            {
+                ID_RESTAURANT = 1,
+                FIRSTNAME = "lily",
+                LASTNAME = "test",
+                ADRESS = "test adress",
+                PHONENUMBER = "12345678",
+                USERNAME = "lilyTest",
+                PASSWORD = "lilyTest"
+            };
+
+
+            //add staff in database
+
+            Staff temp = staffManager.AddStaff(testStaff);
+
+            Console.WriteLine("ADD METHOD WORKING");
+
+            testStaff.ID_STAFF = temp.ID_STAFF;
+
+            Console.WriteLine(testStaff.ToString());
+
+
+            //see if it is in the list of staff
+
+            var staffs = staffManager.GetStaffs();
+            foreach (var staff in staffs)
+            {
+                if (staff.ID_STAFF == testStaff.ID_STAFF)
+                {
+                    Console.WriteLine("ADD METHOD WORKING");
+                    Console.WriteLine("GET ALL METHOD WORKING");
+                }
+            }
+
+            // test get staff with ID
+            if (staffManager.GetStaff(testStaff.ID_STAFF) != null)
+            {
+                Console.WriteLine("GET WITH ID WORKING");
+            }
+
+            // test get staff in restaurant
+            var StaffinJetPizza = staffManager.GetStaffs();
+            foreach (var staff in StaffinJetPizza)
+            {
+                if (staff.ID_STAFF== testStaff.ID_STAFF)
+                {
+                    Console.WriteLine("GET STAFF IN RESTAURANT WORKING");
+                }
+            }
+
+            // test update
+            Staff myUpdatedStaff = new Staff
+            {
+                ID_RESTAURANT = testStaff.ID_RESTAURANT,
+                FIRSTNAME = "totoTest",
+                LASTNAME = testStaff.LASTNAME,
+                ADRESS = testStaff.ADRESS,
+                PHONENUMBER = testStaff.PHONENUMBER,
+                USERNAME = testStaff.USERNAME,
+                PASSWORD = testStaff.PASSWORD
+            };
+
+            staffManager.UpdateStaff(testStaff.ID_STAFF, myUpdatedStaff);
+
+            // test if it was updated
+            if (staffManager.GetStaff(testStaff.ID_STAFF).FIRSTNAME == "totoTest")
+            {
+                Console.WriteLine("UPDATE WORKING");
+            }
+
+
+            staffManager.DeleteStaff(testStaff.ID_STAFF);
+            // test if the user is still in the list
+            staffs = staffManager.GetStaffs();
+            foreach (var staff in staffs)
+            {
+                if (staff.ID_STAFF == testStaff.ID_STAFF)
+                {
+                    Console.WriteLine("ERROR : THE USER IS STILL THERE");
+                }
+            }
+            Console.WriteLine("DELETE WORKING");
+
+            Console.WriteLine("==========================================");
+            Console.WriteLine("END TEST STAFF");
+            Console.WriteLine("==========================================");
         }
 
         //use only once to prevent having multiple times the same town

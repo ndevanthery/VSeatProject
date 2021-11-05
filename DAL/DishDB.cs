@@ -248,7 +248,7 @@ namespace DAL
             return dish;
         }
 
-        public Dish getDish(int idDish)
+        public Dish GetDish(int idDish)
         {
             Dish dish = null;
             string connectionString = Configuration.GetConnectionString("DefaultConnection");

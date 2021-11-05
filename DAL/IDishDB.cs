@@ -22,7 +22,7 @@ namespace DAL
 
         //get Dish
 
-        public Dish getDish(int idDish);
+        public Dish GetDish(int idDish);
 
 
         //update Dish

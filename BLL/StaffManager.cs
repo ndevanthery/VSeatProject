@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace BLL
 { 
-    class StaffManager
+    public class StaffManager
     {
         private IStaffDB staffDB { get; }
 
@@ -18,6 +18,37 @@ namespace BLL
             staffDB = new StaffDB(conf);
         }
 
+
+        // add method
+        public Staff AddStaff(Staff staff)
+        {
+            return staffDB.AddStaff(staff);
+
+        }
+
+
+        // get by one method
+        public Staff GetStaff(int idStaff)
+        {
+            return staffDB.getStaff(idStaff);
+        }
+
+
+        //update method
+        public Staff UpdateStaff(int idStaff,Staff newStaff)
+        {
+            return staffDB.UpdateStaff(idStaff, newStaff);
+        }
+
+        // delete method
+
+        public Staff DeleteStaff(int idStaff)
+        {
+            return staffDB.DeleteStaff(idStaff);
+        }
+
+
+        // get by lists methods
 
         public List<Staff> GetStaffs()
         {
@@ -31,10 +62,6 @@ namespace BLL
 
 
 
-        public Staff AddStaff(Staff staff)
-        {
-            return staffDB.AddStaff(staff);
 
-        }
     }
 }

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace BLL
 {
-    class RestaurantManager
+    public class RestaurantManager
     {
         private IRestaurantDB restaurantDB { get; }
 
@@ -42,10 +42,22 @@ namespace BLL
             return restaurantDB.GetRestaurant(idRestaurant);
         }
 
-        public Restaurant addRestaurant(Restaurant restaurant)
+        public Restaurant AddRestaurant(Restaurant restaurant)
         {
             return restaurantDB.addRestaurant(restaurant);
         }
+
+        public Restaurant UpdateRestaurant(int idRestaurant, Restaurant newRestaurant)
+        {
+            return restaurantDB.UpdateRestaurant(idRestaurant, newRestaurant);
+        }
+
+        public Restaurant DeleteRestaurant(int idRestaurant)
+        {
+            restaurantDB.DeleteRestaurant(idRestaurant);
+
+        }
+
 
     }
 }
