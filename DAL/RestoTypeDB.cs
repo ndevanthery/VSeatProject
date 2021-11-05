@@ -162,9 +162,40 @@ namespace DAL
 
         }
 
-        public RestoType UpdateRestoType(int idType, RestoType newRestoType)
+        public RestoType UpdateRestoType(int idTypeOld, RestoType newRestoType)
         {
-            throw new NotImplementedException();
+            RestoType restoType = null;
+            string connectionString = Configuration.GetConnectionString("DefaultConnection");
+
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(connectionString))
+                {
+                    string query = "UPDATE RESTOTYPE SET IDTYPE = @IDTYPE , TYPENAME= @TYPENAME WHERE IDTYPE = @idTypeOld";
+                    SqlCommand cmd = new SqlCommand(query, cn);
+
+                    cmd.Parameters.AddWithValue("@IDTYPE", newRestoType.IDTYPE);
+                    cmd.Parameters.AddWithValue("@TYPENAME", newRestoType.TYPENAME);
+                    cmd.Parameters.AddWithValue("@idTypeOld", idTypeOld);
+
+                    cn.Open();
+
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+
+                        restoType = new RestoType();
+                        restoType.IDTYPE = (int)dr["IDTYPE"];
+                        restoType.TYPENAME = (string)dr["TYPENAME"];
+
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+
+            return restoType;
         }
 
         public RestoType DeleteRestotype(int idType)
