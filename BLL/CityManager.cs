@@ -32,9 +32,9 @@ namespace BLL
         }
 
 
-        public City GetCity(string cityName)
+        public City GetCity(int idCity)
         {
-            return cityDB.GetCity(cityName);
+            return cityDB.GetCity(idCity);
         }
 
 

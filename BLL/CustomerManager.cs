@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace BLL
 {
-    class CustomerManager
+    public class CustomerManager
     {
         private ICustomerDB customerDB { get; }
 
@@ -18,20 +18,50 @@ namespace BLL
             customerDB = new CustomerDB(conf);
         }
 
-        public List<Customer> GetCustomers()
-        {
-            return customerDB.GetCustomers();
-        }
 
-        public Customer GetCustomer(string name, string surname)
-        {
-            return customerDB.GetCustomerByName(name, surname);
-        }
+        //add method
 
         public Customer addCustomer(Customer customer)
         {
             return customerDB.addCustomer(customer);
         }
+
+        //get one method
+        public Customer GetCustomer(int idCustomer)
+        {
+            return customerDB.GetCustomer(idCustomer);
+        }
+
+
+        //update method
+        public Customer UpdateCustomer(int id_customer , Customer newCustomer)
+        {
+            return customerDB.UpdateCustomer(id_customer, newCustomer);
+        }
+
+
+        //delete method
+        public Customer DeleteCustomer(int id_customer)
+        {
+            return customerDB.DeleteCustomer(id_customer);
+        }
+
+        //get Lists methods
+
+        public List<Customer> GetCustomers()
+        {
+            return customerDB.GetCustomers();
+        }
+
+        public List<Customer> GetCustomers(int id_city)
+        {
+            return customerDB.GetCustomers(id_city);
+        }
+
+
+
+
+
 
 
     }

@@ -40,7 +40,7 @@ namespace DAL
                 {
                     string query = "Insert into CUSTOMER(IDCITY,FIRSTNAME,LASTNAME,ADRESS,PHONENUMBER,USERNAME,PASSWORD,EMAIL) values(@IDCITY,@FIRSTNAME,@LASTNAME,@ADRESS,@PHONENUMBER,@USERNAME,@PASSWORD,@EMAIL); SELECT SCOPE_IDENTITY()";
                     SqlCommand cmd = new SqlCommand(query, cn);
-                    cmd.Parameters.AddWithValue("@ID_CITY", customer.IDCITY);
+                    cmd.Parameters.AddWithValue("@IDCITY", customer.IDCITY);
                     cmd.Parameters.AddWithValue("@FIRSTNAME", customer.FIRSTNAME);
                     cmd.Parameters.AddWithValue("@LASTNAME", customer.LASTNAME);
                     cmd.Parameters.AddWithValue("@ADRESS", customer.ADRESS);
@@ -80,27 +80,31 @@ namespace DAL
             {
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
-                    string query = "Select * from CUSTOMER WHERE ID_CUSTOMER = @id";
+                    string query = "Select * from CUSTOMER where ID_CUSTOMER = @id";
                     SqlCommand cmd = new SqlCommand(query, cn);
                     cmd.Parameters.AddWithValue("@id", idCustomer);
-
+                    
+                    
 
                     cn.Open();
 
                     using (SqlDataReader dr = cmd.ExecuteReader())
                     {
+                        if(dr.Read())
+                        {
+                            customer = new Customer();
+                            customer.ID_CUSTOMER = (int)dr["ID_CUSTOMER"];
+                            customer.IDCITY = (int)dr["IDCITY"];
+                            customer.FIRSTNAME = (string)dr["FIRSTNAME"];
+                            customer.LASTNAME = (string)dr["LASTNAME"];
+                            customer.ADRESS = (string)dr["ADRESS"];
+                            customer.PHONENUMBER = (string)dr["PHONENUMBER"];
+                            customer.USERNAME = (string)dr["USERNAME"];
+                            customer.PASSWORD = (string)dr["PASSWORD"];
 
-                        customer = new Customer();
-                        customer.ID_CUSTOMER = (int)dr["ID_CUSTOMER"];
-                        customer.IDCITY = (int)dr["IDCITY"];
-                        customer.FIRSTNAME = (string)dr["NAME"];
-                        customer.LASTNAME = (string)dr["SURNAME"];
-                        customer.ADRESS = (string)dr["ADRESS"];
-                        customer.PHONENUMBER = (string)dr["PHONENUMBER"];
-                        customer.USERNAME = (string)dr["USERNAME"];
-                        customer.PASSWORD = (string)dr["PASSWORD"];
-
-                        customer.EMAIL = (string)dr["EMAIL"];
+                            customer.EMAIL = (string)dr["EMAIL"];
+                        }
+                        
 
 
                     }
@@ -150,8 +154,8 @@ namespace DAL
                         customer = new Customer();
                         customer.ID_CUSTOMER = (int)dr["ID_CUSTOMER"];
                         customer.IDCITY = (int)dr["IDCITY"];
-                        customer.FIRSTNAME = (string)dr["NAME"];
-                        customer.LASTNAME = (string)dr["SURNAME"];
+                        customer.FIRSTNAME = (string)dr["FIRSTNAME"];
+                        customer.LASTNAME = (string)dr["LASTNAME"];
                         customer.ADRESS = (string)dr["ADRESS"];
                         customer.PHONENUMBER = (string)dr["PHONENUMBER"];
                         customer.USERNAME = (string)dr["USERNAME"];
@@ -175,7 +179,7 @@ namespace DAL
         //---------------------------------------------------
         // DELETE METHOD
         //---------------------------------------------------
-        public Customer deleteCustomer(int id_customer)
+        public Customer DeleteCustomer(int id_customer)
         {
             Customer customer = null;
             string connectionString = Configuration.GetConnectionString("DefaultConnection");
@@ -197,8 +201,8 @@ namespace DAL
                         customer = new Customer();
                         customer.ID_CUSTOMER = (int)dr["ID_CUSTOMER"];
                         customer.IDCITY = (int)dr["IDCITY"];
-                        customer.FIRSTNAME = (string)dr["NAME"];
-                        customer.LASTNAME = (string)dr["SURNAME"];
+                        customer.FIRSTNAME = (string)dr["FIRSTNAME"];
+                        customer.LASTNAME = (string)dr["LASTNAME"];
                         customer.ADRESS = (string)dr["ADRESS"];
                         customer.PHONENUMBER = (string)dr["PHONENUMBER"];
                         customer.USERNAME = (string)dr["USERNAME"];
@@ -249,8 +253,8 @@ namespace DAL
                             customer = new Customer();
                             customer.ID_CUSTOMER = (int)dr["ID_CUSTOMER"];
                             customer.IDCITY = (int)dr["IDCITY"];
-                            customer.FIRSTNAME = (string)dr["NAME"];
-                            customer.LASTNAME = (string)dr["SURNAME"];
+                            customer.FIRSTNAME = (string)dr["FIRSTNAME"];
+                            customer.LASTNAME = (string)dr["LASTNAME"];
                             customer.ADRESS = (string)dr["ADRESS"];
                             customer.PHONENUMBER = (string)dr["PHONENUMBER"];
                             customer.USERNAME = (string)dr["USERNAME"];
@@ -297,8 +301,8 @@ namespace DAL
 
                                 customer.ID_CUSTOMER = (int)dr["ID_CUSTOMER"];
                                 customer.IDCITY = (int)dr["IDCITY"];
-                                customer.FIRSTNAME = (string)dr["NAME"];
-                                customer.LASTNAME = (string)dr["SURNAME"];
+                                customer.FIRSTNAME = (string)dr["FIRSTNAME"];
+                                customer.LASTNAME = (string)dr["LASTNAME"];
                                 customer.ADRESS = (string)dr["ADRESS"];
                                 customer.PHONENUMBER = (string)dr["PHONENUMBER"];
                                 customer.USERNAME = (string)dr["USERNAME"];

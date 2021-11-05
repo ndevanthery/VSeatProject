@@ -29,7 +29,7 @@ namespace DAL
 
         //delete customer
 
-        public Customer deleteCustomer(int id_customer);
+        public Customer DeleteCustomer(int id_customer);
 
 
 

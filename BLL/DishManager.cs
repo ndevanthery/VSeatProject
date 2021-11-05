@@ -16,10 +16,6 @@ namespace BLL
         {
             return dishDB.GetDishes();
         }
-        public Dish GetDish(string name)
-        {
-            return dishDB.GetDish(name);
-        }
 
         public Dish addDish(Dish dish)
         {

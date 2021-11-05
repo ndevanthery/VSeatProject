@@ -23,11 +23,6 @@ namespace BLL
         {
             return restoTypeDB.GetRestoTypes();
         }
-        public RestoType GetRestoType(string typeName)
-        {
-            return restoTypeDB.GetRestoType(typeName);
-        }
-
         public RestoType GetRestoType(int idType)
         {
             return restoTypeDB.GetRestoType(idType);

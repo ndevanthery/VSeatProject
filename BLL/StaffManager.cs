@@ -29,15 +29,6 @@ namespace BLL
             return staffDB.GetStaffs(idRestaurant);
         }
 
-        public Staff GetStaff(string username)
-        {
-            return staffDB.GetStaff(username);
-        }
-
-        public Staff GetStaff(string name, string surname)
-        {
-            return staffDB.GetStaff(name, surname);
-        }
 
 
         public Staff AddStaff(Staff staff)
