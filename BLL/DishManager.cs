@@ -30,6 +30,11 @@ namespace BLL
             return dishDB.GetDishes(idRestaurant);
         }
 
+         public List<Dish> GetDishesUnderPrice(int maxPrice)
+        {
+            return dishDB.GetDishesUnderPrice(maxPrice);
+        }
+
         public Dish addDish(Dish dish)
         {
 
@@ -42,9 +47,15 @@ namespace BLL
 
         }
 
-        public Dish UpdateDish(int idDish, Dish newDish)
+         public Dish GetDish(string name)
         {
-            return dishDB.UpdateDish(idDish, newDish);
+            return dishDB.GetDish(name);
+
+        }
+
+        public Dish UpdateDish(int idDishOld, Dish newDish)
+        {
+            return dishDB.UpdateDish(idDishOld, newDish);
         }
         public Dish DeleteDish(int idDish)
         {

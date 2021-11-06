@@ -159,49 +159,10 @@ namespace DAL
             return results;
         }
 
-        public List<OrderDetails> GetOrderDetailsByDish(int id_dish)
-        {
-            {
-                List<OrderDetails> results = null;
-                string connectionString = Configuration.GetConnectionString("DefaultConnection");
-
-                try
-                {
-                    using (SqlConnection cn = new SqlConnection(connectionString))
-                    {
-                        string query = "Select * from ORDERDETAILS WHERE ID_DISH = @id_dish";
-                        SqlCommand cmd = new SqlCommand(query, cn);
-                        cmd.Parameters.AddWithValue("@id_dish", id_dish);
-
-                        cn.Open();
-
-                        using (SqlDataReader dr = cmd.ExecuteReader())
-                        {
-                            while (dr.Read())
-                            {
-                                if (results == null)
-                                    results = new List<OrderDetails>();
-
-                                OrderDetails orderDetails = new OrderDetails();
-
-                                orderDetails.ID_ORDER = (int)dr["ID_ORDER"];
-                                orderDetails.ID_DISH = (int)dr["ID_DISH"];
-
-                                results.Add(orderDetails);
-                            }
-                        }
-                    }
-                }
-                catch (Exception e)
-                {
-                    throw e;
-                }
-
-                return results;
-            }
+       
 
 
-        }
+        
 
         public List<OrderDetails> GetOrderDetailsByOrder(int orderId)
         {

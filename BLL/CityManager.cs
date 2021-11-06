@@ -19,7 +19,6 @@ namespace BLL
 
         }
 
-
         public List<City> GetCities()
         {
             return cityDB.GetCities();
@@ -35,6 +34,21 @@ namespace BLL
         public City GetCity(int idCity)
         {
             return cityDB.GetCity(idCity);
+        }
+
+         public City GetCity(string cityName)
+        {
+            return cityDB.GetCity(cityName);
+        }
+
+          public City UpdateCity(int idCityToChange, City newCity)
+        {
+            return cityDB.UpdateCity(idCityToChange,newCity);
+        }
+
+           public City DeleteCity(int idCity)
+        {
+            return cityDB.UDeleteCity(idCity);
         }
 
         public Cit

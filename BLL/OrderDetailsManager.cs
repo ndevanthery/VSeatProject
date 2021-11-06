@@ -19,10 +19,22 @@ namespace BLL
 
         }
 
-         public List<OrderDetails> GetOrdersDetails()
+        public List<OrderDetails> GetOrdersDetails()
         {
             return orderDetailsDB.GetOrdersDetails();
         }
+
+        public List<OrderDetails> GetOrderDetailsWithIdDish(int id_dish)
+        {
+            return orderDetailsDB.GetOrderDetailsWithIdDish(id_dish);
+        }
+
+        public List<OrderDetails> GetOrderDetailsByDish(string dishName)
+        {
+            return orderDetailsDB.GetOrderDetailsByDish(dishName);
+        }
+
+
 
         public OrderDetails GetOrderDetails(int orderId)
         {

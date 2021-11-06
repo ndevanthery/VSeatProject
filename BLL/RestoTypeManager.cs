@@ -23,9 +23,16 @@ namespace BLL
         {
             return restoTypeDB.GetRestoTypes();
         }
+
+
         public RestoType GetRestoType(int idType)
         {
             return restoTypeDB.GetRestoType(idType);
+        }
+
+         public RestoType GetRestoType(string typeName)
+        {
+            return restoTypeDB.GetRestoType(typeName);
         }
 
         public RestoType addRestoType(RestoType restoType)
@@ -33,10 +40,12 @@ namespace BLL
             return restoTypeDB.addRestoType(restoType);
         }
 
+
         public RestoType UpdateRestoType(int idType, RestoType newRestoType)
         {
             return restoTypeDB.UpdateRestoType(idType, newRestoType);
         }
+
 
         public RestoType DeleteRestoType(int idType)
         {

@@ -25,7 +25,7 @@ namespace DTO
         {
             return "ID DISH : " + ID_DISH +
                    "ID RESTAURANT : " + ID_RESTAURANT +
-                   "IMAGE" : + IMAGE +
+                   "IMAGE : "  + IMAGE +
                    "NAME : " + NAME +
                    "PRICE : " + PRICE ;
         }
