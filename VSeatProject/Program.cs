@@ -350,14 +350,26 @@ namespace VSeat
                  Console.WriteLine("GetOrder(orderID) METHOD NOT WORKING - TRY ANOTHER ORDER ID");
 
             }
+             Console.WriteLine("==========================================");
+            Console.WriteLine("END TEST ORDER");
+            Console.WriteLine("==========================================");
 
         }
         
-        
-    
+        //TODO
         public void OrderDetailsTest()
         {
+            Console.WriteLine("==========================================");
+            Console.WriteLine("TEST ORDERDETAILS");
+            Console.WriteLine("==========================================");
 
+            OrderDetailsManager orderDetailsManager = new OrderDetailsManager(Configuration);
+
+
+
+            Console.WriteLine("==========================================");
+            Console.WriteLine("END TEST ORDERDETAILS");
+            Console.WriteLine("==========================================");
         }
 
         public void RestaurantTest()

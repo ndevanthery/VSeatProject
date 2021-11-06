@@ -37,7 +37,7 @@ namespace BLL
             return cityDB.GetCity(idCity);
         }
 
-
+        public Cit
 
     }
 }
