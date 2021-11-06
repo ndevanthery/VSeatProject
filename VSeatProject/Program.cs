@@ -209,13 +209,152 @@ namespace VSeat
             Console.WriteLine("==========================================");
         }
     
-
+        
         public void OrderTest()
-        {
+        { 
+            Console.WriteLine("==========================================");
+            Console.WriteLine("Test ORDER");
+            Console.WriteLine("==========================================");
+           
+            //creation of the BLL manager object in order to call the DAL methods
+            //creation of the object "testOrder" that will return all results from the tests
+            OrderManager orderManager = new OrderManager(Configuration)
+            Order testOrder = new Order
+            {
+                 ID_ORDER = 1,
+                ID_CUSTOMER = 1,
+                //YYYY-MM-DD
+                // ATTENTION : remove datetime from table Order since we can add the time on orderDate
+                ORDERDATE = "2021-06-11",
+                //HH:MM:SS
+                ORDERTIME = "19:50:47",
+                //Create a table named "Discounts" that store all available discounts so we can call a discount by his id
+                DISCOUNT = 15,
+                TOTALPRICE = 135.54
+
+            };
+                  
+
+            //testing method addOrder();
+            Order temp = orderManager.addOrder(testOrder);
+            
+           Console.WriteLine("ADD METHOD WORKING");
+            //Why do we have to do this if we know that the objects are the same
+            //why not do a checking 
+
+           // if (testOrder.equals(temp){ 
+           //
+           //     Console.WriteLine("ADD METHOD WORKING");
+           //
+           // }
+            //instead of
+
+            testOrder.ID_ORDER = temp.ID_ORDER;
+
+            Console.WriteLine(testOrder.ToString());
+
+            //Checking if the getOrders() List is working
+            var orders = orderManager.GetOrders();
+            foreach (var order in orders)
+            {
+                if (order.ID_ORDER == testOrder.ID_ORDER)
+                {
+                    Console.WriteLine("ADD METHOD WORKING");
+                    Console.WriteLine("GetOrders() METHOD WORKING");
+                }
+            }
+
+            // Checking if GetOrders(orderDate) is working
+            // date of the "orderTest"
+
+            DateTime testTime = "2021-06-11";
+
+            var orders = orderManager.GetOrders(testTime);
+
+            foreach (var order in orders) { 
+
+                if(order.ID_ORDER != NULL) { 
+            
+                Console.WriteLine(" getOrder(orderDate) METHOD WORKING");
+
+                }else { 
+                    Console.WriteLine(" getOrder(orderDate) METHOD NOT WORKING - TRY ANOTHER ORDER DATE");
+                }
+            }
+            // Checking if GetOrdersByDiscount(discount) is working
+            //discount of the "orderTest"
+            int testDiscount =15;
+
+            var orders = orderManager.GetOrdersByDiscount(testDiscount);
+
+            foreach (var order in orders) { 
+
+                 if(order.DISCOUNT != NULL) { 
+            
+                    Console.WriteLine("GetOrderByDiscount(discount) METHOD WORKING");
+
+                 } else { 
+                    Console.WriteLine(" GetOrderByDiscount(discount) METHOD NOT WORKING - TRY ANOTHER DISCOUNT");
+                
+                 }
+            }
+            //Checking if GetOrdersByMinTotalPrice(totalPrice) is working
+            //totalPrice of the "orderTest"
+            //orderTest.totalPrice = 135.54
+            double testTotalPrice = 150.00;
+
+            var orders = orderManager.GetOrdersByMinTotalPrice(testTotalPrice);
+
+            foreach (var order in orders) { 
+
+                 if(order.TOTALPRICE < testTotalPrice) { 
+            
+                    Console.WriteLine("GetOrdersByMinTotalPrice(totalPrice) METHOD WORKING");
+
+                 } else { 
+                    Console.WriteLine(" GetOrderByDiscount(discount) METHOD NOT WORKING - TOTALPRICE BIGGER THAN THE PARAMETER");
+                
+                 }
+            }
+            //Checking if GetOrdersByMaxTotalPrice(totalPrice) is working
+            //totalPrice of the "orderTest"
+            var orders = orderManager.GetOrdersByMaxTotalPrice(testTotalPrice);
+
+            foreach (var order in orders) { 
+
+                 if(order.TOTALPRICE > testTotalPrice) { 
+            
+                    Console.WriteLine("GetOrdersByMaxTotalPrice(totalPrice) METHOD WORKING");
+
+                 } else { 
+                    Console.WriteLine("GetOrdersByMaxTotalPrice(totalPrice) METHOD NOT WORKING - TOTALPRICE UNDER THAN THE PARAMETER");
+                 }
+            }
+
+
+            //Checking if GetOrder(orderID) is working
+            //id_order of the "testOrder" is 1
+
+            int testOrderID = 1;
+            Order searchedOrder = new Order();
+
+            searchedOrder = orderManager.GetOrder(testOrderID);
+
+           if(searchedOrder.ID_ORDER != NULL) {
+            
+                 Console.WriteLine("GetOrder(orderID) METHOD WORKING");
+            
+            
+            } else { 
+
+                 Console.WriteLine("GetOrder(orderID) METHOD NOT WORKING - TRY ANOTHER ORDER ID");
+
+            }
 
         }
-
-
+        
+        
+    
         public void OrderDetailsTest()
         {
 
@@ -227,7 +366,7 @@ namespace VSeat
             Console.WriteLine("==========================================");
             Console.WriteLine("Test RESTAURANT");
             Console.WriteLine("==========================================");
-
+            
             RestaurantManager restaurantManager = new RestaurantManager(Configuration);
             Restaurant testRestaurant = new Restaurant
             {
