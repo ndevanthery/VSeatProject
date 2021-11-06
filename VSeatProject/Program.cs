@@ -35,7 +35,9 @@ namespace VSeat
         public void CustomerTest()
         {
             //test Customer
-            Console.WriteLine("Test Customer BLL");
+            Console.WriteLine("==========================================");
+            Console.WriteLine("Test CUSTOMER");
+            Console.WriteLine("==========================================");
             CustomerManager customerManager = new CustomerManager(Configuration);
             Customer testCustomer = new Customer();
             testCustomer.IDCITY = 3;
@@ -118,6 +120,10 @@ namespace VSeat
                 }
             }
             Console.WriteLine("DELETE working");
+
+            Console.WriteLine("==========================================");
+            Console.WriteLine("Test CUSTOMER");
+            Console.WriteLine("==========================================");
         }
 
 
@@ -211,147 +217,160 @@ namespace VSeat
     
         
         public void OrderTest()
-        { 
+        {
+            //test Order
             Console.WriteLine("==========================================");
             Console.WriteLine("Test ORDER");
             Console.WriteLine("==========================================");
-           
-            //creation of the BLL manager object in order to call the DAL methods
-            //creation of the object "testOrder" that will return all results from the tests
-            OrderManager orderManager = new OrderManager(Configuration)
+            OrderManager orderManager = new OrderManager(Configuration);
             Order testOrder = new Order
             {
-                 ID_ORDER = 1,
-                ID_CUSTOMER = 1,
-                //YYYY-MM-DD
-                // ATTENTION : remove datetime from table Order since we can add the time on orderDate
-                ORDERDATE = "2021-06-11",
-                //HH:MM:SS
-                ORDERTIME = "19:50:47",
-                //Create a table named "Discounts" that store all available discounts so we can call a discount by his id
-                DISCOUNT = 15,
-                TOTALPRICE = 135.54
-
+                ID_CUSTOMER = 3,
+                ORDERDATE = new DateTime(2021 , 06,11,15,31,12),
+                DISCOUNT = 12,
+                TOTALPRICE = 132.12
             };
-                  
 
-            //testing method addOrder();
+
+            Console.WriteLine("test ADD Order");
+
+            //add Order in database
+
             Order temp = orderManager.addOrder(testOrder);
-            
-           Console.WriteLine("ADD METHOD WORKING");
-            //Why do we have to do this if we know that the objects are the same
-            //why not do a checking 
 
-           // if (testOrder.equals(temp){ 
-           //
-           //     Console.WriteLine("ADD METHOD WORKING");
-           //
-           // }
-            //instead of
+            Console.WriteLine("order added :");
 
             testOrder.ID_ORDER = temp.ID_ORDER;
 
             Console.WriteLine(testOrder.ToString());
 
-            //Checking if the getOrders() List is working
+
+            //see if it is in the list of order
+
             var orders = orderManager.GetOrders();
             foreach (var order in orders)
             {
                 if (order.ID_ORDER == testOrder.ID_ORDER)
                 {
-                    Console.WriteLine("ADD METHOD WORKING");
-                    Console.WriteLine("GetOrders() METHOD WORKING");
+                    Console.WriteLine("test Order in list : it's working");
                 }
             }
 
-            // Checking if GetOrders(orderDate) is working
-            // date of the "orderTest"
+            // test get order with ID
+            if (orderManager.GetOrder(testOrder.ID_ORDER) != null)
+            {
+                Console.WriteLine("Get Method with ID is working");
+            }
 
-            DateTime testTime = "2021-06-11";
-
-            var orders = orderManager.GetOrders(testTime);
-
-            foreach (var order in orders) { 
-
-                if(order.ID_ORDER != NULL) { 
-            
-                Console.WriteLine(" getOrder(orderDate) METHOD WORKING");
-
-                }else { 
-                    Console.WriteLine(" getOrder(orderDate) METHOD NOT WORKING - TRY ANOTHER ORDER DATE");
+            // test get Order by Date
+            var OrdersToday = orderManager.GetOrders(new DateTime(2021,06,11));
+            foreach (var order in OrdersToday)
+            {
+                if (order.ID_ORDER == testOrder.ID_ORDER)
+                {
+                    Console.WriteLine("get Order by Date working");
                 }
             }
-            // Checking if GetOrdersByDiscount(discount) is working
-            //discount of the "orderTest"
-            int testDiscount =15;
 
-            var orders = orderManager.GetOrdersByDiscount(testDiscount);
 
-            foreach (var order in orders) { 
-
-                 if(order.DISCOUNT != NULL) { 
-            
-                    Console.WriteLine("GetOrderByDiscount(discount) METHOD WORKING");
-
-                 } else { 
-                    Console.WriteLine(" GetOrderByDiscount(discount) METHOD NOT WORKING - TRY ANOTHER DISCOUNT");
-                
-                 }
-            }
-            //Checking if GetOrdersByMinTotalPrice(totalPrice) is working
-            //totalPrice of the "orderTest"
-            //orderTest.totalPrice = 135.54
-            double testTotalPrice = 150.00;
-
-            var orders = orderManager.GetOrdersByMinTotalPrice(testTotalPrice);
-
-            foreach (var order in orders) { 
-
-                 if(order.TOTALPRICE < testTotalPrice) { 
-            
-                    Console.WriteLine("GetOrdersByMinTotalPrice(totalPrice) METHOD WORKING");
-
-                 } else { 
-                    Console.WriteLine(" GetOrderByDiscount(discount) METHOD NOT WORKING - TOTALPRICE BIGGER THAN THE PARAMETER");
-                
-                 }
-            }
-            //Checking if GetOrdersByMaxTotalPrice(totalPrice) is working
-            //totalPrice of the "orderTest"
-            var orders = orderManager.GetOrdersByMaxTotalPrice(testTotalPrice);
-
-            foreach (var order in orders) { 
-
-                 if(order.TOTALPRICE > testTotalPrice) { 
-            
-                    Console.WriteLine("GetOrdersByMaxTotalPrice(totalPrice) METHOD WORKING");
-
-                 } else { 
-                    Console.WriteLine("GetOrdersByMaxTotalPrice(totalPrice) METHOD NOT WORKING - TOTALPRICE UNDER THAN THE PARAMETER");
-                 }
+            // test get Order by Discount
+            var OrdersDiscount12 = orderManager.GetOrdersByDiscount(12);
+            foreach (var order in OrdersDiscount12)
+            {
+                if (order.ID_ORDER == testOrder.ID_ORDER)
+                {
+                    Console.WriteLine("get Order by Discount working");
+                }
             }
 
-
-            //Checking if GetOrder(orderID) is working
-            //id_order of the "testOrder" is 1
-
-            int testOrderID = 1;
-            Order searchedOrder = new Order();
-
-            searchedOrder = orderManager.GetOrder(testOrderID);
-
-           if(searchedOrder.ID_ORDER != NULL) {
-            
-                 Console.WriteLine("GetOrder(orderID) METHOD WORKING");
-            
-            
-            } else { 
-
-                 Console.WriteLine("GetOrder(orderID) METHOD NOT WORKING - TRY ANOTHER ORDER ID");
-
+            // test get Order by min total price
+            var OrdersMin100 = orderManager.GetOrdersByMinTotalPrice(100.00);
+            foreach (var order in OrdersMin100)
+            {
+                if (order.ID_ORDER == testOrder.ID_ORDER)
+                {
+                    Console.WriteLine("order appears with min 100");
+                }
             }
-             Console.WriteLine("==========================================");
-            Console.WriteLine("END TEST ORDER");
+            var OrdersMin200 = orderManager.GetOrdersByMinTotalPrice(200.00);
+            foreach (var order in OrdersMin200)
+            {
+                if (order.ID_ORDER == testOrder.ID_ORDER)
+                {
+                    Console.WriteLine("order appears with 200 min : ERROR");
+                }
+            }
+            Console.WriteLine("if the last message was not ERROR , get order with min total is working");
+
+
+
+            // test get Order by max total price
+            var OrdersMax200 = orderManager.GetOrdersByMaxTotalPrice(200.00);
+            foreach (var order in OrdersMax200)
+            {
+                if (order.ID_ORDER == testOrder.ID_ORDER)
+                {
+                    Console.WriteLine("order appears with max 200");
+                }
+            }
+            var OrdersMax100 = orderManager.GetOrdersByMaxTotalPrice(100.00);
+            foreach (var order in OrdersMax100)
+            {
+                if (order.ID_ORDER == testOrder.ID_ORDER)
+                {
+                    Console.WriteLine("order appears with 100 max : ERROR");
+                }
+            }
+            Console.WriteLine("if the last message was not ERROR , get order with max total is working");
+
+
+            // test get Order by Customer
+            var ordersByTestUser = orderManager.GetOrdersByCustomer(testOrder.ID_CUSTOMER);
+            foreach (var order in ordersByTestUser)
+            {
+                if (order.ID_ORDER == testOrder.ID_ORDER)
+                {
+                    Console.WriteLine("get Order by Customer Working");
+                }
+            }
+
+
+
+
+
+            // test update
+            Order myUpdatedOrder = new Order
+            {
+                ID_CUSTOMER = 3,
+                ORDERDATE = new DateTime(2021, 06, 11, 15, 31, 12),
+                DISCOUNT = 12,
+                TOTALPRICE = 145.50
+            };
+
+
+            orderManager.UpdaterOrder(testOrder.ID_ORDER, myUpdatedOrder);
+
+            // test if it was updated
+            if (orderManager.GetOrder(testOrder.ID_ORDER).TOTALPRICE == 145.50)
+            {
+                Console.WriteLine("update Method is working");
+            }
+
+
+            orderManager.DeleteOrder(testOrder.ID_ORDER);
+            // test if the user is still in the list
+            orders = orderManager.GetOrders();
+            foreach (var order in orders)
+            {
+                if (order.ID_ORDER == testOrder.ID_ORDER)
+                {
+                    Console.WriteLine("ERROR : THE ORDER IS STILL THERE");
+                }
+            }
+            Console.WriteLine("DELETE working");
+
+            Console.WriteLine("==========================================");
+            Console.WriteLine("Test ORDER END");
             Console.WriteLine("==========================================");
 
         }

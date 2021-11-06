@@ -46,6 +46,11 @@ namespace BLL
         }
 
 
+        public List<Order> GetOrdersByCustomer(int idCustomer)
+        {
+            return orderDB.GetOrdersByCustomer(idCustomer);
+        }
+
         public Order GetOrder(int orderID)
         {
             return orderDB.GetOrder(orderID);
@@ -55,7 +60,18 @@ namespace BLL
         {
             return orderDB.addOrder(order);
         }
-        
+
+
+        public Order UpdaterOrder(int idOrder, Order newOrder)
+        {
+            return orderDB.UpdateOrder(idOrder, newOrder);
+        }
+
+        public Order DeleteOrder(int idOrder)
+        {
+            return orderDB.DeleteOrder(idOrder);
+        }
+
 
     }
 }
