@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace BLL
 {
-    class OrderManager
+    public class OrderManager
     {
         private IOrderDB orderDB { get; }
 
