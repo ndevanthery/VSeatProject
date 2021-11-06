@@ -13,11 +13,9 @@ namespace DAL
 
         //add RestoType
 
-        public RestoType addRestoType(RestoType restoType);
+        public RestoType AddRestoType(RestoType restoType);
 
-        //get Lists
 
-        public List<RestoType> GetRestoTypes();
 
 
 
@@ -34,7 +32,9 @@ namespace DAL
 
         public RestoType DeleteRestotype(int idType);
 
+        //get Lists
 
+        public List<RestoType> GetRestoTypes();
 
 
     }

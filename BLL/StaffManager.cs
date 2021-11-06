@@ -30,7 +30,7 @@ namespace BLL
         // get by one method
         public Staff GetStaff(int idStaff)
         {
-            return staffDB.getStaff(idStaff);
+            return staffDB.GetStaff(idStaff);
         }
 
 

@@ -13,7 +13,7 @@ namespace DAL
 
         //add Customer
 
-        public Customer addCustomer(Customer customer);
+        public Customer AddCustomer(Customer customer);
 
 
         //get Customers

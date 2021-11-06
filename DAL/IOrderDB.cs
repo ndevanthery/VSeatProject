@@ -11,7 +11,7 @@ namespace DAL
     {
         //add Order
 
-        public Order addOrder(Order order);
+        public Order AddOrder(Order order);
 
 
         //get Order

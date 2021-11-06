@@ -11,6 +11,10 @@ namespace DAL
 {
     public class RestoTypeDB : IRestoTypeDB
     {
+        //---------------------------------------------------
+        // CONFIGURATION
+        //---------------------------------------------------
+
 
         private IConfiguration Configuration { get; }
 
@@ -20,7 +24,11 @@ namespace DAL
         }
 
 
-        public RestoType addRestoType(RestoType restoType)
+        //---------------------------------------------------
+        // ADD METHOD
+        //---------------------------------------------------
+
+        public RestoType AddRestoType(RestoType restoType)
         {
             string connectionString = Configuration.GetConnectionString("DefaultConnection");
             try
@@ -44,45 +52,12 @@ namespace DAL
             return restoType;
         }
 
-        public RestoType GetRestoType(string typeName)
-        {
-            RestoType restoType = null;
-            string connectionString = Configuration.GetConnectionString("DefaultConnection");
-
-            try
-            {
-                using (SqlConnection cn = new SqlConnection(connectionString))
-                {
-                    string query = "Select * from RESTOTYPE WHERE CITYNAME = @typeName";
-                    SqlCommand cmd = new SqlCommand(query, cn);
-                    cmd.Parameters.AddWithValue("@typeName", typeName);
 
 
-                    cn.Open();
+        //---------------------------------------------------
+        // GET ONE METHOD
+        //---------------------------------------------------
 
-                    using (SqlDataReader dr = cmd.ExecuteReader())
-                    {
-
-                        restoType = new RestoType();
-
-                        restoType.IDTYPE = (int)dr["IDTYPE"];
-
-                        restoType.TYPENAME = (string)dr["TYPENAME"];
-
-
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-            }
-
-            return restoType;
-        }
-
-                
-        
         public RestoType GetRestoType(int idType)
         {
              RestoType restoType = null;
@@ -119,6 +94,88 @@ namespace DAL
 
             return restoType;
         }
+
+        //---------------------------------------------------
+        // UPDATE METHOD
+        //---------------------------------------------------
+        public RestoType UpdateRestoType(int idType, RestoType newRestoType)
+        {
+            RestoType restoType = null;
+            string connectionString = Configuration.GetConnectionString("DefaultConnection");
+
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(connectionString))
+                {
+                    string query = "UPDATE RESTOTYPE SET TYPENAME= @TYPENAME WHERE IDTYPE = @id";
+                    SqlCommand cmd = new SqlCommand(query, cn);
+
+                    cmd.Parameters.AddWithValue("@IDTYPE", newRestoType.IDTYPE);
+                    cmd.Parameters.AddWithValue("@TYPENAME", newRestoType.TYPENAME);
+                    cmd.Parameters.AddWithValue("@id", idType);
+
+                    cn.Open();
+
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+
+                        restoType = new RestoType();
+                        restoType.IDTYPE = (int)dr["IDTYPE"];
+                        restoType.TYPENAME = (string)dr["TYPENAME"];
+
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+
+            return restoType;
+        }
+
+        //---------------------------------------------------
+        // DELETE METHOD
+        //---------------------------------------------------
+
+
+        public RestoType DeleteRestotype(int idType)
+        {
+            RestoType restoType = null;
+            string connectionString = Configuration.GetConnectionString("DefaultConnection");
+
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(connectionString))
+                {
+                    string query = "DELETE FROM RESTOTYPE WHERE IDTYPE = @idType";
+                    SqlCommand cmd = new SqlCommand(query, cn);
+                    cmd.Parameters.AddWithValue("@idType", idType);
+
+
+                    cn.Open();
+
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        restoType = new RestoType();
+                        restoType.IDTYPE = (int)dr["IDTYPE"];
+                        restoType.TYPENAME = (string)dr["TYPENAME"];
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+
+            return restoType;
+        }
+
+
+        //---------------------------------------------------
+        // GET LIST METHODS
+        //---------------------------------------------------
+
 
 
         public List<RestoType> GetRestoTypes()
@@ -162,72 +219,7 @@ namespace DAL
 
         }
 
-        public RestoType UpdateRestoType(int idTypeOld, RestoType newRestoType)
-        {
-            RestoType restoType = null;
-            string connectionString = Configuration.GetConnectionString("DefaultConnection");
+        
 
-            try
-            {
-                using (SqlConnection cn = new SqlConnection(connectionString))
-                {
-                    string query = "UPDATE RESTOTYPE SET IDTYPE = @IDTYPE , TYPENAME= @TYPENAME WHERE IDTYPE = @idTypeOld";
-                    SqlCommand cmd = new SqlCommand(query, cn);
-
-                    cmd.Parameters.AddWithValue("@IDTYPE", newRestoType.IDTYPE);
-                    cmd.Parameters.AddWithValue("@TYPENAME", newRestoType.TYPENAME);
-                    cmd.Parameters.AddWithValue("@idTypeOld", idTypeOld);
-
-                    cn.Open();
-
-                    using (SqlDataReader dr = cmd.ExecuteReader())
-                    {
-
-                        restoType = new RestoType();
-                        restoType.IDTYPE = (int)dr["IDTYPE"];
-                        restoType.TYPENAME = (string)dr["TYPENAME"];
-
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-            }
-
-            return restoType;
-        }
-
-        public RestoType DeleteRestotype(int idType)
-        {
-            RestoType restoType = null;
-            string connectionString = Configuration.GetConnectionString("DefaultConnection");
-
-            try
-            {
-                using (SqlConnection cn = new SqlConnection(connectionString))
-                {
-                    string query = "DELETE FROM RESTOTYPE WHERE IDCITY = @idType";
-                    SqlCommand cmd = new SqlCommand(query, cn);
-                    cmd.Parameters.AddWithValue("@idType", idType);
-
-
-                    cn.Open();
-
-                    using (SqlDataReader dr = cmd.ExecuteReader())
-                    {
-                        restoType = new RestoType();
-                        restoType.IDTYPE = (int)dr["IDTYPE"];
-                        restoType.TYPENAME = (string)dr["TYPENAME"];
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-            }
-
-            return restoType;
-        }
     }
 }

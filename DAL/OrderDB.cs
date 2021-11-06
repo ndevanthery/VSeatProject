@@ -27,7 +27,7 @@ namespace DAL
         //---------------------------------------------------
 
 
-        public Order addOrder(Order order)
+        public Order AddOrder(Order order)
         {
             string connectionString = Configuration.GetConnectionString("DefaultConnection");
             try

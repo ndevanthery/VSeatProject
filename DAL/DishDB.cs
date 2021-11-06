@@ -25,7 +25,7 @@ namespace DAL
         // ADD METHODS
         //---------------------------------------------------
 
-        public Dish addDish(Dish dish)
+        public Dish AddDish(Dish dish)
         {
             string connectionString = Configuration.GetConnectionString("DefaultConnection");
             try
@@ -52,6 +52,152 @@ namespace DAL
             return dish;
         }
 
+
+        
+
+
+
+
+        //---------------------------------------------------
+        // GET one METHOD
+        //---------------------------------------------------
+
+
+        public Dish GetDish(int idDish)
+        {
+            Dish dish = null;
+            string connectionString = Configuration.GetConnectionString("DefaultConnection");
+
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(connectionString))
+                {
+                    string query = "Select * from DISH WHERE ID_DISH = @Id_dish";
+                    SqlCommand cmd = new SqlCommand(query, cn);
+                    cmd.Parameters.AddWithValue("@Id_dish", idDish);
+
+
+                    cn.Open();
+
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+
+                        dish = new Dish();
+
+                        dish.ID_DISH = (int)dr["ID_DISH"];
+
+                        dish.ID_RESTAURANT = (int)dr["ID_RESTAURANT"];
+
+                        dish.IMAGE = (ImageFormat)dr["IMAGE"];
+
+                        dish.NAME = (string)dr["NAME"];
+
+                        dish.PRICE = (double)dr["PRICE"];
+
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+
+            return dish;
+        }
+
+
+        //---------------------------------------------------
+        // UPDATE METHOD
+        //---------------------------------------------------
+
+        public Dish UpdateDish(int idDish, Dish newDish)
+        {
+            Dish dish = null;
+            string connectionString = Configuration.GetConnectionString("DefaultConnection");
+
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(connectionString))
+                {
+                    string query = "UPDATE DISH SET ID_RESTAURANT = @ID_RESTAURANT, IMAGE = @IMAGE, NAME = @NAME, PRICE = @PRICE WHERE ID_DISH = @id";
+                    SqlCommand cmd = new SqlCommand(query, cn);
+
+                    cmd.Parameters.AddWithValue("@ID_DISH", newDish.ID_DISH);
+                    cmd.Parameters.AddWithValue("@ID_RESTAURANT", newDish.ID_RESTAURANT);
+                    cmd.Parameters.AddWithValue("@IMAGE", newDish.IMAGE);
+                    cmd.Parameters.AddWithValue("@NAME", newDish.NAME);
+                    cmd.Parameters.AddWithValue("@PRICE", newDish.PRICE);
+
+                    // old parameter used to figure out which dish to update
+
+                    cmd.Parameters.AddWithValue("@id", idDish);
+
+                    cn.Open();
+
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+
+                        dish = new Dish();
+
+                        dish.ID_DISH = (int)dr["ID_DISH"];
+                        dish.ID_RESTAURANT = (int)dr["ID_RESTAURANT"];
+                        dish.NAME = (string)dr["NAME"];
+                        dish.PRICE = (double)dr["PRICE"];
+                        dish.IMAGE = (ImageFormat)dr["IMAGE"];
+
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+
+            return dish;
+        }
+
+
+
+
+        //---------------------------------------------------
+        // DELETE METHOD
+        //---------------------------------------------------
+
+        public Dish DeleteDish(int idDish)
+       {
+            Dish dish = null;
+            string connectionString = Configuration.GetConnectionString("DefaultConnection");
+
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(connectionString))
+                {
+                    string query = "DELETE FROM DISH WHERE ID_DISH = @Id_dish";
+                    SqlCommand cmd = new SqlCommand(query, cn);
+                    cmd.Parameters.AddWithValue("@Id_dish", idDish);
+
+
+                    cn.Open();
+
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        dish = new Dish();
+                        dish.ID_DISH = (int)dr["ID_DISH"];
+                        dish.ID_RESTAURANT = (int)dr["ID_RESTAURANT"];
+                        dish.NAME = (string)dr["NAME"];
+                        dish.PRICE = (double)dr["PRICE"];
+                        dish.IMAGE = (ImageFormat)dr["IMAGE"];
+                        
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+
+            return dish;
+        }
 
         //---------------------------------------------------
         // GET by Lists METHODS
@@ -114,7 +260,7 @@ namespace DAL
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
                     string query = "Select * from DISH WHERE ID_RESTAURANT = @Id_restaurant";
-                     
+
                     SqlCommand cmd = new SqlCommand(query, cn);
                     cmd.Parameters.AddWithValue("@Id_restaurant", idRestaurant);
 
@@ -200,176 +346,5 @@ namespace DAL
         }
 
 
-
-
-        //---------------------------------------------------
-        // GET one METHODS
-        //---------------------------------------------------
-
-        public Dish GetDish(string name)
-        {
-            Dish dish = null;
-            string connectionString = Configuration.GetConnectionString("DefaultConnection");
-
-            try
-            {
-                using (SqlConnection cn = new SqlConnection(connectionString))
-                {
-                    string query = "Select * from DISH WHERE NAME = @Name";
-                    SqlCommand cmd = new SqlCommand(query, cn);
-                    cmd.Parameters.AddWithValue("@Name", name);
-
-
-                    cn.Open();
-
-                    using (SqlDataReader dr = cmd.ExecuteReader())
-                    {
-
-                        dish = new Dish();
-
-                        dish.ID_DISH = (int)dr["ID_DISH"];
-
-                        dish.ID_RESTAURANT = (int)dr["ID_RESTAURANT"];
-
-                        dish.IMAGE = (ImageFormat)dr["IMAGE"];
-
-                        dish.NAME = (string)dr["NAME"];
-
-                        dish.PRICE = (double)dr["PRICE"];
-
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-            }
-
-            return dish;
-        }
-
-        public Dish GetDish(int idDish)
-        {
-            Dish dish = null;
-            string connectionString = Configuration.GetConnectionString("DefaultConnection");
-
-            try
-            {
-                using (SqlConnection cn = new SqlConnection(connectionString))
-                {
-                    string query = "Select * from DISH WHERE ID_DISH = @Id_dish";
-                    SqlCommand cmd = new SqlCommand(query, cn);
-                    cmd.Parameters.AddWithValue("@Id_dish", idDish);
-
-
-                    cn.Open();
-
-                    using (SqlDataReader dr = cmd.ExecuteReader())
-                    {
-
-                        dish = new Dish();
-
-                        dish.ID_DISH = (int)dr["ID_DISH"];
-
-                        dish.ID_RESTAURANT = (int)dr["ID_RESTAURANT"];
-
-                        dish.IMAGE = (ImageFormat)dr["IMAGE"];
-
-                        dish.NAME = (string)dr["NAME"];
-
-                        dish.PRICE = (double)dr["PRICE"];
-
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-            }
-
-            return dish;
-        }
-
-        public Dish UpdateDish(int idDishOld, Dish newDish)
-        {
-            Dish dish = null;
-            string connectionString = Configuration.GetConnectionString("DefaultConnection");
-
-            try
-            {
-                using (SqlConnection cn = new SqlConnection(connectionString))
-                {
-                    string query = "UPDATE DISH SET ID_DISH = @ID_DISH , ID_RESTAURANT = @ID_RESTAURANT, IMAGE = @IMAGE, NAME = @NAME, PRICE = @PRICE WHERE ID_DISH = @idDishOld";
-                    SqlCommand cmd = new SqlCommand(query, cn);
-
-                    cmd.Parameters.AddWithValue("@ID_DISH", newDish.ID_DISH);
-                    cmd.Parameters.AddWithValue("@ID_RESTAURANT", newDish.ID_RESTAURANT);
-                    cmd.Parameters.AddWithValue("@IMAGE", newDish.IMAGE);
-                    cmd.Parameters.AddWithValue("@NAME", newDish.NAME);
-                    cmd.Parameters.AddWithValue("@PRICE", newDish.PRICE);
-
-                    // old parameter used to figure out which dish to update
-
-                    cmd.Parameters.AddWithValue("@idDishOld", idDishOld);
-
-                    cn.Open();
-
-                    using (SqlDataReader dr = cmd.ExecuteReader())
-                    {
-
-                        dish = new Dish();
-
-                        dish.ID_DISH = (int)dr["ID_DISH"];
-                        dish.ID_RESTAURANT = (int)dr["ID_RESTAURANT"];
-                        dish.NAME = (string)dr["NAME"];
-                        dish.PRICE = (decimal)dr["PRICE"];
-                        dish.IMAGE = (image)dr["IMAGE"];
-
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-            }
-
-            return restoType;
-        }
-
-        public Dish DeleteDish(int idDish)
-       {
-            Dish dish = null;
-            string connectionString = Configuration.GetConnectionString("DefaultConnection");
-
-            try
-            {
-                using (SqlConnection cn = new SqlConnection(connectionString))
-                {
-                    string query = "DELETE FROM DISH WHERE ID_DISH = @Id_dish";
-                    SqlCommand cmd = new SqlCommand(query, cn);
-                    cmd.Parameters.AddWithValue("@Id_dish", idDish);
-
-
-                    cn.Open();
-
-                    using (SqlDataReader dr = cmd.ExecuteReader())
-                    {
-                        dish = new Dish();
-                        dish.ID_DISH = (int)dr["ID_DISH"];
-                        dish.ID_RESTAURANT = (int)dr["ID_RESTAURANT"];
-                        dish.NAME = (string)dr["NAME"];
-                        dish.PRICE = (decimal)dr["PRICE"];
-                        dish.IMAGE = (image)dr["IMAGE"];
-                        
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-            }
-
-            return dish;
-        }
     }
 }

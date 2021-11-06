@@ -14,8 +14,6 @@ namespace DAL
 
 
 
-        //get Lists
-        public List<City> GetCities();
 
 
         //get City
@@ -33,7 +31,9 @@ namespace DAL
 
         public City DeleteCity(int idCity);
 
+        //get Lists
+        public List<City> GetCities();
 
-       
+
     }
 }

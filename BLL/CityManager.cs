@@ -19,16 +19,18 @@ namespace BLL
 
         }
 
-        public List<City> GetCities()
-        {
-            return cityDB.GetCities();
-
-        }
-
+        //---------------------------------------------------
+        // ADD METHOD
+        //---------------------------------------------------
         public City AddCity(City city)
         {
             return cityDB.AddCity(city);
         }
+
+
+        //---------------------------------------------------
+        // GET one METHOD
+        //---------------------------------------------------
 
 
         public City GetCity(int idCity)
@@ -36,22 +38,46 @@ namespace BLL
             return cityDB.GetCity(idCity);
         }
 
-         public City GetCity(string cityName)
+
+
+        //---------------------------------------------------
+        // UPDATE METHOD
+        //---------------------------------------------------
+        public City UpdateCity(int idCityToChange, City newCity)
         {
-            return cityDB.GetCity(cityName);
+            return cityDB.UpdateCity(idCityToChange, newCity);
         }
 
-          public City UpdateCity(int idCityToChange, City newCity)
+
+        //---------------------------------------------------
+        // DELETE METHOD
+        //---------------------------------------------------
+
+        public City DeleteCity(int idCity)
         {
-            return cityDB.UpdateCity(idCityToChange,newCity);
+            return cityDB.DeleteCity(idCity);
         }
 
-           public City DeleteCity(int idCity)
+        //---------------------------------------------------
+        // GET LISTS METHODS
+        //---------------------------------------------------
+
+
+        public List<City> GetCities()
         {
-            return cityDB.UDeleteCity(idCity);
+            return cityDB.GetCities();
+
         }
 
-        public Cit
+
+
+
+
+
+
+
+
+
 
     }
 }

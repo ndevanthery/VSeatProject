@@ -19,6 +19,43 @@ namespace BLL
             orderDB = new OrderDB(conf);
         }
 
+        //---------------------------------------------------
+        // ADD METHOD
+        //---------------------------------------------------
+        public Order AddOrder(Order order)
+        {
+            return orderDB.AddOrder(order);
+        }
+
+
+        //---------------------------------------------------
+        // GET ONE METHOD
+        //---------------------------------------------------
+        public Order GetOrder(int orderID)
+        {
+            return orderDB.GetOrder(orderID);
+        }
+
+
+        //---------------------------------------------------
+        // UPDATE METHOD
+        //---------------------------------------------------
+        public Order UpdaterOrder(int idOrder, Order newOrder)
+        {
+            return orderDB.UpdateOrder(idOrder, newOrder);
+        }
+        //---------------------------------------------------
+        // DELETE METHOD
+        //---------------------------------------------------
+        public Order DeleteOrder(int idOrder)
+        {
+            return orderDB.DeleteOrder(idOrder);
+        }
+        //---------------------------------------------------
+        // GET lists METHODS
+        //---------------------------------------------------
+
+
 
         public List<Order> GetOrders()
         {
@@ -51,26 +88,13 @@ namespace BLL
             return orderDB.GetOrdersByCustomer(idCustomer);
         }
 
-        public Order GetOrder(int orderID)
-        {
-            return orderDB.GetOrder(orderID);
-        }
-
-        public Order addOrder(Order order)
-        {
-            return orderDB.addOrder(order);
-        }
 
 
-        public Order UpdaterOrder(int idOrder, Order newOrder)
-        {
-            return orderDB.UpdateOrder(idOrder, newOrder);
-        }
 
-        public Order DeleteOrder(int idOrder)
-        {
-            return orderDB.DeleteOrder(idOrder);
-        }
+
+
+
+
 
 
     }

@@ -20,6 +20,41 @@ namespace BLL
 
         }
 
+
+        //add method
+        public Dish AddDish(Dish dish)
+        {
+
+            return dishDB.AddDish(dish);
+        }
+
+        //get one method
+
+        public Dish GetDish(int idDish)
+        {
+            return dishDB.GetDish(idDish);
+
+        }
+
+        //update method
+
+        public Dish UpdateDish(int idDishOld, Dish newDish)
+        {
+            return dishDB.UpdateDish(idDishOld, newDish);
+        }
+
+
+        //delete method
+
+
+        public Dish DeleteDish(int idDish)
+        {
+            return dishDB.DeleteDish(idDish);
+        }
+
+        //get list methods
+
+
         public List<Dish> GetDishes()
         {
             return dishDB.GetDishes();
@@ -35,32 +70,10 @@ namespace BLL
             return dishDB.GetDishesUnderPrice(maxPrice);
         }
 
-        public Dish addDish(Dish dish)
-        {
 
-            return dishDB.addDish(dish);
-        }
 
-        public Dish GetDish(int idDish)
-        {
-            return dishDB.GetDish(idDish);
 
-        }
 
-         public Dish GetDish(string name)
-        {
-            return dishDB.GetDish(name);
-
-        }
-
-        public Dish UpdateDish(int idDishOld, Dish newDish)
-        {
-            return dishDB.UpdateDish(idDishOld, newDish);
-        }
-        public Dish DeleteDish(int idDish)
-        {
-            return dishDB.DeleteDish(idDish);
-        }
 
 
 

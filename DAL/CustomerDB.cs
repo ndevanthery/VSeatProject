@@ -30,7 +30,7 @@ namespace DAL
         // ADD METHOD
         //---------------------------------------------------
 
-        public Customer addCustomer(Customer customer)
+        public Customer AddCustomer(Customer customer)
         {
 
             string connectionString = Configuration.GetConnectionString("DefaultConnection");

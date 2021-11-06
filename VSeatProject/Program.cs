@@ -28,7 +28,81 @@ namespace VSeat
 
         public void CityTest()
         {
+            //test Customer
+            Console.WriteLine("==========================================");
+            Console.WriteLine("Test City");
+            Console.WriteLine("==========================================");
+            CityManager cityManager = new CityManager(Configuration);
+            City testCity = new City
+            {
+                CITYNAME = "testCity",
+                NPA = 9999
+            };
 
+
+            Console.WriteLine("test ADD City");
+
+            //add city in database
+
+            City temp = cityManager.AddCity(testCity);
+
+            Console.WriteLine("city added :");
+
+            testCity.IDCITY = temp.IDCITY;
+
+            Console.WriteLine(testCity.ToString());
+
+
+            //see if it is in the list of city
+
+            var cities = cityManager.GetCities();
+            foreach (var city in cities)
+            {
+                if (city.IDCITY == testCity.IDCITY)
+                {
+                    Console.WriteLine("test city in list : it's working");
+                }
+            }
+
+            // test get city with ID
+            if (cityManager.GetCity(testCity.IDCITY) != null)
+            {
+                Console.WriteLine("Get Method with ID is working");
+            }
+
+
+
+            // test update
+            City myUpdatedCity = new City
+            {
+                CITYNAME = testCity.CITYNAME,
+                NPA = 9998
+            };
+
+            cityManager.UpdateCity(testCity.IDCITY, myUpdatedCity);
+
+            // test if it was updated
+            if (cityManager.GetCity(testCity.IDCITY).NPA == 9998)
+            {
+                Console.WriteLine("update Method is working");
+            }
+
+
+            cityManager.DeleteCity(testCity.IDCITY);
+            // test if the user is still in the list
+            cities = cityManager.GetCities();
+            foreach (var city in cities)
+            {
+                if (city.IDCITY == testCity.IDCITY)
+                {
+                    Console.WriteLine("ERROR : THE City IS STILL THERE");
+                }
+            }
+            Console.WriteLine("DELETE working");
+
+            Console.WriteLine("==========================================");
+            Console.WriteLine("Test CITY END");
+            Console.WriteLine("==========================================");
         }
 
 
@@ -53,7 +127,7 @@ namespace VSeat
 
             //add customer in database
 
-            Customer temp = customerManager.addCustomer(testCustomer);
+            Customer temp = customerManager.AddCustomer(testCustomer);
 
             Console.WriteLine("user added :");
 
@@ -80,7 +154,7 @@ namespace VSeat
             }
 
             // test get customers in city
-            var customersInMonthey = customerManager.GetCustomers();
+            var customersInMonthey = customerManager.GetCustomers(testCustomer.IDCITY);
             foreach (var customer in customersInMonthey)
             {
                 if (customer.ID_CUSTOMER == testCustomer.ID_CUSTOMER)
@@ -145,7 +219,7 @@ namespace VSeat
 
             //add staff in database
 
-            Dish temp = dishManager.addDish(testDish);
+            Dish temp = dishManager.AddDish(testDish);
 
             Console.WriteLine("ADD METHOD WORKING");
 
@@ -176,11 +250,33 @@ namespace VSeat
             var dishesinJetPizza = dishManager.GetDishes(1);
             foreach (var dish in dishesinJetPizza)
             {
-                if (dish.ID_DISH == dish.ID_DISH)
+                if (dish.ID_DISH == testDish.ID_DISH)
                 {
                     Console.WriteLine("GET DISH IN RESTAURANT WORKING");
                 }
             }
+
+
+            // test get dishes under 20
+            var dishesUnder20 = dishManager.GetDishesUnderPrice(20);
+            foreach (var dish in dishesUnder20)
+            {
+                if (dish.ID_DISH == testDish.ID_DISH)
+                {
+                    Console.WriteLine("GET DISH under 20 WORKING");
+                }
+            }
+            var dishesUnder10 = dishManager.GetDishesUnderPrice(10);
+            foreach (var dish in dishesUnder10)
+            {
+                if (dish.ID_DISH == testDish.ID_DISH)
+                {
+                    Console.WriteLine("ERROR : GET DISH under 10 problem");
+                }
+            }
+            Console.WriteLine("if the last message isn't ERROR , getDishUnderPrice is working");
+
+
 
             // test update
             Dish myUpdatedDish = new Dish()
@@ -236,7 +332,7 @@ namespace VSeat
 
             //add Order in database
 
-            Order temp = orderManager.addOrder(testOrder);
+            Order temp = orderManager.AddOrder(testOrder);
 
             Console.WriteLine("order added :");
 
@@ -378,16 +474,80 @@ namespace VSeat
         //TODO
         public void OrderDetailsTest()
         {
+            //test Customer
             Console.WriteLine("==========================================");
-            Console.WriteLine("TEST ORDERDETAILS");
+            Console.WriteLine("Test ORDER DETAILS");
             Console.WriteLine("==========================================");
-
             OrderDetailsManager orderDetailsManager = new OrderDetailsManager(Configuration);
+            OrderDetails testOrderDetails = new OrderDetails
+            {
+                ID_ORDER = 1,
+                ID_DISH = 2
+            };
 
 
+            Console.WriteLine("test ADD orderDetails");
+
+            //add customer in database
+
+            orderDetailsManager.AddOrderDetails(testOrderDetails);
+
+            Console.WriteLine("orderDetails added :");
+
+            Console.WriteLine(testOrderDetails.ToString());
+
+
+            //see if it is in the list of customers
+
+            var orderDetails = orderDetailsManager.GetOrdersDetails();
+            foreach (var orderDetail in orderDetails)
+            {
+                if (orderDetail.ID_ORDER == testOrderDetails.ID_ORDER)
+                {
+                    if (orderDetail.ID_DISH == testOrderDetails.ID_DISH)
+                    {
+                        Console.WriteLine("test customer in list : it's working");
+
+                    }
+                }
+            }
+
+            // test get OrderDetails with id's
+            if (orderDetailsManager.GetOrderDetails(testOrderDetails.ID_ORDER , testOrderDetails.ID_DISH) != null)
+            {
+                Console.WriteLine("Get Method with ID's is working");
+            }
+
+            // test get OrderDetails with dish
+            var OrderDetailswithDish = orderDetailsManager.GetOrderDetailsByDish(testOrderDetails.ID_DISH);
+            foreach (var orderDetail in OrderDetailswithDish)
+            {
+                if (orderDetail.ID_ORDER == testOrderDetails.ID_ORDER)
+                {
+                    if (orderDetail.ID_DISH == testOrderDetails.ID_DISH)
+                    {
+                        Console.WriteLine("test orderDetails with Dish : it's working");
+
+                    }
+                }
+            }
+
+            // test get OrderDetails with orderID
+            var OrderDetailswithOrder = orderDetailsManager.GetOrderDetailsByOrder(testOrderDetails.ID_ORDER);
+            foreach (var orderDetail in OrderDetailswithOrder)
+            {
+                if (orderDetail.ID_ORDER == testOrderDetails.ID_ORDER)
+                {
+                    if (orderDetail.ID_DISH == testOrderDetails.ID_DISH)
+                    {
+                        Console.WriteLine("test orderDetails with Order : it's working");
+
+                    }
+                }
+            }
 
             Console.WriteLine("==========================================");
-            Console.WriteLine("END TEST ORDERDETAILS");
+            Console.WriteLine("Test CUSTOMER");
             Console.WriteLine("==========================================");
         }
 
@@ -515,7 +675,7 @@ namespace VSeat
 
             //add restoType in database
 
-            RestoType temp = restoTypeManager.addRestoType(testRestoType);
+            RestoType temp = restoTypeManager.AddRestoType(testRestoType);
 
             Console.WriteLine("ADD METHOD WORKING");
 
@@ -624,7 +784,7 @@ namespace VSeat
             }
 
             // test get staff in restaurant
-            var StaffinJetPizza = staffManager.GetStaffs();
+            var StaffinJetPizza = staffManager.GetStaffs(testStaff.ID_RESTAURANT);
             foreach (var staff in StaffinJetPizza)
             {
                 if (staff.ID_STAFF== testStaff.ID_STAFF)
@@ -671,46 +831,6 @@ namespace VSeat
             Console.WriteLine("==========================================");
         }
 
-        //use only once to prevent having multiple times the same town
-        public static void AddCitiesTest()
-        {
-            CityManager cityManager = new CityManager(Configuration);
-
-            City city = new City();
-
-
-            city.CITYNAME = "Sion";
-            city.NPA = 1950;
-            cityManager.AddCity(city);
-            Console.WriteLine(city.ToString());
-
-            city.CITYNAME = "Sierre";
-            city.NPA = 3960;
-            cityManager.AddCity(city);
-            Console.WriteLine(city.ToString());
-
-
-            city.CITYNAME = "Martigny";
-            city.NPA = 1920;
-            cityManager.AddCity(city);
-            Console.WriteLine(city.ToString());
-
-
-            city.CITYNAME = "St-Maurice";
-            city.NPA = 1890;
-            cityManager.AddCity(city);
-            Console.WriteLine(city.ToString());
-
-
-            city.CITYNAME = "Conthey";
-            city.NPA = 1964;
-            cityManager.AddCity(city);
-            Console.WriteLine(city.ToString());
-
-
-
-
-        }
 
 
     }

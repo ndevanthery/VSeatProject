@@ -28,7 +28,7 @@ namespace DAL
         // ADD METHOD
         //---------------------------------------------------
 
-        public Restaurant addRestaurant(Restaurant restaurant)
+        public Restaurant AddRestaurant(Restaurant restaurant)
         {
             string connectionString = Configuration.GetConnectionString("DefaultConnection");
             try

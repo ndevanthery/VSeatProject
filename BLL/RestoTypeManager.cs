@@ -19,38 +19,53 @@ namespace BLL
         }
 
 
+        //---------------------------------------------------
+        // ADD METHOD
+        //---------------------------------------------------
+        public RestoType AddRestoType(RestoType restoType)
+        {
+            return restoTypeDB.AddRestoType(restoType);
+        }
+
+
+        //---------------------------------------------------
+        // GET ONE METHOD
+        //---------------------------------------------------
+        public RestoType GetRestoType(int idType)
+        {
+            return restoTypeDB.GetRestoType(idType);
+        }
+        //---------------------------------------------------
+        // UPDATE METHOD
+        //---------------------------------------------------
+        public RestoType UpdateRestoType(int idType, RestoType newRestoType)
+        {
+            return restoTypeDB.UpdateRestoType(idType, newRestoType);
+        }
+        //---------------------------------------------------
+        // DELETE METHOD
+        //---------------------------------------------------
+        public RestoType DeleteRestoType(int idType)
+        {
+            return restoTypeDB.DeleteRestotype(idType);
+        }
+        //---------------------------------------------------
+        // GET LIST METHODS
+        //---------------------------------------------------
+        
+
         public List<RestoType> GetRestoTypes()
         {
             return restoTypeDB.GetRestoTypes();
         }
 
 
-        public RestoType GetRestoType(int idType)
-        {
-            return restoTypeDB.GetRestoType(idType);
-        }
-
-         public RestoType GetRestoType(string typeName)
-        {
-            return restoTypeDB.GetRestoType(typeName);
-        }
-
-        public RestoType addRestoType(RestoType restoType)
-        {
-            return restoTypeDB.addRestoType(restoType);
-        }
 
 
-        public RestoType UpdateRestoType(int idType, RestoType newRestoType)
-        {
-            return restoTypeDB.UpdateRestoType(idType, newRestoType);
-        }
 
 
-        public RestoType DeleteRestoType(int idType)
-        {
-            return restoTypeDB.DeleteRestotype(idType);
-        }
+
+
 
     }
 }

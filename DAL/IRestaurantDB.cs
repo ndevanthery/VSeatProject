@@ -12,7 +12,7 @@ namespace DAL
         //add Restaurant
 
 
-        public Restaurant addRestaurant(Restaurant restaurant);
+        public Restaurant AddRestaurant(Restaurant restaurant);
 
 
 

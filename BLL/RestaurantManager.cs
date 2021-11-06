@@ -19,6 +19,38 @@ namespace BLL
 
         }
 
+        //---------------------------------------------------
+        // ADD METHOD
+        //---------------------------------------------------
+        public Restaurant AddRestaurant(Restaurant restaurant)
+        {
+            return restaurantDB.AddRestaurant(restaurant);
+        }
+        //---------------------------------------------------
+        // GET ONE METHOD
+        //---------------------------------------------------
+        public Restaurant GetRestaurant(int idRestaurant)
+        {
+            return restaurantDB.GetRestaurant(idRestaurant);
+        }
+        //---------------------------------------------------
+        // UPDATE METHOD
+        //---------------------------------------------------
+        public Restaurant UpdateRestaurant(int idRestaurant, Restaurant newRestaurant)
+        {
+            return restaurantDB.UpdateRestaurant(idRestaurant, newRestaurant);
+        }
+        //---------------------------------------------------
+        // DELETE METHOD
+        //---------------------------------------------------
+        public Restaurant DeleteRestaurant(int idRestaurant)
+        {
+            return restaurantDB.DeleteRestaurant(idRestaurant);
+
+        }
+        //---------------------------------------------------
+        // GET LIST METHODS
+        //---------------------------------------------------
 
         public List<Restaurant> GetRestaurants()
         {
@@ -37,26 +69,13 @@ namespace BLL
         }
 
 
-        public Restaurant GetRestaurant(int idRestaurant)
-        {
-            return restaurantDB.GetRestaurant(idRestaurant);
-        }
 
-        public Restaurant AddRestaurant(Restaurant restaurant)
-        {
-            return restaurantDB.addRestaurant(restaurant);
-        }
 
-        public Restaurant UpdateRestaurant(int idRestaurant, Restaurant newRestaurant)
-        {
-            return restaurantDB.UpdateRestaurant(idRestaurant, newRestaurant);
-        }
 
-        public Restaurant DeleteRestaurant(int idRestaurant)
-        {
-            restaurantDB.DeleteRestaurant(idRestaurant);
 
-        }
+
+
+
 
 
     }

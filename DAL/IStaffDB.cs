@@ -18,7 +18,7 @@ namespace DAL
 
         //get Staff
 
-        public Staff getStaff(int idStaff);
+        public Staff GetStaff(int idStaff);
 
 
         //update Staff

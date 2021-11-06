@@ -12,13 +12,22 @@ namespace DAL
     public class OrderDetailsDB : IOrderDetailsDB
     {
 
+        //---------------------------------------------------
+        // CONFIGURATION
+        //---------------------------------------------------
+
         private IConfiguration Configuration { get; }
 
         public OrderDetailsDB(IConfiguration conf)
         {
             Configuration = conf;
         }
-        public OrderDetails addOrderDetails(OrderDetails orderDetails)
+
+        //---------------------------------------------------
+        // ADD METHOD
+        //---------------------------------------------------
+
+        public OrderDetails AddOrderDetails(OrderDetails orderDetails)
         {
             string connectionString = Configuration.GetConnectionString("DefaultConnection");
             try
@@ -41,7 +50,12 @@ namespace DAL
             return orderDetails;
         }
 
-        public OrderDetails GetOrderDetail(int orderId)
+
+        //---------------------------------------------------
+        // GET ONE METHOD
+        //---------------------------------------------------
+
+        public OrderDetails GetOrderDetail(int orderId , int id_dish)
         {
             OrderDetails orderDetails = null;
             string connectionString = Configuration.GetConnectionString("DefaultConnection");
@@ -50,9 +64,10 @@ namespace DAL
             {
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
-                    string query = "Select * from ORDERDETAILS WHERE ID_ORDER = @OrderId";
+                    string query = "Select * from ORDERDETAILS WHERE ID_ORDER = @OrderId AND ID_DISH = @id_dish";
                     SqlCommand cmd = new SqlCommand(query, cn);
                     cmd.Parameters.AddWithValue("@OrderId", orderId);
+                    cmd.Parameters.AddWithValue("@id_dish", id_dish);
 
 
                     cn.Open();
@@ -77,6 +92,13 @@ namespace DAL
 
             return orderDetails;
         }
+
+
+
+        //---------------------------------------------------
+        // GET LIST METHODS
+        //---------------------------------------------------
+
 
         public List<OrderDetails> GetOrdersDetails()
         {
@@ -118,7 +140,7 @@ namespace DAL
         }
 
 
-        public List<OrderDetails> GetOrderDetailsWithIdDish(int id_dish)
+        public List<OrderDetails> GetOrderDetailsByDish(int id_dish)
 
         {
             List<OrderDetails> results = null;
@@ -159,10 +181,6 @@ namespace DAL
             return results;
         }
 
-       
-
-
-        
 
         public List<OrderDetails> GetOrderDetailsByOrder(int orderId)
         {

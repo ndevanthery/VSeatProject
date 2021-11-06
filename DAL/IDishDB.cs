@@ -11,14 +11,9 @@ namespace DAL
     {
         //add Dish
 
-        public Dish addDish(Dish dish);
+        public Dish AddDish(Dish dish);
 
-        //get Lists
-        public List<Dish> GetDishes();
 
-        public List<Dish> GetDishes(int idRestaurant);
-
-        public List<Dish> GetDishesUnderPrice(int maxPrice);
 
         //get Dish
 
@@ -33,6 +28,14 @@ namespace DAL
         //delete Dish
 
         public Dish DeleteDish(int idDish);
+
+
+        //get Lists
+        public List<Dish> GetDishes();
+
+        public List<Dish> GetDishes(int idRestaurant);
+
+        public List<Dish> GetDishesUnderPrice(int maxPrice);
 
 
     }

@@ -21,9 +21,9 @@ namespace BLL
 
         //add method
 
-        public Customer addCustomer(Customer customer)
+        public Customer AddCustomer(Customer customer)
         {
-            return customerDB.addCustomer(customer);
+            return customerDB.AddCustomer(customer);
         }
 
         //get one method

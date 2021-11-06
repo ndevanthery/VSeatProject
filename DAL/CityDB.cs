@@ -55,8 +55,128 @@ namespace DAL
 
 
 
+        //---------------------------------------------------
+        // GET by one METHOD
+        //---------------------------------------------------
+
+        public City GetCity(int idCity)
+        {
+            City city = null;
+            string connectionString = Configuration.GetConnectionString("DefaultConnection");
+
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(connectionString))
+                {
+                    string query = "Select * from CITY WHERE IDCITY = @idCity";
+                    SqlCommand cmd = new SqlCommand(query, cn);
+                    cmd.Parameters.AddWithValue("@idCity", idCity);
 
 
+                    cn.Open();
+
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+
+                        city = new City();
+
+                        city.IDCITY = (int)dr["IDCITY"];
+
+                        city.CITYNAME = (string)dr["CITYNAME"];
+
+                        city.NPA = (int)dr["NPA"];
+
+                        
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+
+            return city;
+        }
+
+
+        //---------------------------------------------------
+        // UPDATE METHOD
+        //---------------------------------------------------
+
+        public City UpdateCity(int idCity, City newCity)
+         {
+            City city = null;
+            string connectionString = Configuration.GetConnectionString("DefaultConnection");
+
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(connectionString))
+                {
+                    string query = "UPDATE CITY SET CITYNAME= @CITYNAME , NPA = @NPA WHERE IDCITY = @id";
+                    SqlCommand cmd = new SqlCommand(query, cn);
+                    cmd.Parameters.AddWithValue("@CITYNAME", newCity.CITYNAME);
+                    cmd.Parameters.AddWithValue("@NPA", newCity.NPA);
+
+                    cmd.Parameters.AddWithValue("@id", idCity);
+
+                    cn.Open();
+
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+
+                        city = new City();
+                        city.IDCITY = (int)dr["IDCITY"];
+                        city.CITYNAME = (string)dr["CITYNAME"];
+                        city.NPA = (int)dr["NPA"];
+
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+
+            return city;
+        }
+
+        //---------------------------------------------------
+        // DELETE METHOD
+        //---------------------------------------------------
+
+        public City DeleteCity(int idCity)
+        {
+            City city = null;
+            string connectionString = Configuration.GetConnectionString("DefaultConnection");
+
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(connectionString))
+                {
+                    string query = "DELETE FROM CITY WHERE IDCITY = @idcity";
+                    SqlCommand cmd = new SqlCommand(query, cn);
+                    cmd.Parameters.AddWithValue("@idcity", idCity);
+
+                    cn.Open();
+
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+
+                        city = new City();
+                        city.IDCITY = (int)dr["IDCITY"];
+                        city.CITYNAME = (string)dr["CITYNAME"];
+                        city.NPA = (int)dr["NPA"];
+
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+
+            return city;
+        }
 
 
 
@@ -112,166 +232,5 @@ namespace DAL
 
 
 
-
-
-
-
-        //---------------------------------------------------
-        // GET by one METHODS
-        //---------------------------------------------------
-
-        public City GetCity(string cityName)
-        {
-            City city = null;
-            string connectionString = Configuration.GetConnectionString("DefaultConnection");
-
-            try
-            {
-                using (SqlConnection cn = new SqlConnection(connectionString))
-                {
-                    string query = "Select * from CITY WHERE CITYNAME = @cityName";
-                    SqlCommand cmd = new SqlCommand(query, cn);
-                    cmd.Parameters.AddWithValue("@cityName", cityName);
-
-
-                    cn.Open();
-
-                    using (SqlDataReader dr = cmd.ExecuteReader())
-                    {
-
-                        city = new City();
-
-                        city.IDCITY = (int)dr["IDCITY"];
-
-                        city.CITYNAME = (string)dr["CITYNAME"];
-
-                        city.NPA = (int)dr["NPA"];
-
-
-
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-            }
-
-            return city;
-        }
-
-
-
-
-        public City GetCity(int idCity)
-        {
-            City city = null;
-            string connectionString = Configuration.GetConnectionString("DefaultConnection");
-
-            try
-            {
-                using (SqlConnection cn = new SqlConnection(connectionString))
-                {
-                    string query = "Select * from CITY WHERE IDCITY = @idCity";
-                    SqlCommand cmd = new SqlCommand(query, cn);
-                    cmd.Parameters.AddWithValue("@idCity", idCity);
-
-
-                    cn.Open();
-
-                    using (SqlDataReader dr = cmd.ExecuteReader())
-                    {
-
-                        city = new City();
-
-                        city.IDCITY = (int)dr["IDCITY"];
-
-                        city.CITYNAME = (string)dr["CITYNAME"];
-
-                        city.NPA = (int)dr["NPA"];
-
-                        
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-            }
-
-            return city;
-        }
-
-        public City UpdateCity(int idCityToChange, City newCity)
-         {
-            City city = null;
-            string connectionString = Configuration.GetConnectionString("DefaultConnection");
-
-            try
-            {
-                using (SqlConnection cn = new SqlConnection(connectionString))
-                {
-                    string query = "UPDATE CITY SET IDCITY = @IDCITY , CITYNAME= @CITYNAME , NPA = @NPA WHERE IDCITY = @IDcityOld";
-                    SqlCommand cmd = new SqlCommand(query, cn);
-                    cmd.Parameters.AddWithValue("@IDCITY", newCity.ID_CUSTOMER);
-                    cmd.Parameters.AddWithValue("@CITYNAME", newCity.ORDERDATE);
-                    cmd.Parameters.AddWithValue("@NPA", newCity.ORDERTIME);
-
-                    cmd.Parameters.AddWithValue("@IDcityOld", idCityToChange);
-
-                    cn.Open();
-
-                    using (SqlDataReader dr = cmd.ExecuteReader())
-                    {
-
-                        city = new City();
-                        city.IDCITY = (int)dr["IDCITY"];
-                        city.CITYNAME = (string)dr["CITYNAME"];
-                        city.NPA = (int)dr["NPA"];
-
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-            }
-
-            return city;
-        }
-
-        public City DeleteCity(int idCity)
-        {
-            City city = null;
-            string connectionString = Configuration.GetConnectionString("DefaultConnection");
-
-            try
-            {
-                using (SqlConnection cn = new SqlConnection(connectionString))
-                {
-                    string query = "DELETE FROM CITY WHERE IDCITY = @idcity";
-                    SqlCommand cmd = new SqlCommand(query, cn);
-                    cmd.Parameters.AddWithValue("@idcity", idCity);
-
-                    cn.Open();
-
-                    using (SqlDataReader dr = cmd.ExecuteReader())
-                    {
-
-                        city = new City();
-                        city.IDCITY = (int)dr["IDCITY"];
-                        city.CITYNAME = (string)dr["CITYNAME"];
-                        city.NPA = (int)dr["NPA"];
-
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-            }
-
-            return city;
-        }
     }
 }

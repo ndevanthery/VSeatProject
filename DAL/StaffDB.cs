@@ -105,7 +105,7 @@ namespace DAL
         // UPDATE METHOD
         //---------------------------------------------------
 
-        public Staff UpdateStaff(int idStaff, Restaurant newStaff)
+        public Staff UpdateStaff(int idStaff, Staff newStaff)
         {
 
             Staff staff = null;
@@ -117,13 +117,13 @@ namespace DAL
                 {
                     string query = "UPDATE RESTAURANT SET ID_RESTAURANT = @ID_RESTAURANT , FIRSTNAME= @FIRSTNAME , LASTNAME = @LASTNAME , ADRESS = @ADRESS , PHONENUMBER =@PHONENUMBER, USERNAME=@USERNAME, PASSWORD = @PASSWORD WHERE ID_STAFF = @id";
                     SqlCommand cmd = new SqlCommand(query, cn);
-                    cmd.Parameters.AddWithValue("@ID_RESTAURANT", staff.ID_RESTAURANT);
-                    cmd.Parameters.AddWithValue("@FIRSTNAME", staff.FIRSTNAME);
-                    cmd.Parameters.AddWithValue("@LASTNAME", staff.LASTNAME);
-                    cmd.Parameters.AddWithValue("@ADRESS", staff.ADRESS);
-                    cmd.Parameters.AddWithValue("@PHONENUMBER", staff.PHONENUMBER);
-                    cmd.Parameters.AddWithValue("@USERNAME", staff.USERNAME);
-                    cmd.Parameters.AddWithValue("@PASSWORD", staff.PASSWORD);
+                    cmd.Parameters.AddWithValue("@ID_RESTAURANT", newStaff.ID_RESTAURANT);
+                    cmd.Parameters.AddWithValue("@FIRSTNAME", newStaff.FIRSTNAME);
+                    cmd.Parameters.AddWithValue("@LASTNAME", newStaff.LASTNAME);
+                    cmd.Parameters.AddWithValue("@ADRESS", newStaff.ADRESS);
+                    cmd.Parameters.AddWithValue("@PHONENUMBER", newStaff.PHONENUMBER);
+                    cmd.Parameters.AddWithValue("@USERNAME", newStaff.USERNAME);
+                    cmd.Parameters.AddWithValue("@PASSWORD", newStaff.PASSWORD);
 
                     cmd.Parameters.AddWithValue("@id", idStaff);
 
@@ -299,15 +299,6 @@ namespace DAL
 
             return results;        
         }
-
-        public Staff getStaff(int idStaff)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Staff UpdateStaff(int idStaff, Staff newStaff)
-        {
-            throw new NotImplementedException();
-        }
+        
     }
 }
