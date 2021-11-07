@@ -15,28 +15,144 @@ namespace VSeat
     class Program
     {
         public static IConfiguration Configuration { get; } = new ConfigurationBuilder()
-            .SetBasePath("P://hes//semestre 3//VSeat_Project//VSeatProject//VSeatProject/")
+            .SetBasePath(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName)
             .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
             .Build();
 
         static void Main(string[] args)
         {
-            
+            Console.WriteLine(Configuration.GetConnectionString("DefaultConnection"));
+
+            try
+            {
+                CityTest();
+            }
+            catch (Exception e)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+
+                Console.WriteLine("!!!!!!!!!!! MASSIVE ERROR ON CITY TESTS !!!!!!!!!");
+                Console.WriteLine(e);
+                Console.ForegroundColor = ConsoleColor.White;
+
+            }
+
+            try
+            {
+                CustomerTest();
+            }
+            catch (Exception e)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+
+                Console.WriteLine("!!!!!!!!!!! MASSIVE ERROR ON CUSTOMER TESTS !!!!!!!!!");
+                Console.WriteLine(e);
+                Console.ForegroundColor = ConsoleColor.White;
+
+            }
+
+            try
+            {
+                DishTest();
+            }
+            catch (Exception e)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+
+                Console.WriteLine("!!!!!!!!!!! MASSIVE ERROR ON DISH TESTS !!!!!!!!!");
+                Console.WriteLine(e);
+                Console.ForegroundColor = ConsoleColor.White;
+
+            }
+
+            try
+            {
+                OrderTest();
+            }
+            catch (Exception e)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+
+                Console.WriteLine("!!!!!!!!!!! MASSIVE ERROR ON ORDER TESTS !!!!!!!!!");
+                Console.WriteLine(e);
+                Console.ForegroundColor = ConsoleColor.White;
+
+            }
+
+            try
+            {
+                OrderDetailsTest();
+            }
+            catch (Exception e)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+
+                Console.WriteLine("!!!!!!!!!!! MASSIVE ERROR ON ORDER DETAILS TESTS !!!!!!!!!");
+                Console.WriteLine(e);
+                Console.ForegroundColor = ConsoleColor.White;
+
+            }
+
+            try
+            {
+                RestaurantTest();
+            }
+            catch (Exception e)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+
+                Console.WriteLine("!!!!!!!!!!! MASSIVE ERROR ON RESTAURANT TESTS !!!!!!!!!");
+                Console.WriteLine(e);
+                Console.ForegroundColor = ConsoleColor.White;
+
+            }
+
+            try
+            {
+                RestoTypeTest();
+            }
+            catch (Exception e)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+
+                Console.WriteLine("!!!!!!!!!!! MASSIVE ERROR ON RESTOTYPE TESTS !!!!!!!!!");
+                Console.WriteLine(e);
+                Console.ForegroundColor = ConsoleColor.White;
+
+            }
+
+            try
+            {
+                StaffTest();
+            }
+            catch (Exception e)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+
+                Console.WriteLine("!!!!!!!!!!! MASSIVE ERROR ON STAFF TESTS !!!!!!!!!");
+                Console.WriteLine(e);
+                Console.ForegroundColor = ConsoleColor.White;
+
+            }
 
 
         }
 
-        public void CityTest()
+        public static void CityTest()
         {
             //test Customer
+            Console.ForegroundColor = ConsoleColor.Green;
+
             Console.WriteLine("==========================================");
             Console.WriteLine("Test City");
             Console.WriteLine("==========================================");
+            Console.ForegroundColor = ConsoleColor.White;
+
             CityManager cityManager = new CityManager(Configuration);
             City testCity = new City
             {
                 CITYNAME = "testCity",
-                NPA = 9999
+                NPA = (int)9999
             };
 
 
@@ -76,13 +192,13 @@ namespace VSeat
             City myUpdatedCity = new City
             {
                 CITYNAME = testCity.CITYNAME,
-                NPA = 9998
+                NPA = (int)9998
             };
 
             cityManager.UpdateCity(testCity.IDCITY, myUpdatedCity);
 
             // test if it was updated
-            if (cityManager.GetCity(testCity.IDCITY).NPA == 9998)
+            if (cityManager.GetCity(testCity.IDCITY).NPA == (int)9998)
             {
                 Console.WriteLine("update Method is working");
             }
@@ -100,18 +216,26 @@ namespace VSeat
             }
             Console.WriteLine("DELETE working");
 
+
+            Console.ForegroundColor = ConsoleColor.Green;
+
             Console.WriteLine("==========================================");
             Console.WriteLine("Test CITY END");
             Console.WriteLine("==========================================");
+
+            Console.ForegroundColor = ConsoleColor.White;
+
         }
 
 
-        public void CustomerTest()
+        public static void CustomerTest()
         {
             //test Customer
+            Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("==========================================");
             Console.WriteLine("Test CUSTOMER");
             Console.WriteLine("==========================================");
+            Console.ForegroundColor = ConsoleColor.White;
             CustomerManager customerManager = new CustomerManager(Configuration);
             Customer testCustomer = new Customer();
             testCustomer.IDCITY = 3;
@@ -123,13 +247,13 @@ namespace VSeat
             testCustomer.PASSWORD = "lilyTest";
             testCustomer.EMAIL = "lilytest@gmail.com";
 
-            Console.WriteLine("test ADD user");
+            Console.WriteLine("test ADD CUSTOMER");
 
             //add customer in database
 
             Customer temp = customerManager.AddCustomer(testCustomer);
 
-            Console.WriteLine("user added :");
+            Console.WriteLine("CUSTOMER added :");
 
             testCustomer.ID_CUSTOMER = temp.ID_CUSTOMER;
 
@@ -177,7 +301,7 @@ namespace VSeat
             customerManager.UpdateCustomer(testCustomer.ID_CUSTOMER, myUpdatedCustomer);
 
             // test if it was updated
-            if (customerManager.GetCustomer(testCustomer.ID_CUSTOMER).FIRSTNAME == "totoTest")
+            if (customerManager.GetCustomer(testCustomer.ID_CUSTOMER).FIRSTNAME.Equals("totoTest"))
             {
                 Console.WriteLine("update Method is working");
             }
@@ -195,25 +319,39 @@ namespace VSeat
             }
             Console.WriteLine("DELETE working");
 
+
+            Console.ForegroundColor = ConsoleColor.Green;
+
             Console.WriteLine("==========================================");
-            Console.WriteLine("Test CUSTOMER");
+            Console.WriteLine("Test CUSTOMER END");
             Console.WriteLine("==========================================");
+
+            Console.ForegroundColor = ConsoleColor.White;
+
         }
 
 
-        public void DishTest()
+        public static void DishTest()
         {
             //test Staff
+
+            Console.ForegroundColor = ConsoleColor.Green;
+
             Console.WriteLine("==========================================");
             Console.WriteLine("Test DISH");
             Console.WriteLine("==========================================");
+
+            Console.ForegroundColor = ConsoleColor.White;
+
 
             DishManager dishManager = new DishManager(Configuration);
             Dish testDish = new Dish()
             {
                 ID_RESTAURANT = 1,
                 NAME = "donerbox",
-                PRICE = 10.50
+                PRICE = 10.50,
+                IMAGE = null
+
             };
 
 
@@ -259,13 +397,17 @@ namespace VSeat
 
             // test get dishes under 20
             var dishesUnder20 = dishManager.GetDishesUnderPrice(20);
-            foreach (var dish in dishesUnder20)
+            if (dishesUnder20 != null)
             {
-                if (dish.ID_DISH == testDish.ID_DISH)
+                foreach (var dish in dishesUnder20)
                 {
-                    Console.WriteLine("GET DISH under 20 WORKING");
+                    if (dish.ID_DISH == testDish.ID_DISH)
+                    {
+                        Console.WriteLine("GET DISH under 20 WORKING");
+                    }
                 }
             }
+            
             var dishesUnder10 = dishManager.GetDishesUnderPrice(10);
             foreach (var dish in dishesUnder10)
             {
@@ -306,18 +448,30 @@ namespace VSeat
             }
             Console.WriteLine("DELETE WORKING");
 
+
+            Console.ForegroundColor = ConsoleColor.Green;
+
             Console.WriteLine("==========================================");
             Console.WriteLine("END TEST DISH");
             Console.WriteLine("==========================================");
+
+            Console.ForegroundColor = ConsoleColor.White;
+
         }
-    
-        
-        public void OrderTest()
+
+
+        public static void OrderTest()
         {
             //test Order
+
+            Console.ForegroundColor = ConsoleColor.Green;
+
             Console.WriteLine("==========================================");
             Console.WriteLine("Test ORDER");
             Console.WriteLine("==========================================");
+
+            Console.ForegroundColor = ConsoleColor.White;
+
             OrderManager orderManager = new OrderManager(Configuration);
             Order testOrder = new Order
             {
@@ -325,6 +479,7 @@ namespace VSeat
                 ORDERDATE = new DateTime(2021 , 06,11,15,31,12),
                 DISCOUNT = 12,
                 TOTALPRICE = 132.12
+                
             };
 
 
@@ -465,19 +620,28 @@ namespace VSeat
             }
             Console.WriteLine("DELETE working");
 
+            Console.ForegroundColor = ConsoleColor.Green;
+
             Console.WriteLine("==========================================");
             Console.WriteLine("Test ORDER END");
             Console.WriteLine("==========================================");
+            Console.ForegroundColor = ConsoleColor.White;
+
 
         }
-        
+
         //TODO
-        public void OrderDetailsTest()
+        public static void OrderDetailsTest()
         {
             //test Customer
+
+            Console.ForegroundColor = ConsoleColor.Green;
+
             Console.WriteLine("==========================================");
             Console.WriteLine("Test ORDER DETAILS");
             Console.WriteLine("==========================================");
+            Console.ForegroundColor = ConsoleColor.White;
+
             OrderDetailsManager orderDetailsManager = new OrderDetailsManager(Configuration);
             OrderDetails testOrderDetails = new OrderDetails
             {
@@ -506,7 +670,7 @@ namespace VSeat
                 {
                     if (orderDetail.ID_DISH == testOrderDetails.ID_DISH)
                     {
-                        Console.WriteLine("test customer in list : it's working");
+                        Console.WriteLine("test OrderDetail in list : it's working");
 
                     }
                 }
@@ -545,19 +709,26 @@ namespace VSeat
                     }
                 }
             }
+            Console.ForegroundColor = ConsoleColor.Green;
 
             Console.WriteLine("==========================================");
-            Console.WriteLine("Test CUSTOMER");
+            Console.WriteLine("Test ORDERDETAILS");
             Console.WriteLine("==========================================");
+            Console.ForegroundColor = ConsoleColor.White;
+
         }
 
-        public void RestaurantTest()
+        public static void RestaurantTest()
         {
             //test Staff
+            Console.ForegroundColor = ConsoleColor.Green;
+
             Console.WriteLine("==========================================");
             Console.WriteLine("Test RESTAURANT");
             Console.WriteLine("==========================================");
-            
+            Console.ForegroundColor = ConsoleColor.White;
+
+
             RestaurantManager restaurantManager = new RestaurantManager(Configuration);
             Restaurant testRestaurant = new Restaurant
             {
@@ -635,7 +806,7 @@ namespace VSeat
             restaurantManager.UpdateRestaurant(testRestaurant.ID_RESTAURANT, myUpdatedRestaurant);
 
             // test if it was updated
-            if (restaurantManager.GetRestaurant(testRestaurant.ID_RESTAURANT).NAME == "le mix modified")
+            if (restaurantManager.GetRestaurant(testRestaurant.ID_RESTAURANT).NAME.Equals("le mix modified"))
             {
                 Console.WriteLine("UPDATE WORKING");
             }
@@ -648,23 +819,32 @@ namespace VSeat
             {
                 if (restaurant.ID_RESTAURANT == testRestaurant.ID_RESTAURANT)
                 {
-                    Console.WriteLine("ERROR : THE USER IS STILL THERE");
+                    Console.WriteLine("ERROR : THE RESTAURANT IS STILL THERE");
                 }
             }
             Console.WriteLine("DELETE WORKING");
 
+            Console.ForegroundColor = ConsoleColor.Green;
+
             Console.WriteLine("==========================================");
             Console.WriteLine("END TEST RESTAURANT");
             Console.WriteLine("==========================================");
+            Console.ForegroundColor = ConsoleColor.White;
+
         }
 
 
-        public void RestoTypeTest()
+        public static void RestoTypeTest()
         {
             //test restoType
+
+            Console.ForegroundColor = ConsoleColor.Green;
+
             Console.WriteLine("==========================================");
             Console.WriteLine("Test RestoType");
             Console.WriteLine("==========================================");
+            Console.ForegroundColor = ConsoleColor.White;
+
 
             RestoTypeManager restoTypeManager = new RestoTypeManager(Configuration);
             RestoType testRestoType = new RestoType
@@ -711,7 +891,7 @@ namespace VSeat
             restoTypeManager.UpdateRestoType(testRestoType.IDTYPE, myUpdatedrRestoType);
 
             // test if it was updated
-            if (restoTypeManager.GetRestoType(testRestoType.IDTYPE).TYPENAME == "modifiedType")
+            if (restoTypeManager.GetRestoType(testRestoType.IDTYPE).TYPENAME.Equals("modifiedType"))
             {
                 Console.WriteLine("UPDATE WORKING");
             }
@@ -724,22 +904,30 @@ namespace VSeat
             {
                 if (restoType.IDTYPE == testRestoType.IDTYPE)
                 {
-                    Console.WriteLine("ERROR : THE USER IS STILL THERE");
+                    Console.WriteLine("ERROR : THE RESTOTYPE IS STILL THERE");
                 }
             }
             Console.WriteLine("DELETE WORKING");
 
+            Console.ForegroundColor = ConsoleColor.Green;
+
             Console.WriteLine("==========================================");
             Console.WriteLine("END TEST RESTOTYPE");
             Console.WriteLine("==========================================");
+            Console.ForegroundColor = ConsoleColor.White;
+
         }
 
-        public void StaffTest()
+        public static void StaffTest()
         {
             //test Staff
+            Console.ForegroundColor = ConsoleColor.Green;
+
             Console.WriteLine("==========================================");
             Console.WriteLine("Test STAFF");
             Console.WriteLine("==========================================");
+            Console.ForegroundColor = ConsoleColor.White;
+
 
             StaffManager staffManager = new StaffManager(Configuration);
             Staff testStaff = new Staff
@@ -808,7 +996,7 @@ namespace VSeat
             staffManager.UpdateStaff(testStaff.ID_STAFF, myUpdatedStaff);
 
             // test if it was updated
-            if (staffManager.GetStaff(testStaff.ID_STAFF).FIRSTNAME == "totoTest")
+            if (staffManager.GetStaff(testStaff.ID_STAFF).FIRSTNAME.Equals("totoTest"))
             {
                 Console.WriteLine("UPDATE WORKING");
             }
@@ -826,9 +1014,14 @@ namespace VSeat
             }
             Console.WriteLine("DELETE WORKING");
 
+            Console.ForegroundColor = ConsoleColor.Green;
+
             Console.WriteLine("==========================================");
             Console.WriteLine("END TEST STAFF");
             Console.WriteLine("==========================================");
+
+            Console.ForegroundColor = ConsoleColor.White;
+
         }
 
 

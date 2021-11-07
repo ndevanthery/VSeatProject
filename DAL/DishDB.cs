@@ -32,12 +32,13 @@ namespace DAL
             {
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
-                    string query = "Insert into DISH(ID_RESTAURANT,IMAGE,NAME,PRICE) values(@ID_RESTAURANT,@IMAGE,@NAME,PRICE); SELECT SCOPE_IDENTITY()";
+                    string query = "Insert into DISH(ID_RESTAURANT,NAME,PRICE,IMAGE) values(@ID_RESTAURANT,@NAME,@PRICE,@IMAGE); SELECT SCOPE_IDENTITY()";
                     SqlCommand cmd = new SqlCommand(query, cn);
                     cmd.Parameters.AddWithValue("@ID_RESTAURANT", dish.ID_RESTAURANT);
-                    cmd.Parameters.AddWithValue("@IMAGE", dish.IMAGE);
                     cmd.Parameters.AddWithValue("@NAME", dish.NAME);
                     cmd.Parameters.AddWithValue("@PRICE", dish.PRICE);
+                    cmd.Parameters.AddWithValue("@IMAGE", dish.IMAGE);
+
 
                     cn.Open();
 
@@ -86,13 +87,15 @@ namespace DAL
 
                         dish.ID_DISH = (int)dr["ID_DISH"];
 
-                        dish.ID_RESTAURANT = (int)dr["ID_RESTAURANT"];
-
-                        dish.IMAGE = (ImageFormat)dr["IMAGE"];
+                        dish.ID_RESTAURANT = (int) dr["ID_RESTAURANT"];
 
                         dish.NAME = (string)dr["NAME"];
 
                         dish.PRICE = (double)dr["PRICE"];
+
+
+                        dish.IMAGE = (ImageFormat)dr["IMAGE"];
+
 
                     }
                 }
@@ -119,10 +122,9 @@ namespace DAL
             {
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
-                    string query = "UPDATE DISH SET ID_RESTAURANT = @ID_RESTAURANT, IMAGE = @IMAGE, NAME = @NAME, PRICE = @PRICE WHERE ID_DISH = @id";
+                    string query = "UPDATE DISH SET ID_RESTAURANT = @ID_RESTAURANT, NAME = @NAME, PRICE = @PRICE, IMAGE = @IMAGE WHERE ID_DISH = @id";
                     SqlCommand cmd = new SqlCommand(query, cn);
 
-                    cmd.Parameters.AddWithValue("@ID_DISH", newDish.ID_DISH);
                     cmd.Parameters.AddWithValue("@ID_RESTAURANT", newDish.ID_RESTAURANT);
                     cmd.Parameters.AddWithValue("@IMAGE", newDish.IMAGE);
                     cmd.Parameters.AddWithValue("@NAME", newDish.NAME);
@@ -307,9 +309,9 @@ namespace DAL
             {
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
-                    string query = "Select * from DISH WHERE SELL_PRICE <= @Sell_price";
+                    string query = "Select * from DISH WHERE PRICE <= @PRICE";
                     SqlCommand cmd = new SqlCommand(query, cn);
-                    cmd.Parameters.AddWithValue("@SELL_PRICE", maxPrice);
+                    cmd.Parameters.AddWithValue("@PRICE", maxPrice);
 
                     cn.Open();
 
@@ -326,7 +328,11 @@ namespace DAL
 
                             dish.ID_RESTAURANT = (int)dr["ID_RESTAURANT"];
 
-                            dish.IMAGE = (ImageFormat)dr["IMAGE"];
+                            if (dr["IMAGE"] != null)
+                            {
+                                dish.IMAGE = (ImageFormat)dr["IMAGE"];
+                            }
+                            
 
                             dish.NAME = (string)dr["NAME"];
 

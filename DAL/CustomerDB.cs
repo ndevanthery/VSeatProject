@@ -284,9 +284,9 @@ namespace DAL
                 {
                     using (SqlConnection cn = new SqlConnection(connectionString))
                     {
-                        string query = "Select * from CUSTOMER WHERE ID_CITY = @Id_city";
+                        string query = "Select * from CUSTOMER WHERE IDCITY = @id";
                         SqlCommand cmd = new SqlCommand(query, cn);
-                        cmd.Parameters.AddWithValue("@Id_city", id_city);
+                        cmd.Parameters.AddWithValue("@id", id_city);
 
                         cn.Open();
 

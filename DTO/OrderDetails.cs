@@ -14,8 +14,8 @@ namespace DTO
 
         public override string ToString()
         {
-            return "ID DISH : " + ID_DISH +
-                   "ID ORDER : " + ID_ORDER;
+            return "ID DISH:" + ID_DISH +
+                   " / ID ORDER:" + ID_ORDER;
         }
 
 

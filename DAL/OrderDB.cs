@@ -34,11 +34,10 @@ namespace DAL
             {
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
-                    string query = "Insert into ORDER(ID_CUSTOMER,ORDERDATE,ORDERTIME,DISCOUNT,TOTALPRICE) values(@ID_CUSTOMER ,@ORDERDATE,@ORDERTIME,@DISCOUNT,@TOTALPRICE); SELECT SCOPE_IDENTITY()";
+                    string query = "Insert into ORDER(ID_CUSTOMER,ORDERDATE,DISCOUNT,TOTALPRICE) values(@ID_CUSTOMER ,@ORDERDATE,@DISCOUNT,@TOTALPRICE); SELECT SCOPE_IDENTITY()";
                     SqlCommand cmd = new SqlCommand(query, cn);
                     cmd.Parameters.AddWithValue("@ID_CUSTOMER", order.ID_CUSTOMER);
                     cmd.Parameters.AddWithValue("@ORDERDATE", order.ORDERDATE);
-                    cmd.Parameters.AddWithValue("@ORDERTIME", order.ORDERTIME);
                     cmd.Parameters.AddWithValue("@DISCOUNT", order.DISCOUNT);
                     cmd.Parameters.AddWithValue("@TOTALPRICE", order.TOTALPRICE);
 
@@ -83,7 +82,6 @@ namespace DAL
                         order.ID_ORDER = (int)dr["ID_ORDER"];
                         order.ID_CUSTOMER = (int)dr["ID_CUSTOMER"];
                         order.ORDERDATE = (DateTime)dr["ORDERDATE"];
-                        order.ORDERTIME = (DateTime)dr["ORDERTIME"];
                         order.DISCOUNT = (int)dr["DISCOUNT"];
                         order.TOTALPRICE = (double)dr["TOTALPRICE"];
 
@@ -111,11 +109,10 @@ namespace DAL
             {
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
-                    string query = "UPDATE ORDER SET ID_CUSTOMER = @ID_CUSTOMER , ORDERDATE= @ORDERDATE , ORDERTIME = @ORDERTIME , DISCOUNT = @DISCOUNT , TOTALPRICE =@TOTALPRICE WHERE ID_ORDER = @id";
+                    string query = "UPDATE ORDER SET ID_CUSTOMER = @ID_CUSTOMER , ORDERDATE= @ORDERDATE , DISCOUNT = @DISCOUNT , TOTALPRICE =@TOTALPRICE WHERE ID_ORDER = @id";
                     SqlCommand cmd = new SqlCommand(query, cn);
                     cmd.Parameters.AddWithValue("@ID_CUSTOMER", newOrder.ID_CUSTOMER);
                     cmd.Parameters.AddWithValue("@ORDERDATE", newOrder.ORDERDATE);
-                    cmd.Parameters.AddWithValue("@ORDERTIME", newOrder.ORDERTIME);
                     cmd.Parameters.AddWithValue("@DISCOUNT", newOrder.DISCOUNT);
                     cmd.Parameters.AddWithValue("@TOTALPRICE", newOrder.TOTALPRICE);
 
@@ -131,7 +128,6 @@ namespace DAL
                         order.ID_ORDER = (int)dr["ID_ORDER"];
                         order.ID_CUSTOMER = (int)dr["ID_CUSTOMER"];
                         order.ORDERDATE = (DateTime)dr["ORDERDATE"];
-                        order.ORDERTIME = (DateTime)dr["ORDERTIME"];
                         order.DISCOUNT = (int)dr["DISCOUNT"];
                         order.TOTALPRICE = (double)dr["TOTALPRICE"];
 
@@ -175,7 +171,6 @@ namespace DAL
                         order.ID_ORDER = (int)dr["ID_ORDER"];
                         order.ID_CUSTOMER = (int)dr["ID_CUSTOMER"];
                         order.ORDERDATE = (DateTime)dr["ORDERDATE"];
-                        order.ORDERTIME = (DateTime)dr["ORDERTIME"];
                         order.DISCOUNT = (int)dr["DISCOUNT"];
                         order.TOTALPRICE = (double)dr["TOTALPRICE"];
 
@@ -222,7 +217,6 @@ namespace DAL
                             order.ID_ORDER = (int)dr["ID_ORDER"];
                             order.ID_CUSTOMER = (int)dr["ID_CUSTOMER"];
                             order.ORDERDATE = (DateTime)dr["ORDERDATE"];
-                            order.ORDERTIME = (DateTime)dr["ORDERTIME"];
                             order.DISCOUNT = (int)dr["DISCOUNT"];
                             order.TOTALPRICE = (double)dr["TOTALPRICE"];
 
@@ -267,7 +261,6 @@ namespace DAL
                             order.ID_ORDER = (int)dr["ID_ORDER"];
                             order.ID_CUSTOMER = (int)dr["ID_CUSTOMER"];
                             order.ORDERDATE = (DateTime)dr["ORDERDATE"];
-                            order.ORDERTIME = (DateTime)dr["ORDERTIME"];
                             order.DISCOUNT = (int)dr["DISCOUNT"];
                             order.TOTALPRICE = (double)dr["TOTALPRICE"];
 
@@ -311,7 +304,6 @@ namespace DAL
                             order.ID_ORDER = (int)dr["ID_ORDER"];
                             order.ID_CUSTOMER = (int)dr["ID_CUSTOMER"];
                             order.ORDERDATE = (DateTime)dr["ORDERDATE"];
-                            order.ORDERTIME = (DateTime)dr["ORDERTIME"];
                             order.DISCOUNT = (int)dr["DISCOUNT"];
                             order.TOTALPRICE = (double)dr["TOTALPRICE"];
 
@@ -354,7 +346,6 @@ namespace DAL
                             order.ID_ORDER = (int)dr["ID_ORDER"];
                             order.ID_CUSTOMER = (int)dr["ID_CUSTOMER"];
                             order.ORDERDATE = (DateTime)dr["ORDERDATE"];
-                            order.ORDERTIME = (DateTime)dr["ORDERTIME"];
                             order.DISCOUNT = (int)dr["DISCOUNT"];
                             order.TOTALPRICE = (double)dr["TOTALPRICE"];
 
@@ -397,7 +388,6 @@ namespace DAL
                             order.ID_ORDER = (int)dr["ID_ORDER"];
                             order.ID_CUSTOMER = (int)dr["ID_CUSTOMER"];
                             order.ORDERDATE = (DateTime)dr["ORDERDATE"];
-                            order.ORDERTIME = (DateTime)dr["ORDERTIME"];
                             order.DISCOUNT = (int)dr["DISCOUNT"];
                             order.TOTALPRICE = (double)dr["TOTALPRICE"];
 
@@ -441,7 +431,6 @@ namespace DAL
                             order.ID_ORDER = (int)dr["ID_ORDER"];
                             order.ID_CUSTOMER = (int)dr["ID_CUSTOMER"];
                             order.ORDERDATE = (DateTime)dr["ORDERDATE"];
-                            order.ORDERTIME = (DateTime)dr["ORDERTIME"];
                             order.DISCOUNT = (int)dr["DISCOUNT"];
                             order.TOTALPRICE = (double)dr["TOTALPRICE"];
 
