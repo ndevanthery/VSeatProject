@@ -14,16 +14,26 @@ namespace DAL
 
 
 
-        //get Lists
-        public List<City> GetCities();
 
 
         //get City
 
-        public City GetCity(string cityName);
 
         public City GetCity(int idCity);
 
-       
+
+        //update City
+
+        public City UpdateCity(int idCityToChange, City newCity);
+
+
+        //delete city
+
+        public City DeleteCity(int idCity);
+
+        //get Lists
+        public List<City> GetCities();
+
+
     }
 }

@@ -12,7 +12,25 @@ namespace DAL
         //add Restaurant
 
 
-        public Restaurant addRestaurant(Restaurant restaurant);
+        public Restaurant AddRestaurant(Restaurant restaurant);
+
+
+
+
+        //get Restaurant
+
+        public Restaurant GetRestaurant(int idRestaurant);
+
+
+
+        //update Restaurant
+
+        public Restaurant UpdateRestaurant(int idRestaurant, Restaurant newRestaurant);
+
+
+        //delete Restaurant
+
+        public Restaurant DeleteRestaurant(int idRestaurant);
 
 
         //get lists
@@ -22,13 +40,6 @@ namespace DAL
         public List<Restaurant> GetRestaurantsByCity(int id_city);
 
         public List<Restaurant> GetRestaurantsByType(int id_type);
-
-
-        //get Restaurant
-
-        public Restaurant GetRestaurant(string name , string adress);
-
-        public Restaurant GetRestaurant(int idRestaurant);
 
 
 

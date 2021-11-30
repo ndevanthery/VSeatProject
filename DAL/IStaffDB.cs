@@ -14,6 +14,22 @@ namespace DAL
 
         public Staff AddStaff(Staff staff);
 
+
+
+        //get Staff
+
+        public Staff GetStaff(int idStaff);
+
+
+        //update Staff
+
+        public Staff UpdateStaff(int idStaff, Staff newStaff);
+
+        //delete Staff
+
+        public Staff DeleteStaff(int idStaff);
+
+
         //get Lists
 
         public List<Staff> GetStaffs();
@@ -21,14 +37,6 @@ namespace DAL
         public List<Staff> GetStaffs(int idRestaurant);
 
 
-
-        //get Staff
-
-        public Staff GetStaff(string username);
-
-        public Staff GetStaff(string name, string surname);
-
-        public Staff getStaff(int idStaff);
 
 
     }

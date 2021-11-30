@@ -11,7 +11,21 @@ namespace DAL
     {
         //add Order
 
-        public Order addOrder(Order order);
+        public Order AddOrder(Order order);
+
+
+        //get Order
+
+        public Order GetOrder(int orderID);
+
+
+        //update Order
+
+        public Order UpdateOrder(int idOrder, Order newOrder);
+
+        //delete Order
+
+        public Order DeleteOrder(int idOrder);
 
         //get Lists
 
@@ -26,11 +40,6 @@ namespace DAL
         public List<Order> GetOrdersByMaxTotalPrice(double totalPrice);
 
         public List<Order> GetOrdersByCustomer(int idCustomer);
-
-
-        //get Order
-
-        public Order GetOrder(int orderID);
 
 
     }

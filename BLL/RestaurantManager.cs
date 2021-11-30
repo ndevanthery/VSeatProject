@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace BLL
 {
-    class RestaurantManager
+    public class RestaurantManager
     {
         private IRestaurantDB restaurantDB { get; }
 
@@ -19,21 +19,64 @@ namespace BLL
 
         }
 
+        //---------------------------------------------------
+        // ADD METHOD
+        //---------------------------------------------------
+        public Restaurant AddRestaurant(Restaurant restaurant)
+        {
+            return restaurantDB.AddRestaurant(restaurant);
+        }
+        //---------------------------------------------------
+        // GET ONE METHOD
+        //---------------------------------------------------
+        public Restaurant GetRestaurant(int idRestaurant)
+        {
+            return restaurantDB.GetRestaurant(idRestaurant);
+        }
+        //---------------------------------------------------
+        // UPDATE METHOD
+        //---------------------------------------------------
+        public Restaurant UpdateRestaurant(int idRestaurant, Restaurant newRestaurant)
+        {
+            return restaurantDB.UpdateRestaurant(idRestaurant, newRestaurant);
+        }
+        //---------------------------------------------------
+        // DELETE METHOD
+        //---------------------------------------------------
+        public Restaurant DeleteRestaurant(int idRestaurant)
+        {
+            return restaurantDB.DeleteRestaurant(idRestaurant);
+
+        }
+        //---------------------------------------------------
+        // GET LIST METHODS
+        //---------------------------------------------------
 
         public List<Restaurant> GetRestaurants()
         {
             return restaurantDB.GetRestaurants();
         }
 
-        public Restaurant GetRestaurant(string name, string adress)
+        public List<Restaurant> GetRestaurantsByCity(int id_city)
         {
-            return restaurantDB.GetRestaurant(name, adress);
+            return restaurantDB.GetRestaurantsByCity(id_city);
         }
 
-        public Restaurant addRestaurant(Restaurant restaurant)
+        public List<Restaurant> GetRestaurantsByType(int id_type)
         {
-            return restaurantDB.addRestaurant(restaurant);
+           return restaurantDB.GetRestaurantsByType(id_type);
+
         }
+
+
+
+
+
+
+
+
+
+
 
     }
 }

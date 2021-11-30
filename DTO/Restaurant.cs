@@ -26,14 +26,14 @@ namespace DTO
 
         public override string ToString()
         {
-            return "ID RESTAURANT : " + ID_RESTAURANT +
-                   "ID CITY : " + IDCITY +
-                   "ID TYPE : " + IDTYPE +
-                   "NAME : " + NAME +
-                   "ADRESS : " + ADRESS +
-                   "PHONE NUMBER : " + PHONENUMBER+
-                   "USERNAME : " + USERNAME +
-                   "PASSWORD : " + PASSWORD 
+            return "ID RESTAURANT:" + ID_RESTAURANT +
+                   " / ID CITY:" + IDCITY +
+                   " / ID TYPE:" + IDTYPE +
+                   " / NAME:" + NAME +
+                   " / ADRESS:" + ADRESS +
+                   " / PHONE NUMBER:" + PHONENUMBER+
+                   " / USERNAME:" + USERNAME +
+                   " / PASSWORD:" + PASSWORD 
                    ;
 
         }

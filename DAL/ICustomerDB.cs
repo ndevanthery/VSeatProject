@@ -13,7 +13,24 @@ namespace DAL
 
         //add Customer
 
-        public Customer addCustomer(Customer customer);
+        public Customer AddCustomer(Customer customer);
+
+
+        //get Customers
+
+        public Customer GetCustomer(int idCustomer);
+
+
+
+        //update customer
+        public Customer UpdateCustomer(int id_customer , Customer newCustomer);
+
+
+
+        //delete customer
+
+        public Customer DeleteCustomer(int id_customer);
+
 
 
         //get Lists
@@ -24,15 +41,8 @@ namespace DAL
 
 
 
-        //get Customers
 
-        public Customer GetCustomerByName(string name, string surname);
 
-        public Customer GetCustomerByEmail(string email);
-
-        public Customer GetCustomer(int idCustomer);
-
-       
 
     }
 }

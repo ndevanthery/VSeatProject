@@ -23,10 +23,11 @@ namespace DTO
 
         public override string ToString()
         {
-            return "ID DISH : " + ID_DISH +
-                   "ID RESTAURANT : " + ID_RESTAURANT +
-                   "NAME : " + NAME +
-                   "COST PRICE : " + COST_PRICE;
+            return "ID DISH:" + ID_DISH +
+                   " / ID RESTAURANT:" + ID_RESTAURANT +
+                   " / IMAGE:" + IMAGE +
+                   " / NAME:" + NAME +
+                   " / PRICE:" + PRICE ;
         }
     }
 }

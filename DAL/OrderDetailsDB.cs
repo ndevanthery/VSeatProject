@@ -12,13 +12,22 @@ namespace DAL
     public class OrderDetailsDB : IOrderDetailsDB
     {
 
+        //---------------------------------------------------
+        // CONFIGURATION
+        //---------------------------------------------------
+
         private IConfiguration Configuration { get; }
 
         public OrderDetailsDB(IConfiguration conf)
         {
             Configuration = conf;
         }
-        public OrderDetails addOrderDetails(OrderDetails orderDetails)
+
+        //---------------------------------------------------
+        // ADD METHOD
+        //---------------------------------------------------
+
+        public OrderDetails AddOrderDetails(OrderDetails orderDetails)
         {
             string connectionString = Configuration.GetConnectionString("DefaultConnection");
             try
@@ -35,13 +44,18 @@ namespace DAL
             }
             catch (Exception e)
             {
-                throw e;
+                Console.WriteLine(e.Message);
             }
 
             return orderDetails;
         }
 
-        public OrderDetails GetOrderDetail(int orderId)
+
+        //---------------------------------------------------
+        // GET ONE METHOD
+        //---------------------------------------------------
+
+        public OrderDetails GetOrderDetail(int orderId , int id_dish)
         {
             OrderDetails orderDetails = null;
             string connectionString = Configuration.GetConnectionString("DefaultConnection");
@@ -50,9 +64,10 @@ namespace DAL
             {
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
-                    string query = "Select * from ORDERDETAILS WHERE ID_ORDER = @OrderId";
+                    string query = "Select * from ORDERDETAILS WHERE ID_ORDER = @OrderId AND ID_DISH = @id_dish";
                     SqlCommand cmd = new SqlCommand(query, cn);
                     cmd.Parameters.AddWithValue("@OrderId", orderId);
+                    cmd.Parameters.AddWithValue("@id_dish", id_dish);
 
 
                     cn.Open();
@@ -72,11 +87,18 @@ namespace DAL
             }
             catch (Exception e)
             {
-                throw e;
+                Console.WriteLine(e.Message);
             }
 
             return orderDetails;
         }
+
+
+
+        //---------------------------------------------------
+        // GET LIST METHODS
+        //---------------------------------------------------
+
 
         public List<OrderDetails> GetOrdersDetails()
         {
@@ -111,15 +133,99 @@ namespace DAL
             }
             catch (Exception e)
             {
-                throw e;
+                Console.WriteLine(e.Message);
             }
 
             return results;
         }
 
-        List<OrderDetails> IOrderDetailsDB.GetOrderDetails(int id_dish)
+
+        public List<OrderDetails> GetOrderDetailsByDish(int id_dish)
+
         {
-            throw new NotImplementedException();
+            List<OrderDetails> results = null;
+            string connectionString = Configuration.GetConnectionString("DefaultConnection");
+
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(connectionString))
+                {
+                    string query = "Select * from ORDERDETAILS WHERE ID_DISH = @id_dish";
+                    SqlCommand cmd = new SqlCommand(query, cn);
+                    cmd.Parameters.AddWithValue("@ID_DISH", id_dish);
+
+                    cn.Open();
+
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            if (results == null)
+                                results = new List<OrderDetails>();
+
+                            OrderDetails orderDetails = new OrderDetails();
+
+                            orderDetails.ID_DISH = (int)dr["ID_DISH"];
+                            orderDetails.ID_ORDER = (int)dr["ID_ORDER"];
+
+                            results.Add(orderDetails);
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+
+            return results;
         }
+
+
+        public List<OrderDetails> GetOrderDetailsByOrder(int orderId)
+        {
+            {
+                List<OrderDetails> results = null;
+                string connectionString = Configuration.GetConnectionString("DefaultConnection");
+
+                try
+                {
+                    using (SqlConnection cn = new SqlConnection(connectionString))
+                    {
+                        string query = "Select * from ORDERDETAILS WHERE ID_ORDER = @orderId";
+                        SqlCommand cmd = new SqlCommand(query, cn);
+                        cmd.Parameters.AddWithValue("@orderId", orderId);
+
+                        cn.Open();
+
+                        using (SqlDataReader dr = cmd.ExecuteReader())
+                        {
+                            while (dr.Read())
+                            {
+                                if (results == null)
+                                    results = new List<OrderDetails>();
+
+                                OrderDetails orderDetails = new OrderDetails();
+
+                                orderDetails.ID_ORDER = (int)dr["ID_ORDER"];
+                                orderDetails.ID_DISH = (int)dr["ID_DISH"];
+
+                                results.Add(orderDetails);
+                            }
+                        }
+                    }
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                }
+
+                return results;
+            }
+
+
+        }
+
     }
+
 }

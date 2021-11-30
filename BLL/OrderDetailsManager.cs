@@ -9,8 +9,10 @@ using System.Threading.Tasks;
 
 namespace BLL
 {
-    class OrderDetailsManager
+    public class OrderDetailsManager
     {
+
+
         private IOrderDetailsDB orderDetailsDB { get; }
 
         public OrderDetailsManager(IConfiguration conf)
@@ -19,20 +21,54 @@ namespace BLL
 
         }
 
-         public List<OrderDetails> GetOrdersDetails()
+        //---------------------------------------------------
+        // ADD METHOD
+        //---------------------------------------------------
+
+        public OrderDetails AddOrderDetails(OrderDetails orderDetails)
+        {
+            return orderDetailsDB.AddOrderDetails(orderDetails);
+        }
+
+        //---------------------------------------------------
+        // get one METHOD
+        //---------------------------------------------------
+
+        public OrderDetails GetOrderDetails(int orderId, int id_dish)
+        {
+            return orderDetailsDB.GetOrderDetail(orderId, id_dish);
+        }
+
+
+        //---------------------------------------------------
+        // get list METHODS
+        //---------------------------------------------------
+
+
+
+        public List<OrderDetails> GetOrdersDetails()
         {
             return orderDetailsDB.GetOrdersDetails();
         }
 
-        public OrderDetails GetOrderDetails(int orderId)
+        public List<OrderDetails> GetOrderDetailsByDish(int id_dish)
         {
-            return orderDetailsDB.GetOrderDetail(orderId);
+            return orderDetailsDB.GetOrderDetailsByDish(id_dish);
         }
 
-        public OrderDetails addOrderDetails(OrderDetails orderDetails)
+        public List<OrderDetails> GetOrderDetailsByOrder(int orderId)
         {
-            return orderDetailsDB.addOrderDetails(orderDetails);
+            return orderDetailsDB.GetOrderDetailsByOrder(orderId);
         }
+
+
+
+
+
+
+
+
+
 
 
 

@@ -11,6 +11,9 @@ namespace DAL
 {
    public  class OrderDB : IOrderDB
     {
+        //---------------------------------------------------
+        // CONFIGURATION
+        //---------------------------------------------------
 
         private IConfiguration Configuration { get; }
 
@@ -18,18 +21,23 @@ namespace DAL
         {
             Configuration = conf;
         }
-        public Order addOrder(Order order)
+
+        //---------------------------------------------------
+        // ADD METHOD
+        //---------------------------------------------------
+
+
+        public Order AddOrder(Order order)
         {
             string connectionString = Configuration.GetConnectionString("DefaultConnection");
             try
             {
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
-                    string query = "Insert into ORDER(ID_CUSTOMER,ORDERDATE,ORDERTIME,DISCOUNT,TOTALPRICE) values(@ID_CUSTOMER ,@ORDERDATE,@ORDERTIME,@DISCOUNT,@TOTALPRICE); SELECT SCOPE_IDENTITY()";
+                    string query = "Insert into ORDER(ID_CUSTOMER,ORDERDATE,DISCOUNT,TOTALPRICE) values(@ID_CUSTOMER ,@ORDERDATE,@DISCOUNT,@TOTALPRICE); SELECT SCOPE_IDENTITY()";
                     SqlCommand cmd = new SqlCommand(query, cn);
                     cmd.Parameters.AddWithValue("@ID_CUSTOMER", order.ID_CUSTOMER);
                     cmd.Parameters.AddWithValue("@ORDERDATE", order.ORDERDATE);
-                    cmd.Parameters.AddWithValue("@ORDERTIME", order.ORDERTIME);
                     cmd.Parameters.AddWithValue("@DISCOUNT", order.DISCOUNT);
                     cmd.Parameters.AddWithValue("@TOTALPRICE", order.TOTALPRICE);
 
@@ -42,11 +50,14 @@ namespace DAL
             {
                 Console.WriteLine(e.Message);
             }
-
             return order;
 
         }
 
+
+        //---------------------------------------------------
+        // GET ONE METHOD
+        //---------------------------------------------------
         public Order GetOrder(int orderID)
         {
             Order order = null;
@@ -59,7 +70,7 @@ namespace DAL
                     string query = "Select * from ORDER WHERE ID_ORDER= @ID_ORDER";
                     SqlCommand cmd = new SqlCommand(query, cn);
                     cmd.Parameters.AddWithValue("@ID_ORDER", orderID);
-                    
+
 
 
                     cn.Open();
@@ -71,7 +82,6 @@ namespace DAL
                         order.ID_ORDER = (int)dr["ID_ORDER"];
                         order.ID_CUSTOMER = (int)dr["ID_CUSTOMER"];
                         order.ORDERDATE = (DateTime)dr["ORDERDATE"];
-                        order.ORDERTIME = (DateTime)dr["ORDERTIME"];
                         order.DISCOUNT = (int)dr["DISCOUNT"];
                         order.TOTALPRICE = (double)dr["TOTALPRICE"];
 
@@ -85,6 +95,101 @@ namespace DAL
 
             return order;
         }
+
+        //---------------------------------------------------
+        // UPDATE METHOD
+        //---------------------------------------------------
+
+        public Order UpdateOrder(int idOrder, Order newOrder)
+        {
+            Order order = null;
+            string connectionString = Configuration.GetConnectionString("DefaultConnection");
+
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(connectionString))
+                {
+                    string query = "UPDATE ORDER SET ID_CUSTOMER = @ID_CUSTOMER , ORDERDATE= @ORDERDATE , DISCOUNT = @DISCOUNT , TOTALPRICE =@TOTALPRICE WHERE ID_ORDER = @id";
+                    SqlCommand cmd = new SqlCommand(query, cn);
+                    cmd.Parameters.AddWithValue("@ID_CUSTOMER", newOrder.ID_CUSTOMER);
+                    cmd.Parameters.AddWithValue("@ORDERDATE", newOrder.ORDERDATE);
+                    cmd.Parameters.AddWithValue("@DISCOUNT", newOrder.DISCOUNT);
+                    cmd.Parameters.AddWithValue("@TOTALPRICE", newOrder.TOTALPRICE);
+
+                    cmd.Parameters.AddWithValue("@id", idOrder);
+
+
+                    cn.Open();
+
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+
+                        order = new Order();
+                        order.ID_ORDER = (int)dr["ID_ORDER"];
+                        order.ID_CUSTOMER = (int)dr["ID_CUSTOMER"];
+                        order.ORDERDATE = (DateTime)dr["ORDERDATE"];
+                        order.DISCOUNT = (int)dr["DISCOUNT"];
+                        order.TOTALPRICE = (double)dr["TOTALPRICE"];
+
+
+
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+
+            return order;
+        }
+
+
+        //---------------------------------------------------
+        // DELETE METHOD
+        //---------------------------------------------------
+        public Order DeleteOrder(int id_order)
+        {
+            Order order = null;
+            string connectionString = Configuration.GetConnectionString("DefaultConnection");
+
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(connectionString))
+                {
+                    string query = "DELETE FROM ORDER WHERE ID_ORDER = @id";
+                    SqlCommand cmd = new SqlCommand(query, cn);
+                    cmd.Parameters.AddWithValue("@id", id_order);
+
+
+                    cn.Open();
+
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+
+                        order = new Order();
+                        order.ID_ORDER = (int)dr["ID_ORDER"];
+                        order.ID_CUSTOMER = (int)dr["ID_CUSTOMER"];
+                        order.ORDERDATE = (DateTime)dr["ORDERDATE"];
+                        order.DISCOUNT = (int)dr["DISCOUNT"];
+                        order.TOTALPRICE = (double)dr["TOTALPRICE"];
+
+
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+
+            return order;
+        }
+
+        //---------------------------------------------------
+        // GET lists METHODS
+        //---------------------------------------------------
+
 
         public List<Order> GetOrders()
         {
@@ -112,7 +217,6 @@ namespace DAL
                             order.ID_ORDER = (int)dr["ID_ORDER"];
                             order.ID_CUSTOMER = (int)dr["ID_CUSTOMER"];
                             order.ORDERDATE = (DateTime)dr["ORDERDATE"];
-                            order.ORDERTIME = (DateTime)dr["ORDERTIME"];
                             order.DISCOUNT = (int)dr["DISCOUNT"];
                             order.TOTALPRICE = (double)dr["TOTALPRICE"];
 
@@ -157,7 +261,6 @@ namespace DAL
                             order.ID_ORDER = (int)dr["ID_ORDER"];
                             order.ID_CUSTOMER = (int)dr["ID_CUSTOMER"];
                             order.ORDERDATE = (DateTime)dr["ORDERDATE"];
-                            order.ORDERTIME = (DateTime)dr["ORDERTIME"];
                             order.DISCOUNT = (int)dr["DISCOUNT"];
                             order.TOTALPRICE = (double)dr["TOTALPRICE"];
 
@@ -201,7 +304,6 @@ namespace DAL
                             order.ID_ORDER = (int)dr["ID_ORDER"];
                             order.ID_CUSTOMER = (int)dr["ID_CUSTOMER"];
                             order.ORDERDATE = (DateTime)dr["ORDERDATE"];
-                            order.ORDERTIME = (DateTime)dr["ORDERTIME"];
                             order.DISCOUNT = (int)dr["DISCOUNT"];
                             order.TOTALPRICE = (double)dr["TOTALPRICE"];
 
@@ -244,7 +346,6 @@ namespace DAL
                             order.ID_ORDER = (int)dr["ID_ORDER"];
                             order.ID_CUSTOMER = (int)dr["ID_CUSTOMER"];
                             order.ORDERDATE = (DateTime)dr["ORDERDATE"];
-                            order.ORDERTIME = (DateTime)dr["ORDERTIME"];
                             order.DISCOUNT = (int)dr["DISCOUNT"];
                             order.TOTALPRICE = (double)dr["TOTALPRICE"];
 
@@ -263,7 +364,7 @@ namespace DAL
 
         public List<Order> GetOrdersByMaxTotalPrice(double totalPrice)
         {
-        List<Order> results = null;
+            List<Order> results = null;
             string connectionString = Configuration.GetConnectionString("DefaultConnection");
 
             try
@@ -287,7 +388,6 @@ namespace DAL
                             order.ID_ORDER = (int)dr["ID_ORDER"];
                             order.ID_CUSTOMER = (int)dr["ID_CUSTOMER"];
                             order.ORDERDATE = (DateTime)dr["ORDERDATE"];
-                            order.ORDERTIME = (DateTime)dr["ORDERTIME"];
                             order.DISCOUNT = (int)dr["DISCOUNT"];
                             order.TOTALPRICE = (double)dr["TOTALPRICE"];
 
@@ -303,6 +403,49 @@ namespace DAL
             }
 
             return results;           
+        }
+
+        public List<Order> GetOrdersByCustomer(int idCustomer)
+        {
+            List<Order> results = null;
+            string connectionString = Configuration.GetConnectionString("DefaultConnection");
+
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(connectionString))
+                {
+                    string query = "Select * from ORDER WHERE ID_CUSTOMER = @idCustomer";
+                    SqlCommand cmd = new SqlCommand(query, cn);
+                    cmd.Parameters.AddWithValue("@idCustomer", idCustomer);
+                    cn.Open();
+
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            if (results == null)
+                                results = new List<Order>();
+
+                            Order order = new Order();
+
+                            order.ID_ORDER = (int)dr["ID_ORDER"];
+                            order.ID_CUSTOMER = (int)dr["ID_CUSTOMER"];
+                            order.ORDERDATE = (DateTime)dr["ORDERDATE"];
+                            order.DISCOUNT = (int)dr["DISCOUNT"];
+                            order.TOTALPRICE = (double)dr["TOTALPRICE"];
+
+
+                            results.Add(order);
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+
+            return results;
         }
 
 

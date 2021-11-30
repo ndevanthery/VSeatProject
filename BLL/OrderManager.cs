@@ -9,29 +9,93 @@ using System.Threading.Tasks;
 
 namespace BLL
 {
-    class OrderManager
+    public class OrderManager
     {
         private IOrderDB orderDB { get; }
-    
+
 
         public OrderManager(IConfiguration conf)
         {
             orderDB = new OrderDB(conf);
         }
 
-
-        public List<Order> GetOrders()
+        //---------------------------------------------------
+        // ADD METHOD
+        //---------------------------------------------------
+        public Order AddOrder(Order order)
         {
-            return orderDB.GetOrders();
+            return orderDB.AddOrder(order);
         }
+
+
+        //---------------------------------------------------
+        // GET ONE METHOD
+        //---------------------------------------------------
         public Order GetOrder(int orderID)
         {
             return orderDB.GetOrder(orderID);
         }
 
-        public Order addOrder(Order order)
+
+        //---------------------------------------------------
+        // UPDATE METHOD
+        //---------------------------------------------------
+        public Order UpdaterOrder(int idOrder, Order newOrder)
         {
-            return orderDB.addOrder(order);
+            return orderDB.UpdateOrder(idOrder, newOrder);
         }
+        //---------------------------------------------------
+        // DELETE METHOD
+        //---------------------------------------------------
+        public Order DeleteOrder(int idOrder)
+        {
+            return orderDB.DeleteOrder(idOrder);
+        }
+        //---------------------------------------------------
+        // GET lists METHODS
+        //---------------------------------------------------
+
+
+
+        public List<Order> GetOrders()
+        {
+            return orderDB.GetOrders();
+        }
+
+        public List<Order> GetOrders(DateTime orderDate)
+        {
+            return orderDB.GetOrders(orderDate);
+        }
+
+        public List<Order> GetOrdersByDiscount(int discount)
+        {
+            return orderDB.GetOrdersByDiscount(discount);
+        }
+
+        public List<Order> GetOrdersByMinTotalPrice(double totalPrice)
+        {
+            return orderDB.GetOrdersByMinTotalPrice(totalPrice);
+        }
+
+        public List<Order> GetOrdersByMaxTotalPrice(double totalPrice)
+        {
+            return orderDB.GetOrdersByMaxTotalPrice(totalPrice);
+        }
+
+
+        public List<Order> GetOrdersByCustomer(int idCustomer)
+        {
+            return orderDB.GetOrdersByCustomer(idCustomer);
+        }
+
+
+
+
+
+
+
+
+
+
     }
 }

@@ -11,6 +11,11 @@ namespace DAL
 {
     public class StaffDB : IStaffDB
     {
+
+        //---------------------------------------------------
+        // CONFIGURATION
+        //---------------------------------------------------
+
         private IConfiguration Configuration { get; }
 
         public StaffDB(IConfiguration conf)
@@ -18,36 +23,30 @@ namespace DAL
             Configuration = conf;
         }
 
-        public Staff GetStaff(string username)
-        { 
-            Staff staff = null;
-            string connectionString = Configuration.GetConnectionString("DefaultConnection");
+        //---------------------------------------------------
+        // ADD METHOD
+        //---------------------------------------------------
 
+        public Staff AddStaff(Staff staff)
+        {
+            string connectionString = Configuration.GetConnectionString("DefaultConnection");
             try
             {
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
-                    string query = "Select * from STAFF WHERE USERNAME = @Username";
+                    string query = "Insert into STAFF(ID_RESTAURANT,FIRSTNAME,LASTNAME,ADRESS,PHONENUMBER,USERNAME,PASSWORD) values(@ID_RESTAURANT,@FIRSTNAME,@LASTNAME,@ADRESS,@PHONENUMBER,@USERNAME,@PASSWORD); SELECT SCOPE_IDENTITY()";
                     SqlCommand cmd = new SqlCommand(query, cn);
-                    cmd.Parameters.AddWithValue("@Username", username);
-
+                    cmd.Parameters.AddWithValue("@ID_RESTAURANT", staff.ID_RESTAURANT);
+                    cmd.Parameters.AddWithValue("@FIRSTNAME", staff.FIRSTNAME);
+                    cmd.Parameters.AddWithValue("@LASTNAME", staff.LASTNAME);
+                    cmd.Parameters.AddWithValue("@ADRESS", staff.ADRESS);
+                    cmd.Parameters.AddWithValue("@PHONENUMBER", staff.PHONENUMBER);
+                    cmd.Parameters.AddWithValue("@USERNAME", staff.USERNAME);
+                    cmd.Parameters.AddWithValue("@PASSWORD", staff.PASSWORD);
 
                     cn.Open();
 
-                    using (SqlDataReader dr = cmd.ExecuteReader())
-                    {
-
-                        staff = new Staff();
-                        staff.ID_STAFF = (int)dr["ID_STAFF"];
-                        staff.ID_RESTAURANT = (int)dr["ID_RESTAURANT"];
-                        staff.FIRSTNAME = (string)dr["FIRSTNAME"];
-                        staff.LASTNAME = (string)dr["LASTNAME"];
-                        staff.ADRESS = (string)dr["ADRESS"];
-                        staff.PHONENUMBER = (string)dr["PHONENUMBER"];
-                        staff.PASSWORD = (string)dr["PASSWORD"];
-                        staff.USERNAME = (string)dr["USERNAME"];
-
-                    }
+                    staff.ID_STAFF = Convert.ToInt32(cmd.ExecuteScalar());
                 }
             }
             catch (Exception e)
@@ -58,7 +57,11 @@ namespace DAL
             return staff;
         }
 
-        public Staff GetStaff(string firstname, string lastname)
+        //---------------------------------------------------
+        // GET ONE METHOD
+        //---------------------------------------------------
+
+        public Staff GetStaff(int idStaff)
         {
             Staff staff = null;
             string connectionString = Configuration.GetConnectionString("DefaultConnection");
@@ -67,10 +70,62 @@ namespace DAL
             {
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
-                    string query = "Select * from STAFF WHERE FIRSTNAME = @firstname AND LASTNAME = @lastname";
+                    string query = "Select * from STAFF WHERE ID_STAFF = @id";
                     SqlCommand cmd = new SqlCommand(query, cn);
-                    cmd.Parameters.AddWithValue("@firstname", firstname);
-                    cmd.Parameters.AddWithValue("@lastname", lastname);
+                    cmd.Parameters.AddWithValue("@id", idStaff);
+
+
+                    cn.Open();
+
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+
+                        staff = new Staff();
+                        staff.ID_STAFF = (int)dr["ID_STAFF"];
+                        staff.ID_RESTAURANT = (int)dr["ID_RESTAURANT"];
+                        staff.FIRSTNAME = (string)dr["FIRSTNAME"];
+                        staff.LASTNAME = (string)dr["LASTNAME"];
+                        staff.ADRESS = (string)dr["ADRESS"];
+                        staff.PHONENUMBER = (string)dr["PHONENUMBER"];
+                        staff.PASSWORD = (string)dr["PASSWORD"];
+                        staff.USERNAME = (string)dr["USERNAME"];
+
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+
+            return staff;
+        }
+
+        //---------------------------------------------------
+        // UPDATE METHOD
+        //---------------------------------------------------
+
+        public Staff UpdateStaff(int idStaff, Staff newStaff)
+        {
+
+            Staff staff = null;
+            string connectionString = Configuration.GetConnectionString("DefaultConnection");
+
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(connectionString))
+                {
+                    string query = "UPDATE RESTAURANT SET ID_RESTAURANT = @ID_RESTAURANT , FIRSTNAME= @FIRSTNAME , LASTNAME = @LASTNAME , ADRESS = @ADRESS , PHONENUMBER =@PHONENUMBER, USERNAME=@USERNAME, PASSWORD = @PASSWORD WHERE ID_STAFF = @id";
+                    SqlCommand cmd = new SqlCommand(query, cn);
+                    cmd.Parameters.AddWithValue("@ID_RESTAURANT", newStaff.ID_RESTAURANT);
+                    cmd.Parameters.AddWithValue("@FIRSTNAME", newStaff.FIRSTNAME);
+                    cmd.Parameters.AddWithValue("@LASTNAME", newStaff.LASTNAME);
+                    cmd.Parameters.AddWithValue("@ADRESS", newStaff.ADRESS);
+                    cmd.Parameters.AddWithValue("@PHONENUMBER", newStaff.PHONENUMBER);
+                    cmd.Parameters.AddWithValue("@USERNAME", newStaff.USERNAME);
+                    cmd.Parameters.AddWithValue("@PASSWORD", newStaff.PASSWORD);
+
+                    cmd.Parameters.AddWithValue("@id", idStaff);
 
 
                     cn.Open();
@@ -89,6 +144,7 @@ namespace DAL
                         staff.USERNAME = (string)dr["USERNAME"];
 
 
+
                     }
                 }
             }
@@ -99,6 +155,60 @@ namespace DAL
 
             return staff;
         }
+
+
+        //---------------------------------------------------
+        // DELETE METHOD
+        //---------------------------------------------------
+        public Staff DeleteStaff(int idStaff)
+        {
+            Staff staff = null;
+            string connectionString = Configuration.GetConnectionString("DefaultConnection");
+
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(connectionString))
+                {
+                    string query = "DELETE FROM STAFF WHERE ID_STAFF = @id";
+                    SqlCommand cmd = new SqlCommand(query, cn);
+                    cmd.Parameters.AddWithValue("@id", idStaff);
+
+
+                    cn.Open();
+
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+
+                        staff = new Staff();
+                        staff.ID_STAFF = (int)dr["ID_STAFF"];
+                        staff.ID_RESTAURANT = (int)dr["ID_RESTAURANT"];
+                        staff.FIRSTNAME = (string)dr["FIRSTNAME"];
+                        staff.LASTNAME = (string)dr["LASTNAME"];
+                        staff.ADRESS = (string)dr["ADRESS"];
+                        staff.PHONENUMBER = (string)dr["PHONENUMBER"];
+                        staff.PASSWORD = (string)dr["PASSWORD"];
+                        staff.USERNAME = (string)dr["USERNAME"];
+
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+
+            return staff;
+        }
+
+
+        //---------------------------------------------------
+        // GET LISTS METHOD
+        //---------------------------------------------------
+
+
+
+
+
 
         public List<Staff> GetStaffs()
         {
@@ -187,37 +297,8 @@ namespace DAL
                 Console.WriteLine(e.Message);
             }
 
-            return results;        }
-
-
-        public Staff AddStaff(Staff staff)
-        {
-            string connectionString = Configuration.GetConnectionString("DefaultConnection");
-            try
-            {
-                using (SqlConnection cn = new SqlConnection(connectionString))
-                {
-                    string query = "Insert into STAFF(ID_RESTAURANT,FIRSTNAME,LASTNAME,ADRESS,PHONENUMBER,USERNAME,PASSWORD) values(@ID_RESTAURANT,@FIRSTNAME,@LASTNAME,@ADRESS,@PHONENUMBER,@USERNAME,@PASSWORD); SELECT SCOPE_IDENTITY()";
-                    SqlCommand cmd = new SqlCommand(query, cn);
-                    cmd.Parameters.AddWithValue("@ID_RESTAURANT", staff.ID_RESTAURANT);
-                    cmd.Parameters.AddWithValue("@FIRSTNAME", staff.FIRSTNAME);
-                    cmd.Parameters.AddWithValue("@LASTNAME", staff.LASTNAME);
-                    cmd.Parameters.AddWithValue("@ADRESS", staff.ADRESS);
-                    cmd.Parameters.AddWithValue("@PHONENUMBER", staff.PHONENUMBER);
-                    cmd.Parameters.AddWithValue("@PASSWORD", staff.PASSWORD);
-                    cmd.Parameters.AddWithValue("@USERNAME", staff.USERNAME);
-
-                    cn.Open();
-
-                    staff.ID_STAFF = Convert.ToInt32(cmd.ExecuteScalar());
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-            }
-
-            return staff;
+            return results;        
         }
+        
     }
 }
