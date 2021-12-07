@@ -1,0 +1,69 @@
+﻿@model IEnumerable<RestaurantVM>
+
+@{
+    ViewData["Title"] = "RestaurantsList";
+}
+
+<h1>list of restaurants in @Model.First().CITYNAME</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.RESTAURANTNAME)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CITYNAME)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TYPENAME)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.restaurant.NAME)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.restaurant.ADRESS)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.restaurant.PHONENUMBER)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+ @if (Model != null)
+ {
+
+
+@foreach (var item in Model)
+{
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.RESTAURANTNAME)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CITYNAME)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TYPENAME)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.restaurant.NAME)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.restaurant.ADRESS)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.restaurant.PHONENUMBER)
+            </td>
+            <td>
+                @Html.ActionLink("view more", "DishesList", new { idRestaurant = item.restaurant.ID_RESTAURANT })
+            </td>
+        </tr>
+}
+}
+    </tbody>
+</table>

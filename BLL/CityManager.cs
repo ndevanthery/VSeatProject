@@ -9,13 +9,13 @@ using Microsoft.Extensions.Configuration;
 
 namespace BLL
 {
-    public class CityManager
+    public class CityManager : ICityManager
     {
-        private ICityDB cityDB { get; }
+        private ICityDB CityDB { get; }
 
-        public CityManager(IConfiguration conf)
+        public CityManager(ICityDB cityDB)
         {
-            cityDB = new CityDB(conf);
+            CityDB = cityDB;
 
         }
 
@@ -24,7 +24,7 @@ namespace BLL
         //---------------------------------------------------
         public City AddCity(City city)
         {
-            return cityDB.AddCity(city);
+            return CityDB.AddCity(city);
         }
 
 
@@ -35,7 +35,7 @@ namespace BLL
 
         public City GetCity(int idCity)
         {
-            return cityDB.GetCity(idCity);
+            return CityDB.GetCity(idCity);
         }
 
 
@@ -45,7 +45,7 @@ namespace BLL
         //---------------------------------------------------
         public City UpdateCity(int idCityToChange, City newCity)
         {
-            return cityDB.UpdateCity(idCityToChange, newCity);
+            return CityDB.UpdateCity(idCityToChange, newCity);
         }
 
 
@@ -55,7 +55,7 @@ namespace BLL
 
         public City DeleteCity(int idCity)
         {
-            return cityDB.DeleteCity(idCity);
+            return CityDB.DeleteCity(idCity);
         }
 
         //---------------------------------------------------
@@ -65,7 +65,7 @@ namespace BLL
 
         public List<City> GetCities()
         {
-            return cityDB.GetCities();
+            return CityDB.GetCities();
 
         }
 

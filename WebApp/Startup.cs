@@ -33,6 +33,14 @@ namespace WebApp
 
             services.AddScoped<IDishDB, DishDB>();
 
+            services.AddScoped<ICityManager, CityManager>();
+
+            services.AddScoped<ICityDB, CityDB>();
+
+            services.AddScoped<IRestoTypeManager, RestoTypeManager>();
+
+            services.AddScoped<IRestoTypeDB, RestoTypeDB>();
+
             services.AddSession();
 
             services.AddControllersWithViews();

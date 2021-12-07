@@ -22,13 +22,25 @@ namespace VSeat
 
         static void Main(string[] args)
         {
-            
-            DishManager manager = new DishManager(new DishDB(Configuration));
-            var dishes = manager.GetDishes(1);
-            foreach(var dish in dishes)
+
+            OrderManager manager = new OrderManager(new OrderDB(Configuration));
+            var Orders = manager.GetOrders();
+            foreach(var order in Orders)
             {
-                Console.WriteLine(dish.ToString());
+                Console.WriteLine(order.ToString());
             }
+            //CityManager manager = new CityManager(new CityDB(Configuration));
+            //var City = manager.GetCity(3);
+            //Console.WriteLine(City);
+
+
+
+            //DishManager manager = new DishManager(new DishDB(Configuration));
+            //var dishes = manager.GetDishes(1);
+            //foreach(var dish in dishes)
+            //{
+            //    Console.WriteLine(dish.ToString());
+            //}
             //Console.WriteLine(Configuration.GetConnectionString("DefaultConnection"));
             //RestaurantManager manager = new RestaurantManager();
             //var restaurants = manager.GetRestaurants();
