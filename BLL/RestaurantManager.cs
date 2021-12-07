@@ -9,13 +9,13 @@ using System.Threading.Tasks;
 
 namespace BLL
 {
-    public class RestaurantManager
+    public class RestaurantManager : IRestaurantManager
     {
         private IRestaurantDB restaurantDB { get; }
 
-        public RestaurantManager(IConfiguration conf)
+        public RestaurantManager(IRestaurantDB restaurantDB)
         {
-            restaurantDB = new RestaurantDB(conf);
+            this.restaurantDB = restaurantDB;
 
         }
 

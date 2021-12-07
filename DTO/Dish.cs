@@ -17,7 +17,7 @@ namespace DTO
 
         public string NAME { get; set; }
 
-        public double PRICE { get; set; }
+        public decimal PRICE { get; set; }
 
 
 
@@ -25,7 +25,6 @@ namespace DTO
         {
             return "ID DISH:" + ID_DISH +
                    " / ID RESTAURANT:" + ID_RESTAURANT +
-                   " / IMAGE:" + IMAGE +
                    " / NAME:" + NAME +
                    " / PRICE:" + PRICE ;
         }

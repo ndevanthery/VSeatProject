@@ -91,7 +91,7 @@ namespace DAL
 
                         dish.NAME = (string)dr["NAME"];
 
-                        dish.PRICE = (double)dr["PRICE"];
+                        dish.PRICE = (decimal)dr["PRICE"];
 
 
                         dish.IMAGE = (ImageFormat)dr["IMAGE"];
@@ -144,7 +144,7 @@ namespace DAL
                         dish.ID_DISH = (int)dr["ID_DISH"];
                         dish.ID_RESTAURANT = (int)dr["ID_RESTAURANT"];
                         dish.NAME = (string)dr["NAME"];
-                        dish.PRICE = (double)dr["PRICE"];
+                        dish.PRICE = (decimal)dr["PRICE"];
                         dish.IMAGE = (ImageFormat)dr["IMAGE"];
 
                     }
@@ -187,7 +187,7 @@ namespace DAL
                         dish.ID_DISH = (int)dr["ID_DISH"];
                         dish.ID_RESTAURANT = (int)dr["ID_RESTAURANT"];
                         dish.NAME = (string)dr["NAME"];
-                        dish.PRICE = (double)dr["PRICE"];
+                        dish.PRICE = (decimal)dr["PRICE"];
                         dish.IMAGE = (ImageFormat)dr["IMAGE"];
                         
                     }
@@ -237,7 +237,7 @@ namespace DAL
 
                             dish.NAME = (string)dr["NAME"];
 
-                            dish.PRICE = (double)dr["PRICE"];
+                            dish.PRICE = (decimal)dr["PRICE"];
 
                             results.Add(dish);
                         }
@@ -281,11 +281,11 @@ namespace DAL
 
                             dish.ID_RESTAURANT = (int)dr["ID_RESTAURANT"];
 
-                            dish.IMAGE = (ImageFormat)dr["IMAGE"];
+                            dish.IMAGE = null;
 
                             dish.NAME = (string)dr["NAME"];
 
-                            dish.PRICE = (double)dr["PRICE"];
+                            dish.PRICE = (decimal)dr["PRICE"];
 
                             results.Add(dish);
                         }
@@ -336,7 +336,7 @@ namespace DAL
 
                             dish.NAME = (string)dr["NAME"];
 
-                            dish.PRICE = (double)dr["PRICE"];
+                            dish.PRICE = (decimal)dr["PRICE"];
 
                             results.Add(dish);
                         }

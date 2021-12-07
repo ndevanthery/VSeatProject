@@ -8,6 +8,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BLL;
+using DAL;
 
 namespace WebApp
 {
@@ -23,6 +25,16 @@ namespace WebApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddScoped<IRestaurantManager, RestaurantManager>();
+
+            services.AddScoped<IRestaurantDB, RestaurantDB>();
+
+            services.AddScoped<IDishManager, DishManager>();
+
+            services.AddScoped<IDishDB, DishDB>();
+
+            services.AddSession();
+
             services.AddControllersWithViews();
         }
 
@@ -41,6 +53,8 @@ namespace WebApp
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+
+            app.UseSession();
 
             app.UseRouting();
 

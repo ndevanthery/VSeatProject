@@ -20,30 +20,32 @@ namespace BLL
         //login method
         public Customer loginCustomer(string username,string password) {
             
-            Customer loggedCustomer = new Customer;
+            Customer loggedCustomer = new Customer();
 
-             var customers = CustomerManager.GetCustomers()
+            var customers = GetCustomers();
 
             foreach (var customer in customers)
             {
                 if (customer.USERNAME == username && customer.PASSWORD == password )
                 {
-                    Console.WriteLine("customer found and logged"); 
-                    loggedCustomer.ID_CITY = customer.ID_CITY;
-                    loggedCustomer.ID_CUSTOMER = customer.ID_CUSTOMER
-                    loggedCustomer.FIRSTNAME = customer.FIRSTNAME
-                    loggedCustomer.LASTNAME = customer.LASTNAME
-                    loggedCustomer.ADRESS = customer.ADRESS
-                    loggedCustomer.PHONENUMBER = customer.PHONENUMBER
-                    loggedCustomer.USERNAME = customer.USERNAME
-                    loggedCustomer.EMAIL = customer.EMAIL
+                    Console.WriteLine("customer found and logged");
+                    loggedCustomer.IDCITY = customer.IDCITY;
+                    loggedCustomer.ID_CUSTOMER = customer.ID_CUSTOMER;
+                    loggedCustomer.FIRSTNAME = customer.FIRSTNAME;
+                    loggedCustomer.LASTNAME = customer.LASTNAME;
+                    loggedCustomer.ADRESS = customer.ADRESS;
+                    loggedCustomer.PHONENUMBER = customer.PHONENUMBER;
+                    loggedCustomer.USERNAME = customer.USERNAME;
+                    loggedCustomer.EMAIL = customer.EMAIL;
                     
                     return loggedCustomer;
                 }
                 
             }
+            
 
             Console.WriteLine("customer username or password incorrect");
+            return null;
                  
         }
 

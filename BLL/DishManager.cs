@@ -9,14 +9,14 @@ using Microsoft.Extensions.Configuration;
 
 namespace BLL
 {
-    public class DishManager
+    public class DishManager :IDishManager
     {
 
         private IDishDB dishDB { get; }
 
-        public DishManager(IConfiguration conf)
+        public DishManager(IDishDB dishDB)
         {
-            dishDB = new DishDB(conf);
+            this.dishDB = dishDB;
 
         }
 
