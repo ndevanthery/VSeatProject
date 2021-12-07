@@ -4,7 +4,7 @@
     ViewData["Title"] = "RestaurantsList";
 }
 
-<h1>list of restaurants in @Model.First().CITYNAME</h1>
+<h1>restaurants in @Model.First().CITYNAME</h1>
 
 <p>
     <a asp-action="Create">Create New</a>
@@ -13,22 +13,16 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.RESTAURANTNAME)
+                type
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.CITYNAME)
+                name
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.TYPENAME)
+                adress
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.restaurant.NAME)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.restaurant.ADRESS)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.restaurant.PHONENUMBER)
+                phone number
             </th>
             <th></th>
         </tr>
@@ -41,12 +35,6 @@
 @foreach (var item in Model)
 {
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.RESTAURANTNAME)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CITYNAME)
-            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.TYPENAME)
             </td>
