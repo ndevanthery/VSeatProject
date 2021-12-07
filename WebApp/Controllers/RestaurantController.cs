@@ -34,5 +34,21 @@ namespace WebApp.Controllers
 
             return View(dishes);
         }
+        
+
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        public IActionResult Details(Restaurant restaurant)
+        {
+            if(ModelState.IsValid)
+            {
+                RestaurantManager.AddRestaurant(restaurant);
+                return RedirectToAction("Index", "Restaurant");
+            }
+            return View(restaurant);
+        }
     }
 }
