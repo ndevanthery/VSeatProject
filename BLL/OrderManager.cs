@@ -9,14 +9,14 @@ using System.Threading.Tasks;
 
 namespace BLL
 {
-    public class OrderManager
+    public class OrderManager : IOrderManager
     {
         private IOrderDB orderDB { get; }
 
 
-        public OrderManager(IConfiguration conf)
+        public OrderManager(OrderDB OrderDB)
         {
-            orderDB = new OrderDB(conf);
+            orderDB = OrderDB;
         }
 
         //---------------------------------------------------

@@ -18,7 +18,7 @@ namespace DTO
 
         public int DISCOUNT { get; set; }
 
-        public double TOTALPRICE { get; set; }
+        public decimal TOTALPRICE { get; set; }
 
         // ajouter un CustomerID dans order ! 
 

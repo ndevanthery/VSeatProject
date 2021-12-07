@@ -34,7 +34,7 @@ namespace DAL
             {
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
-                    string query = "Insert into ORDER(ID_CUSTOMER,ORDERDATE,DISCOUNT,TOTALPRICE) values(@ID_CUSTOMER ,@ORDERDATE,@DISCOUNT,@TOTALPRICE); SELECT SCOPE_IDENTITY()";
+                    string query = "Insert into [dbo].[ORDER](ID_CUSTOMER,ORDERDATE,DISCOUNT,TOTALPRICE) values(@ID_CUSTOMER ,@ORDERDATE,@DISCOUNT,@TOTALPRICE); SELECT SCOPE_IDENTITY()";
                     SqlCommand cmd = new SqlCommand(query, cn);
                     cmd.Parameters.AddWithValue("@ID_CUSTOMER", order.ID_CUSTOMER);
                     cmd.Parameters.AddWithValue("@ORDERDATE", order.ORDERDATE);
@@ -67,7 +67,7 @@ namespace DAL
             {
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
-                    string query = "Select * from ORDER WHERE ID_ORDER= @ID_ORDER";
+                    string query = "Select * from [dbo].[ORDER] WHERE ID_ORDER= @ID_ORDER";
                     SqlCommand cmd = new SqlCommand(query, cn);
                     cmd.Parameters.AddWithValue("@ID_ORDER", orderID);
 
@@ -83,7 +83,7 @@ namespace DAL
                         order.ID_CUSTOMER = (int)dr["ID_CUSTOMER"];
                         order.ORDERDATE = (DateTime)dr["ORDERDATE"];
                         order.DISCOUNT = (int)dr["DISCOUNT"];
-                        order.TOTALPRICE = (double)dr["TOTALPRICE"];
+                        order.TOTALPRICE = (decimal)dr["TOTALPRICE"];
 
                     }
                 }
@@ -109,7 +109,7 @@ namespace DAL
             {
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
-                    string query = "UPDATE ORDER SET ID_CUSTOMER = @ID_CUSTOMER , ORDERDATE= @ORDERDATE , DISCOUNT = @DISCOUNT , TOTALPRICE =@TOTALPRICE WHERE ID_ORDER = @id";
+                    string query = "UPDATE [dbo].[ORDER] SET ID_CUSTOMER = @ID_CUSTOMER , ORDERDATE= @ORDERDATE , DISCOUNT = @DISCOUNT , TOTALPRICE =@TOTALPRICE WHERE ID_ORDER = @id";
                     SqlCommand cmd = new SqlCommand(query, cn);
                     cmd.Parameters.AddWithValue("@ID_CUSTOMER", newOrder.ID_CUSTOMER);
                     cmd.Parameters.AddWithValue("@ORDERDATE", newOrder.ORDERDATE);
@@ -129,7 +129,7 @@ namespace DAL
                         order.ID_CUSTOMER = (int)dr["ID_CUSTOMER"];
                         order.ORDERDATE = (DateTime)dr["ORDERDATE"];
                         order.DISCOUNT = (int)dr["DISCOUNT"];
-                        order.TOTALPRICE = (double)dr["TOTALPRICE"];
+                        order.TOTALPRICE = (decimal)dr["TOTALPRICE"];
 
 
 
@@ -157,7 +157,7 @@ namespace DAL
             {
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
-                    string query = "DELETE FROM ORDER WHERE ID_ORDER = @id";
+                    string query = "DELETE FROM [dbo].[ORDER] WHERE ID_ORDER = @id";
                     SqlCommand cmd = new SqlCommand(query, cn);
                     cmd.Parameters.AddWithValue("@id", id_order);
 
@@ -172,7 +172,7 @@ namespace DAL
                         order.ID_CUSTOMER = (int)dr["ID_CUSTOMER"];
                         order.ORDERDATE = (DateTime)dr["ORDERDATE"];
                         order.DISCOUNT = (int)dr["DISCOUNT"];
-                        order.TOTALPRICE = (double)dr["TOTALPRICE"];
+                        order.TOTALPRICE = (decimal)dr["TOTALPRICE"];
 
 
                     }
@@ -200,7 +200,7 @@ namespace DAL
             {
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
-                    string query = "Select * from ORDER";
+                    string query = "Select * from [dbo].[ORDER]";
                     SqlCommand cmd = new SqlCommand(query, cn);
 
                     cn.Open();
@@ -218,7 +218,7 @@ namespace DAL
                             order.ID_CUSTOMER = (int)dr["ID_CUSTOMER"];
                             order.ORDERDATE = (DateTime)dr["ORDERDATE"];
                             order.DISCOUNT = (int)dr["DISCOUNT"];
-                            order.TOTALPRICE = (double)dr["TOTALPRICE"];
+                            order.TOTALPRICE = (decimal)dr["TOTALPRICE"];
 
 
                             results.Add(order);
@@ -244,7 +244,7 @@ namespace DAL
             {
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
-                    string query = "Select * from ORDER WHERE ORDERDATE = @orderDate";
+                    string query = "Select * from [dbo].[ORDER] WHERE ORDERDATE = @orderDate";
                     SqlCommand cmd = new SqlCommand(query, cn);
                     cmd.Parameters.AddWithValue("@orderDate", orderDate);
                     cn.Open();
@@ -262,7 +262,7 @@ namespace DAL
                             order.ID_CUSTOMER = (int)dr["ID_CUSTOMER"];
                             order.ORDERDATE = (DateTime)dr["ORDERDATE"];
                             order.DISCOUNT = (int)dr["DISCOUNT"];
-                            order.TOTALPRICE = (double)dr["TOTALPRICE"];
+                            order.TOTALPRICE = (decimal)dr["TOTALPRICE"];
 
 
                             results.Add(order);
@@ -287,7 +287,7 @@ namespace DAL
             {
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
-                    string query = "Select * from ORDER WHERE DISCOUNT = @discount";
+                    string query = "Select * from [dbo].[ORDER] WHERE DISCOUNT = @discount";
                     SqlCommand cmd = new SqlCommand(query, cn);
                     cmd.Parameters.AddWithValue("@disount", discount);
                     cn.Open();
@@ -305,7 +305,7 @@ namespace DAL
                             order.ID_CUSTOMER = (int)dr["ID_CUSTOMER"];
                             order.ORDERDATE = (DateTime)dr["ORDERDATE"];
                             order.DISCOUNT = (int)dr["DISCOUNT"];
-                            order.TOTALPRICE = (double)dr["TOTALPRICE"];
+                            order.TOTALPRICE = (decimal)dr["TOTALPRICE"];
 
 
                             results.Add(order);
@@ -329,7 +329,7 @@ namespace DAL
             {
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
-                    string query = "Select * from ORDER WHERE TOTALPRICE > @total";
+                    string query = "Select * from [dbo].[ORDER] WHERE TOTALPRICE > @total";
                     SqlCommand cmd = new SqlCommand(query, cn);
                     cmd.Parameters.AddWithValue("@total", totalPrice);
                     cn.Open();
@@ -347,7 +347,7 @@ namespace DAL
                             order.ID_CUSTOMER = (int)dr["ID_CUSTOMER"];
                             order.ORDERDATE = (DateTime)dr["ORDERDATE"];
                             order.DISCOUNT = (int)dr["DISCOUNT"];
-                            order.TOTALPRICE = (double)dr["TOTALPRICE"];
+                            order.TOTALPRICE = (decimal)dr["TOTALPRICE"];
 
                             results.Add(order);
                         }
@@ -371,7 +371,7 @@ namespace DAL
             {
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
-                    string query = "Select * from ORDER WHERE TOTALPRICE < @total";
+                    string query = "Select * from [dbo].[ORDER] WHERE TOTALPRICE < @total";
                     SqlCommand cmd = new SqlCommand(query, cn);
                     cmd.Parameters.AddWithValue("@total", totalPrice);
                     cn.Open();
@@ -389,7 +389,7 @@ namespace DAL
                             order.ID_CUSTOMER = (int)dr["ID_CUSTOMER"];
                             order.ORDERDATE = (DateTime)dr["ORDERDATE"];
                             order.DISCOUNT = (int)dr["DISCOUNT"];
-                            order.TOTALPRICE = (double)dr["TOTALPRICE"];
+                            order.TOTALPRICE = (decimal)dr["TOTALPRICE"];
 
 
                             results.Add(order);
@@ -414,7 +414,7 @@ namespace DAL
             {
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
-                    string query = "Select * from ORDER WHERE ID_CUSTOMER = @idCustomer";
+                    string query = "Select * from [dbo].[ORDER] WHERE ID_CUSTOMER = @idCustomer";
                     SqlCommand cmd = new SqlCommand(query, cn);
                     cmd.Parameters.AddWithValue("@idCustomer", idCustomer);
                     cn.Open();
@@ -432,7 +432,7 @@ namespace DAL
                             order.ID_CUSTOMER = (int)dr["ID_CUSTOMER"];
                             order.ORDERDATE = (DateTime)dr["ORDERDATE"];
                             order.DISCOUNT = (int)dr["DISCOUNT"];
-                            order.TOTALPRICE = (double)dr["TOTALPRICE"];
+                            order.TOTALPRICE = (decimal)dr["TOTALPRICE"];
 
 
                             results.Add(order);

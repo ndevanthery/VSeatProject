@@ -1,0 +1,59 @@
+﻿@model IEnumerable<DTO.Dish>
+
+@{
+    ViewData["Title"] = "DishesList";
+}
+
+<h1>DishesList</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ID_DISH)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ID_RESTAURANT)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NAME)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PRICE)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@if (Model != null)
+{
+
+
+@foreach (var item in Model)
+{
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ID_DISH)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ID_RESTAURANT)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NAME)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PRICE)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            </td>
+        </tr>
+}
+}
+    </tbody>
+</table>

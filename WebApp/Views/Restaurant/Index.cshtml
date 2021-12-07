@@ -1,10 +1,10 @@
-﻿@model IEnumerable<DTO.Restaurant>
+﻿@model IEnumerable<DTO.City>
 
 @{
     ViewData["Title"] = "Index";
 }
 
-<h1>Restaurant</h1>
+<h1>list of citys</h1>
 
 <p>
     <a asp-action="Create">Create New</a>
@@ -12,65 +12,27 @@
 <table class="table">
     <thead>
         <tr>
-            @*<th>
-                @Html.DisplayNameFor(model => model.ID_RESTAURANT)
+            <th>
+                @Html.DisplayNameFor(model => model.CITYNAME)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.IDCITY)
+                @Html.DisplayNameFor(model => model.NPA)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IDTYPE)
-            </th>*@
-            <th>
-                @Html.DisplayNameFor(model => model.NAME)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ADRESS)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PHONENUMBER)
-            </th>
-            @*<th>
-                @Html.DisplayNameFor(model => model.USERNAME)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PASSWORD)
-            </th>*@
             <th></th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
         <tr>
-            @*<td>
-                @Html.DisplayFor(modelItem => item.ID_RESTAURANT)
+            <td>
+                @Html.DisplayFor(modelItem => item.CITYNAME)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.IDCITY)
+                @Html.DisplayFor(modelItem => item.NPA)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.IDTYPE)
-            </td>*@
-            <td>
-                @Html.DisplayFor(modelItem => item.NAME)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ADRESS)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PHONENUMBER)
-            </td>
-            @*<td>
-                @Html.DisplayFor(modelItem => item.USERNAME)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PASSWORD)
-            </td>*@
-            <td>
-                @Html.ActionLink("Details", "Details", new {id=item.ID_RESTAURANT}) 
-                @*@Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })*@
+                @Html.ActionLink("view more", "RestaurantsList", new { idCity = item.IDCITY})
+
             </td>
         </tr>
 }
