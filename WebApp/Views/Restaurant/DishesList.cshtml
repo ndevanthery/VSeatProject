@@ -1,30 +1,26 @@
-﻿@model IEnumerable<DTO.Dish>
+﻿@model IEnumerable<DishVM>
 
 @{
     ViewData["Title"] = "DishesList";
 }
 
-<h1>DishesList</h1>
+<h1>Dishes of @Model.First().restaurantName in @Model.First().cityName</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+<h1>@Html.ActionLink("Command", "CommandPage", new { idRestaurant = Model.First().dish.ID_RESTAURANT })</h1>
+
+
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.ID_DISH)
+                @Html.DisplayNameFor(model => model.dish.NAME)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ID_RESTAURANT)
+                @Html.DisplayNameFor(model => model.dish.PRICE)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.NAME)
+                @Html.DisplayNameFor(model => model.dish.IMAGE)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PRICE)
-            </th>
-            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -36,21 +32,13 @@
 {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.ID_DISH)
+                @Html.DisplayFor(modelItem => item.dish.NAME)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ID_RESTAURANT)
+                @Html.DisplayFor(modelItem => item.dish.PRICE)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.NAME)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PRICE)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                @Html.DisplayFor(modelItem => item.dish.IMAGE)
             </td>
         </tr>
 }

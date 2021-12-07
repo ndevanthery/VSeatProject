@@ -66,8 +66,59 @@ namespace WebApp.Controllers
         public IActionResult DishesList(int idRestaurant)
         {
             var dishes = DishManager.GetDishes(idRestaurant);
-            
-            return View(dishes);
+            var dishes_vm = new List<Models.DishVM>();
+            if (dishes != null)
+            {
+                foreach (var dish in dishes)
+                {
+                    var myCityID = RestaurantManager.GetRestaurant(idRestaurant).IDCITY;
+
+                    Models.DishVM myDishVM = new Models.DishVM
+                    {
+                        dish = dish,
+                        restaurantName = RestaurantManager.GetRestaurant(idRestaurant).NAME,
+                        cityName = CityManager.GetCity(myCityID).CITYNAME
+
+
+                    };
+
+                    dishes_vm.Add(myDishVM);
+                }
+            }
+            return View(dishes_vm);
         }
+
+        public IActionResult CommandPage(int idRestaurant)
+        {
+            var dishes = DishManager.GetDishes(idRestaurant);
+            var dishes_vm = new List<Models.DishVM>();
+            if (dishes != null)
+            {
+                foreach (var dish in dishes)
+                {
+                    var myCityID = RestaurantManager.GetRestaurant(idRestaurant).IDCITY;
+
+                    Models.DishVM myDishVM = new Models.DishVM
+                    {
+                        dish = dish,
+                        restaurantName = RestaurantManager.GetRestaurant(idRestaurant).NAME,
+                        cityName = CityManager.GetCity(myCityID).CITYNAME
+
+
+                    };
+
+                    dishes_vm.Add(myDishVM);
+                }
+            }
+            return View(dishes_vm);
+        }
+
+        public IActionResult create()
+        {
+            return View();
+        }
+
+
+
     }
 }

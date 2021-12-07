@@ -1,0 +1,48 @@
+﻿@model IEnumerable<WebApp.Models.DishVM>
+
+@{
+    ViewData["Title"] = "CommandPage";
+}
+
+<h1>pass your command at @Model.First().restaurantName</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.First().dish.NAME)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.First().dish.PRICE)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.dish.NAME)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.dish.PRICE)
+                </td>
+                <td>
+                    <input type="number" class="form-control" value="0" />
+                </td>
+            </tr>
+        }
+
+
+        
+    
+       
+
+    </tbody>
+
+</table>
+<a asp-action="Index">confirm your order</a>

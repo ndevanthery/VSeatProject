@@ -84,17 +84,18 @@ namespace DAL
 
                     using (SqlDataReader dr = cmd.ExecuteReader())
                     {
-
-                        restaurant = new Restaurant();
-                        restaurant.ID_RESTAURANT = (int)dr["ID_RESTAURANT"];
-                        restaurant.IDCITY = (int)dr["IDCITY"];
-                        restaurant.IDTYPE = (int)dr["IDTYPE"];
-                        restaurant.NAME = (string)dr["NAME"];
-                        restaurant.ADRESS = (string)dr["ADRESS"];
-                        restaurant.PHONENUMBER = (string)dr["PHONENUMBER"];
-                        restaurant.USERNAME = (string)dr["USERNAME"];
-                        restaurant.PASSWORD = (string)dr["PASSWORD"];
-
+                        while (dr.Read())
+                        {
+                            restaurant = new Restaurant();
+                            restaurant.ID_RESTAURANT = (int)dr["ID_RESTAURANT"];
+                            restaurant.IDCITY = (int)dr["IDCITY"];
+                            restaurant.IDTYPE = (int)dr["IDTYPE"];
+                            restaurant.NAME = (string)dr["NAME"];
+                            restaurant.ADRESS = (string)dr["ADRESS"];
+                            restaurant.PHONENUMBER = (string)dr["PHONENUMBER"];
+                            restaurant.USERNAME = (string)dr["USERNAME"];
+                            restaurant.PASSWORD = (string)dr["PASSWORD"];
+                        }
 
 
                     }
