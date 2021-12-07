@@ -44,8 +44,8 @@ namespace WebApp
 
             /*ORDER DAL BLL*/
 
-            //services.AddScoped<IOrderManager, OrderManager>();
-            //services.AddScoped<IOrderDB, OrderDB>();
+            services.AddScoped<IOrderManager, OrderManager>();
+            services.AddScoped<IOrderDB, OrderDB>();
 
             /*CUSTOMER DAL BLL*/
             services.AddScoped<ICustomerManager, CustomerManager>();

@@ -40,21 +40,26 @@ namespace WebApp.Controllers
 
             var restaurants = RestaurantManager.GetRestaurantsByCity(idCity);
             var restaurants_vm = new List<Models.RestaurantVM>();
-
-            foreach(var resto in restaurants)
+            if(restaurants!=null)
             {
-                Models.RestaurantVM myRestoVM = new Models.RestaurantVM
+                foreach (var resto in restaurants)
                 {
-                    CITYNAME = CityManager.GetCity(resto.IDCITY).CITYNAME,
-                    RESTAURANTNAME = resto.NAME,
-                    TYPENAME = RestoTypeManager.GetRestoType(resto.IDTYPE).TYPENAME,
-                    restaurant = resto
-                   
+                    Models.RestaurantVM myRestoVM = new Models.RestaurantVM
+                    {
+                        CITYNAME = CityManager.GetCity(resto.IDCITY).CITYNAME,
+                        RESTAURANTNAME = resto.NAME,
+                        TYPENAME = RestoTypeManager.GetRestoType(resto.IDTYPE).TYPENAME,
+                        restaurant = resto
 
-                };
 
-                restaurants_vm.Add(myRestoVM);
-            }     
+                    };
+
+                    restaurants_vm.Add(myRestoVM);
+                }
+            }
+
+
+            
             return View(restaurants_vm);
         }
 
