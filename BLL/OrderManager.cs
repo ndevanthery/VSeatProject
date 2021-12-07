@@ -14,7 +14,7 @@ namespace BLL
         private IOrderDB orderDB { get; }
 
 
-        public OrderManager(OrderDB OrderDB)
+        public OrderManager(IOrderDB OrderDB)
         {
             orderDB = OrderDB;
         }
