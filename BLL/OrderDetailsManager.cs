@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace BLL
 {
-    public class OrderDetailsManager
+    public class OrderDetailsManager : IOrderDetailsManager
     {
 
 

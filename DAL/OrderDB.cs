@@ -36,7 +36,7 @@ namespace DAL
                 {
                     string query = "Insert into [dbo].[ORDER](ID_CUSTOMER,ORDERDATE,DISCOUNT,TOTALPRICE) values(@ID_CUSTOMER ,@ORDERDATE,@DISCOUNT,@TOTALPRICE); SELECT SCOPE_IDENTITY()";
                     SqlCommand cmd = new SqlCommand(query, cn);
-                    cmd.Parameters.AddWithValue("@ID_CUSTOMER", order.ID_CUSTOMER);
+                    cmd.Parameters.AddWithValue("@ID_CUSTOMER",order.ID_CUSTOMER);
                     cmd.Parameters.AddWithValue("@ORDERDATE", order.ORDERDATE);
                     cmd.Parameters.AddWithValue("@DISCOUNT", order.DISCOUNT);
                     cmd.Parameters.AddWithValue("@TOTALPRICE", order.TOTALPRICE);

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace BLL
 {
-    public class CustomerManager
+    public class CustomerManager : ICustomerManager
     {
         private ICustomerDB customerDB { get; }
 
