@@ -77,16 +77,19 @@ namespace DAL
 
                     using (SqlDataReader dr = cmd.ExecuteReader())
                     {
+                        while (dr.Read())
+                        {
 
-                        city = new City();
+                            city = new City();
+                            city.IDCITY = (int)dr["IDCITY"];
 
-                        city.IDCITY = (int)dr["IDCITY"];
+                            city.CITYNAME = (string)dr["CITYNAME"];
 
-                        city.CITYNAME = (string)dr["CITYNAME"];
+                            city.NPA = (string)dr["NPA"];
 
-                        city.NPA = (int)dr["NPA"];
 
-                        
+                        }
+
                     }
                 }
             }
@@ -127,7 +130,7 @@ namespace DAL
                         city = new City();
                         city.IDCITY = (int)dr["IDCITY"];
                         city.CITYNAME = (string)dr["CITYNAME"];
-                        city.NPA = (int)dr["NPA"];
+                        city.NPA = (string)dr["NPA"];
 
                     }
                 }
@@ -165,7 +168,7 @@ namespace DAL
                         city = new City();
                         city.IDCITY = (int)dr["IDCITY"];
                         city.CITYNAME = (string)dr["CITYNAME"];
-                        city.NPA = (int)dr["NPA"];
+                        city.NPA = (string)dr["NPA"];
 
                     }
                 }
@@ -214,7 +217,7 @@ namespace DAL
 
                             city.CITYNAME = (string)dr["CITYNAME"];
 
-                            city.NPA = (int)dr["NPA"];
+                            city.NPA = (string)dr["NPA"];
 
 
                             results.Add(city);

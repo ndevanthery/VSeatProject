@@ -9,13 +9,13 @@ using Microsoft.Extensions.Configuration;
 
 namespace BLL
 {
-    public class RestoTypeManager
+    public class RestoTypeManager : IRestoTypeManager
     {
         private IRestoTypeDB restoTypeDB { get; }
 
-        public RestoTypeManager(IConfiguration conf)
+        public RestoTypeManager(IRestoTypeDB RestoTypeDB)
         {
-            restoTypeDB = new RestoTypeDB(conf);
+            restoTypeDB = RestoTypeDB;
         }
 
 
@@ -58,14 +58,6 @@ namespace BLL
         {
             return restoTypeDB.GetRestoTypes();
         }
-
-
-
-
-
-
-
-
 
     }
 }

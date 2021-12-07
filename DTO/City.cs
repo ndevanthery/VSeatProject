@@ -12,7 +12,7 @@ namespace DTO
 
         public string CITYNAME { get; set; }
 
-        public int NPA { get; set; }
+        public string NPA { get; set; }
 
         public override string ToString()
         {

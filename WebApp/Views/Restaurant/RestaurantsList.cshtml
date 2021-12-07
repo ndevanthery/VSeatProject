@@ -1,0 +1,57 @@
+﻿@model IEnumerable<RestaurantVM>
+
+@{
+    ViewData["Title"] = "RestaurantsList";
+}
+
+<h1>restaurants in @Model.First().CITYNAME</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                type
+            </th>
+            <th>
+                name
+            </th>
+            <th>
+                adress
+            </th>
+            <th>
+                phone number
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+ @if (Model != null)
+ {
+
+
+@foreach (var item in Model)
+{
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.TYPENAME)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.restaurant.NAME)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.restaurant.ADRESS)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.restaurant.PHONENUMBER)
+            </td>
+            <td>
+                @Html.ActionLink("view more", "DishesList", new { idRestaurant = item.restaurant.ID_RESTAURANT })
+            </td>
+        </tr>
+}
+}
+    </tbody>
+</table>

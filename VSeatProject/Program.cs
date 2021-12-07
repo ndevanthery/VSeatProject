@@ -24,11 +24,16 @@ namespace VSeat
         {
 
             OrderManager manager = new OrderManager(new OrderDB(Configuration));
-            var orders = manager.GetOrders();
-            foreach (var order in orders)
+            var Orders = manager.GetOrders();
+            foreach(var order in Orders)
             {
-                Console.Write(order.ToString());
+                Console.WriteLine(order.ToString());
             }
+            //CityManager manager = new CityManager(new CityDB(Configuration));
+            //var City = manager.GetCity(3);
+            //Console.WriteLine(City);
+
+
 
             //DishManager manager = new DishManager(new DishDB(Configuration));
             //var dishes = manager.GetDishes(1);
@@ -43,7 +48,7 @@ namespace VSeat
             //{
             //    Console.WriteLine(resto.ToString());
             //}
-
+              
 
             //try
             //{

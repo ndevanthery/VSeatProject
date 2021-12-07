@@ -76,14 +76,16 @@ namespace DAL
 
                     using (SqlDataReader dr = cmd.ExecuteReader())
                     {
+                        while (dr.Read())
+                        {
 
-                        restoType = new RestoType();
+                            restoType = new RestoType();
 
-                        restoType.IDTYPE = (int)dr["IDTYPE"];
+                            restoType.IDTYPE = (int)dr["IDTYPE"];
 
-                        restoType.TYPENAME = (string)dr["TYPENAME"];
+                            restoType.TYPENAME = (string)dr["TYPENAME"];
 
-
+                        }
                     }
                 }
             }
