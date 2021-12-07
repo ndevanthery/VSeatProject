@@ -220,7 +220,7 @@ namespace DAL
                             order.DISCOUNT = (int)dr["DISCOUNT"];
                             order.TOTALPRICE = (double)dr["TOTALPRICE"];
 
-
+                            Console.WriteLine(order);
                             results.Add(order);
                         }
                     }

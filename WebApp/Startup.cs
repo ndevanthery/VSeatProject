@@ -10,6 +10,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using BLL;
 using DAL;
+using DTO;
 
 namespace WebApp
 {
@@ -32,6 +33,10 @@ namespace WebApp
             services.AddScoped<IDishManager, DishManager>();
 
             services.AddScoped<IDishDB, DishDB>();
+
+            services.AddScoped<IOrderManager, OrderManager>();
+
+            services.AddScoped<IOrderDB, OrderDB>();
 
             services.AddSession();
 
