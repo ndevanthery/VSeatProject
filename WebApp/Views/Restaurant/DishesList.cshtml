@@ -1,5 +1,7 @@
 ﻿@model IEnumerable<DishVM>
-
+@{
+    Layout = "_LayoutCustomer";
+}
 @{
     ViewData["Title"] = "DishesList";
 }
@@ -24,24 +26,24 @@
         </tr>
     </thead>
     <tbody>
-@if (Model != null)
-{
+        @if (Model != null)
+        {
 
 
-@foreach (var item in Model)
-{
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.dish.NAME)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.dish.PRICE)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.dish.IMAGE)
-            </td>
-        </tr>
-}
-}
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.dish.NAME)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.dish.PRICE)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.dish.IMAGE)
+                    </td>
+                </tr>
+            }
+        }
     </tbody>
 </table>

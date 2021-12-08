@@ -1,6 +1,9 @@
 ﻿@model IEnumerable<DTO.City>
 
 @{
+    Layout = "_LayoutCustomer";
+}
+@{
     ViewData["Title"] = "Index";
 }
 
@@ -22,19 +25,20 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.CITYNAME)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NPA)
-            </td>
-            <td>
-                @Html.ActionLink("view more", "RestaurantsList", new { idCity = item.IDCITY})
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CITYNAME)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NPA)
+                </td>
+                <td>
+                    @Html.ActionLink("view more", "RestaurantsList", new { idCity = item.IDCITY })
 
-            </td>
-        </tr>
-}
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

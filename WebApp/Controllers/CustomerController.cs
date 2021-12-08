@@ -18,7 +18,11 @@ namespace WebApp.Controllers
             OrderManager = orderManager;
             CustomerManager = customerManager;
         }
-     
+        public IActionResult Index()
+        {
+            return View();
+        }
+
         public IActionResult OrderInbound()
         {
             return View(OrderManager.GetOrders());

@@ -24,6 +24,7 @@ namespace WebApp.Controllers
         {
             return View();
         }
+       
 
         //this Action result will be called when the user press the button "login"
         //After putting his username and password 

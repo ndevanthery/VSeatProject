@@ -1,5 +1,7 @@
 ﻿@model IEnumerable<RestaurantVM>
-
+@{
+    Layout = "_LayoutCustomer";
+}
 @{
     ViewData["Title"] = "RestaurantsList";
 }
@@ -28,30 +30,30 @@
         </tr>
     </thead>
     <tbody>
- @if (Model != null)
- {
+        @if (Model != null)
+        {
 
 
-@foreach (var item in Model)
-{
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.TYPENAME)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.restaurant.NAME)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.restaurant.ADRESS)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.restaurant.PHONENUMBER)
-            </td>
-            <td>
-                @Html.ActionLink("view more", "DishesList", new { idRestaurant = item.restaurant.ID_RESTAURANT })
-            </td>
-        </tr>
-}
-}
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TYPENAME)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.restaurant.NAME)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.restaurant.ADRESS)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.restaurant.PHONENUMBER)
+                    </td>
+                    <td>
+                        @Html.ActionLink("view more", "DishesList", new { idRestaurant = item.restaurant.ID_RESTAURANT })
+                    </td>
+                </tr>
+            }
+        }
     </tbody>
 </table>
