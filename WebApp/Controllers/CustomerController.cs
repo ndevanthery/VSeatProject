@@ -11,10 +11,12 @@ namespace WebApp.Controllers
     public class CustomerController : Controller
     {
         private IOrderManager OrderManager { get; }
+        private ICustomerManager CustomerManager { get; }
 
-        public CustomerController(IOrderManager orderManager)
+        public CustomerController(IOrderManager orderManager,ICustomerManager customerManager)
         {
             OrderManager = orderManager;
+            CustomerManager = customerManager;
         }
         public IActionResult IndexLogin()
         {
@@ -26,6 +28,22 @@ namespace WebApp.Controllers
         }
         public IActionResult OrderHistory()
         {
+            return View();
+        }
+
+        public IActionResult CustomerHomeAfterLogin(String username,String password)
+        {
+            var customers = CustomerManager.GetCustomers();
+            foreach (var customer in customers)
+            {
+                if (customer.USERNAME == username)
+                {
+                    
+                }
+            }
+            
+                
+            
             return View();
         }
 
