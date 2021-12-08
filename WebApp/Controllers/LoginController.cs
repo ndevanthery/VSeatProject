@@ -31,15 +31,21 @@ namespace WebApp.Controllers
         public IActionResult ProcessLogin(UserModel userModel)
         {
             var customers = CustomerManager.GetCustomers();
+
+            //use BLL method "login"
+            //when your login fails, make it come back to this page
+            //when your login is successful, make it go on the "customer index" view
+            //login not with sessions ? 
+
             foreach (var customer in customers)
             {
                 if (customer.USERNAME == userModel.UserName && customer.PASSWORD == userModel.Password)
                 {
-                    return View("LoginSuccess", userModel);
+                    return View("~/Views/Customer/Index.cshtml", userModel);
                 }
                
             }
-            return View("Loginfailure", userModel);
+            return View("Index", userModel);
         }
     }
 }
