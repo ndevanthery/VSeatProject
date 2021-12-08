@@ -18,32 +18,13 @@ namespace WebApp.Controllers
             OrderManager = orderManager;
             CustomerManager = customerManager;
         }
-        public IActionResult IndexLogin()
-        {
-            return View();
-        }
+     
         public IActionResult OrderInbound()
         {
             return View(OrderManager.GetOrders());
         }
         public IActionResult OrderHistory()
         {
-            return View();
-        }
-
-        public IActionResult CustomerHomeAfterLogin(String username,String password)
-        {
-            var customers = CustomerManager.GetCustomers();
-            foreach (var customer in customers)
-            {
-                if (customer.USERNAME == username)
-                {
-                    
-                }
-            }
-            
-                
-            
             return View();
         }
 

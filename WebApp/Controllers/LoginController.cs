@@ -36,12 +36,9 @@ namespace WebApp.Controllers
                 {
                     return View("LoginSuccess", userModel);
                 }
-                else
-                {
-                    return View("Loginfailure",userModel);
-                }
+               
             }
-            return Index();
+            return View("Loginfailure", userModel);
         }
     }
 }
