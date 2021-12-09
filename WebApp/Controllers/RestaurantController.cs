@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BLL;
+using Microsoft.AspNetCore.Http;
 
 namespace WebApp.Controllers
 {
@@ -27,6 +28,10 @@ namespace WebApp.Controllers
 
         public IActionResult Index()
         {
+            if (HttpContext.Session.GetInt32("ID_CUSTOMER") == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
             var citys = CityManager.GetCities();
             foreach(var city in citys)
             {
@@ -37,6 +42,10 @@ namespace WebApp.Controllers
 
         public IActionResult RestaurantsList(int idCity)
         {
+            if (HttpContext.Session.GetInt32("ID_CUSTOMER") == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
 
             var restaurants = RestaurantManager.GetRestaurantsByCity(idCity);
             var restaurants_vm = new List<Models.RestaurantVM>();
@@ -65,6 +74,10 @@ namespace WebApp.Controllers
 
         public IActionResult DishesList(int idRestaurant)
         {
+            if (HttpContext.Session.GetInt32("ID_CUSTOMER") == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
             var dishes = DishManager.GetDishes(idRestaurant);
             var dishes_vm = new List<Models.DishVM>();
             if (dishes != null)
@@ -90,6 +103,10 @@ namespace WebApp.Controllers
 
         public IActionResult CommandPage(int idRestaurant)
         {
+            if (HttpContext.Session.GetInt32("ID_CUSTOMER") == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
             var dishes = DishManager.GetDishes(idRestaurant);
             var dishes_vm = new List<Models.DishVM>();
             if (dishes != null)
@@ -113,10 +130,6 @@ namespace WebApp.Controllers
             return View(dishes_vm);
         }
 
-        public IActionResult create()
-        {
-            return View();
-        }
 
 
 

@@ -10,16 +10,9 @@ namespace WebApp.Models
     {
         public Order order { get; set; }
 
-        public int ID_ORDER { get; set; }
+        public string restaurantName { get; set; }
 
-        public int ID_CUSTOMER { get; set; }
-
-        public DateTime ORDERDATE { get; set; }
-
-
-        public int DISCOUNT { get; set; }
-
-        public decimal TOTALPRICE { get; set; }
+        public string cityName { get; set; }
 
     }
 }

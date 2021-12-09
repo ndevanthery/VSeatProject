@@ -77,14 +77,15 @@ namespace DAL
 
                     using (SqlDataReader dr = cmd.ExecuteReader())
                     {
-
-                        order = new Order();
-                        order.ID_ORDER = (int)dr["ID_ORDER"];
-                        order.ID_CUSTOMER = (int)dr["ID_CUSTOMER"];
-                        order.ORDERDATE = (DateTime)dr["ORDERDATE"];
-                        order.DISCOUNT = (int)dr["DISCOUNT"];
-                        order.TOTALPRICE = (decimal)dr["TOTALPRICE"];
-
+                        while (dr.Read())
+                        {
+                            order = new Order();
+                            order.ID_ORDER = (int)dr["ID_ORDER"];
+                            order.ID_CUSTOMER = (int)dr["ID_CUSTOMER"];
+                            order.ORDERDATE = (DateTime)dr["ORDERDATE"];
+                            order.DISCOUNT = (int)dr["DISCOUNT"];
+                            order.TOTALPRICE = (decimal)dr["TOTALPRICE"];
+                        }
                     }
                 }
             }

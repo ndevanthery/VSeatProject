@@ -82,21 +82,22 @@ namespace DAL
 
                     using (SqlDataReader dr = cmd.ExecuteReader())
                     {
+                        while (dr.Read())
+                        {
+                            dish = new Dish();
 
-                        dish = new Dish();
+                            dish.ID_DISH = (int)dr["ID_DISH"];
 
-                        dish.ID_DISH = (int)dr["ID_DISH"];
+                            dish.ID_RESTAURANT = (int)dr["ID_RESTAURANT"];
 
-                        dish.ID_RESTAURANT = (int) dr["ID_RESTAURANT"];
+                            dish.NAME = (string)dr["NAME"];
 
-                        dish.NAME = (string)dr["NAME"];
-
-                        dish.PRICE = (decimal)dr["PRICE"];
-
-
-                        dish.IMAGE = (ImageFormat)dr["IMAGE"];
+                            dish.PRICE = (decimal)dr["PRICE"];
 
 
+                            dish.IMAGE = (ImageFormat)dr["IMAGE"];
+
+                        }
                     }
                 }
             }

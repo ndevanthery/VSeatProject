@@ -12,6 +12,8 @@ namespace DTO
 
         public int ID_ORDER { get; set; }
 
+        public int quantity { get; set; }
+
         public override string ToString()
         {
             return "ID DISH:" + ID_DISH +

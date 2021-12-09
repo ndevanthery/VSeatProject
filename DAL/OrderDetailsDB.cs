@@ -34,10 +34,11 @@ namespace DAL
             {
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
-                    string query = "Insert into ORDER_DETAILS(ID_DISH, ID_ORDER) values(@ID_DISH , @ID_ORDER); SELECT SCOPE_IDENTITY()";
+                    string query = "Insert into ORDER_DETAILS(ID_DISH, ID_ORDER,quantity) values(@ID_DISH , @ID_ORDER ,@quantity); SELECT SCOPE_IDENTITY()";
                     SqlCommand cmd = new SqlCommand(query, cn);
                     cmd.Parameters.AddWithValue("@ID_DISH", orderDetails.ID_DISH);
                     cmd.Parameters.AddWithValue("@ID_ORDER", orderDetails.ID_ORDER);
+                    cmd.Parameters.AddWithValue("@quantity", orderDetails.quantity);
 
                     cn.Open();
                 }
@@ -209,6 +210,7 @@ namespace DAL
 
                                 orderDetails.ID_ORDER = (int)dr["ID_ORDER"];
                                 orderDetails.ID_DISH = (int)dr["ID_DISH"];
+                                orderDetails.quantity = (int)dr["quantity"];
 
                                 results.Add(orderDetails);
                             }

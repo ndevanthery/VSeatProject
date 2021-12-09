@@ -1,11 +1,61 @@
-﻿@using System.Security.Cryptography
+﻿@model IEnumerable<DTO.Order>
 @{
     Layout = "_LayoutCustomer";
 }
-@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
 @{
-    <h1>ORDER HISTORY</h1>
-    <h2> you have made 4 orders</h2>
+    ViewData["Title"] = "OrderInbound";
 }
+
+<h1>OrderInbound</h1>
+
+<p>
+    @*No creation allowed*@
+    @*<a asp-action="Create">Create New</a>*@
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ID_ORDER)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ID_CUSTOMER)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ORDERDATE)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DISCOUNT)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TOTALPRICE)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ID_ORDER)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ID_CUSTOMER)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ORDERDATE)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DISCOUNT)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TOTALPRICE)
+                </td>
+                <td>
+                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

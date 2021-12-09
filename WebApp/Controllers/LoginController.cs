@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 using BLL;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using WebApp.Models;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+
 
 namespace WebApp.Controllers
 {
@@ -24,6 +27,26 @@ namespace WebApp.Controllers
         {
             return View();
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Index(UserModel userModel)
+        {
+            if(ModelState.IsValid)
+            {
+                var customer = CustomerManager.loginCustomer(userModel.UserName, userModel.Password);
+                if(customer!=null)
+                {
+                    HttpContext.Session.SetInt32("ID_CUSTOMER", customer.ID_CUSTOMER);
+                    return RedirectToAction("Index", "Customer");
+
+                }
+                ModelState.AddModelError(string.Empty, "Invalid username or password");
+
+            }
+            return View(userModel);
+        }
+
        
 
         //this Action result will be called when the user press the button "login"
