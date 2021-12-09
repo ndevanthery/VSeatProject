@@ -88,6 +88,11 @@ namespace BLL
             return orderDB.GetOrdersByCustomer(idCustomer);
         }
 
+        public List<Order> GetDuringOrdersForCustomer(int idCustomer)
+        {
+            return orderDB.GetDuringOrdersForCustomer(idCustomer);
+        }
+
 
 
 

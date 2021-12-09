@@ -1,0 +1,78 @@
+﻿@model DTO.Customer
+
+@{
+    ViewData["Title"] = "createAccount";
+}
+
+<h1>createAccount</h1>
+
+<h4>Customer</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="createAccount">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <label asp-for="IDCITY" class="control-label">City</label>
+                <br />
+                <select asp-for="IDCITY">
+                    <option value="3">Monthey</option>
+                    <option value="4">Sion</option>
+                    <option value="5">Sierre</option>
+                    <option value="6">Martigny</option>
+                    <option value="7">St-Maurice</option>
+                    <option value="8">Conthey</option>
+                </select>
+                <span asp-validation-for="IDCITY" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FIRSTNAME" class="control-label">firstname</label>
+                <input asp-for="FIRSTNAME" class="form-control" />
+                <span asp-validation-for="FIRSTNAME" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LASTNAME" class="control-label">lastname</label>
+                <input asp-for="LASTNAME" class="form-control" />
+                <span asp-validation-for="LASTNAME" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ADRESS" class="control-label">adress</label>
+                <input asp-for="ADRESS" class="form-control" />
+                <span asp-validation-for="ADRESS" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PHONENUMBER" class="control-label">phone number</label>
+                <input asp-for="PHONENUMBER" class="form-control" />
+                <span asp-validation-for="PHONENUMBER" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="USERNAME" class="control-label">username</label>
+                <input asp-for="USERNAME" class="form-control" value="" />
+                <span asp-validation-for="USERNAME" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PASSWORD" class="control-label">password</label>
+                <input asp-for="PASSWORD" class="form-control" value="" />
+                <span asp-validation-for="PASSWORD" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EMAIL" class="control-label">e-mail</label>
+                <input asp-for="EMAIL" class="form-control" />
+                <span asp-validation-for="EMAIL" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

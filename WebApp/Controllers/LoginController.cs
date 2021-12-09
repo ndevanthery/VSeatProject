@@ -8,6 +8,7 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 using WebApp.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using DTO;
 
 
 namespace WebApp.Controllers
@@ -47,28 +48,37 @@ namespace WebApp.Controllers
             return View(userModel);
         }
 
-       
-
-        //this Action result will be called when the user press the button "login"
-        //After putting his username and password 
-        public IActionResult ProcessLogin(UserModel userModel)
+        public IActionResult createAccount()
         {
-            var customers = CustomerManager.GetCustomers();
-
-            //use BLL method "login"
-            //when your login fails, make it come back to this page
-            //when your login is successful, make it go on the "customer index" view
-            //login not with sessions ? 
-
-            foreach (var customer in customers)
-            {
-                if (customer.USERNAME == userModel.UserName && customer.PASSWORD == userModel.Password)
-                {
-                    return View("~/Views/Customer/Index.cshtml", userModel);
-                }
-               
-            }
-            return View("Index", userModel);
+            return View();
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult createAccount(Customer newCustomer)
+        {
+            if (ModelState.IsValid)
+            {
+                var customer = CustomerManager.loginCustomer(newCustomer.USERNAME, newCustomer.PASSWORD);
+                if (customer == null)
+                {
+                    CustomerManager.AddCustomer(newCustomer);
+
+                    return RedirectToAction("Index", "Login");
+                    
+
+                }
+                ModelState.AddModelError(string.Empty, "this username is already used");
+
+            }
+            return View(newCustomer);
+        }
+
+        public IActionResult Details(Customer newCustomer)
+        {
+            return View(newCustomer);
+        }
+
+
     }
 }

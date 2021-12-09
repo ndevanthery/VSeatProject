@@ -415,7 +415,7 @@ namespace DAL
             {
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
-                    string query = "Select * from [dbo].[ORDER] WHERE ID_CUSTOMER = @idCustomer";
+                    string query = "Select * from [dbo].[ORDER] WHERE ID_CUSTOMER = @idCustomer ORDER BY ORDERDATE DESC";
                     SqlCommand cmd = new SqlCommand(query, cn);
                     cmd.Parameters.AddWithValue("@idCustomer", idCustomer);
                     cn.Open();
@@ -449,6 +449,49 @@ namespace DAL
             return results;
         }
 
+
+        public List<Order> GetDuringOrdersForCustomer(int idCustomer)
+        {
+            List<Order> results = null;
+            string connectionString = Configuration.GetConnectionString("DefaultConnection");
+
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(connectionString))
+                {
+                    string query = "Select * from [dbo].[ORDER] WHERE ID_CUSTOMER = @idCustomer AND DATE_ADD(ORDERDATE,INTERVAL 30 MINUTE)>GETDATE() ORDER BY ORDERDATE DESC";
+                    SqlCommand cmd = new SqlCommand(query, cn);
+                    cmd.Parameters.AddWithValue("@idCustomer", idCustomer);
+                    cn.Open();
+
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            if (results == null)
+                                results = new List<Order>();
+
+                            Order order = new Order();
+
+                            order.ID_ORDER = (int)dr["ID_ORDER"];
+                            order.ID_CUSTOMER = (int)dr["ID_CUSTOMER"];
+                            order.ORDERDATE = (DateTime)dr["ORDERDATE"];
+                            order.DISCOUNT = (int)dr["DISCOUNT"];
+                            order.TOTALPRICE = (decimal)dr["TOTALPRICE"];
+
+
+                            results.Add(order);
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+
+            return results;
+        }
 
     }
     }

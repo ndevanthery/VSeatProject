@@ -1,4 +1,4 @@
-﻿@model IEnumerable<WebApp.Models.DishVM>
+﻿@model IEnumerable<WebApp.Models.OrderDishVM>
 @{
     Layout = "_LayoutCustomer";
 }
@@ -32,7 +32,8 @@
                     @Html.DisplayFor(modelItem => item.dish.PRICE)
                 </td>
                 <td>
-                    <input type="number" class="form-control" value="0" />
+                    @Html.EditorFor(modelItem => item.quantity)
+                    @*<input type="number" class="form-control" value="0" />*@
                 </td>
             </tr>
         }

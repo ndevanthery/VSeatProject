@@ -40,28 +40,34 @@ namespace WebApp.Controllers
         public IActionResult OrderInbound()
         {
             int id = (int)HttpContext.Session.GetInt32("ID_CUSTOMER");
-            var myOrders = OrderManager.GetOrdersByCustomer(id);
+            var myOrders = OrderManager.GetDuringOrdersForCustomer(id) ;
             var orders_vm = new List<Models.OrderVM>();
-            foreach(var order in myOrders)
+
+            if (myOrders!=null)
             {
-                var dish_id = OrderDetailsManager.GetOrderDetailsByOrder(order.ID_ORDER).First().ID_DISH;
-                var restaurant_id = DishManager.GetDish(dish_id).ID_RESTAURANT;
-                var resto = RestaurantManager.GetRestaurant(restaurant_id);
-                var restaurant_name = resto.NAME;
-
-                var cityName = CityManager.GetCity(resto.IDCITY).CITYNAME;
-
-                Models.OrderVM myOrderVM = new Models.OrderVM
+                foreach (var order in myOrders)
                 {
-                    order = order,
-                    restaurantName = restaurant_name,
-                    cityName = cityName
+                    var dish_id = OrderDetailsManager.GetOrderDetailsByOrder(order.ID_ORDER).First().ID_DISH;
+                    var restaurant_id = DishManager.GetDish(dish_id).ID_RESTAURANT;
+                    var resto = RestaurantManager.GetRestaurant(restaurant_id);
+                    var restaurant_name = resto.NAME;
+
+                    var cityName = CityManager.GetCity(resto.IDCITY).CITYNAME;
+
+                    Models.OrderVM myOrderVM = new Models.OrderVM
+                    {
+                        order = order,
+                        restaurantName = restaurant_name,
+                        cityName = cityName
 
 
-                };
+                    };
 
-                orders_vm.Add(myOrderVM);
+                    orders_vm.Add(myOrderVM);
+                }
             }
+
+
             return View(orders_vm);
         }
 
@@ -91,7 +97,34 @@ namespace WebApp.Controllers
         }
         public IActionResult OrderHistory()
         {
-            return View();
+            int id = (int)HttpContext.Session.GetInt32("ID_CUSTOMER");
+            var myOrders = OrderManager.GetOrdersByCustomer(id);
+            var orders_vm = new List<Models.OrderVM>();
+            if(myOrders!=null)
+            {
+                foreach (var order in myOrders)
+                {
+                    var dish_id = OrderDetailsManager.GetOrderDetailsByOrder(order.ID_ORDER).First().ID_DISH;
+                    var restaurant_id = DishManager.GetDish(dish_id).ID_RESTAURANT;
+                    var resto = RestaurantManager.GetRestaurant(restaurant_id);
+                    var restaurant_name = resto.NAME;
+
+                    var cityName = CityManager.GetCity(resto.IDCITY).CITYNAME;
+
+                    Models.OrderVM myOrderVM = new Models.OrderVM
+                    {
+                        order = order,
+                        restaurantName = restaurant_name,
+                        cityName = cityName
+
+
+                    };
+
+                    orders_vm.Add(myOrderVM);
+                }
+            }
+
+            return View(orders_vm);
         }
 
     }

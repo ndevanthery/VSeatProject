@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using BLL;
 using Microsoft.AspNetCore.Http;
+using WebApp.Models;
 
 namespace WebApp.Controllers
 {
@@ -108,18 +109,19 @@ namespace WebApp.Controllers
                 return RedirectToAction("Index", "Login");
             }
             var dishes = DishManager.GetDishes(idRestaurant);
-            var dishes_vm = new List<Models.DishVM>();
+            var dishes_vm = new List<Models.OrderDishVM>();
             if (dishes != null)
             {
                 foreach (var dish in dishes)
                 {
                     var myCityID = RestaurantManager.GetRestaurant(idRestaurant).IDCITY;
 
-                    Models.DishVM myDishVM = new Models.DishVM
+                    Models.OrderDishVM myDishVM = new Models.OrderDishVM
                     {
                         dish = dish,
                         restaurantName = RestaurantManager.GetRestaurant(idRestaurant).NAME,
-                        cityName = CityManager.GetCity(myCityID).CITYNAME
+                        cityname = CityManager.GetCity(myCityID).CITYNAME,
+                        quantity = 0
 
 
                     };
@@ -129,6 +131,33 @@ namespace WebApp.Controllers
             }
             return View(dishes_vm);
         }
+
+
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public IActionResult CommandPage(IEnumerable<OrderDishVM> myOrders)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        var customer = CustomerManager.loginCustomer(userModel.UserName, userModel.Password);
+        //        if (customer != null)
+        //        {
+        //            HttpContext.Session.SetInt32("ID_CUSTOMER", customer.ID_CUSTOMER);
+        //            return RedirectToAction("Index", "Customer");
+
+        //        }
+        //        ModelState.AddModelError(string.Empty, "Invalid username or password");
+
+        //    }
+        //    return View(userModel);
+        //}
+
+
+
+
+
+
+
 
 
 
