@@ -9,13 +9,13 @@ namespace BLL
 {
     public interface IStaffManager
     {
+        public Staff loginStaff(string username, string password);
         public Staff AddStaff(Staff staff);
         public Staff GetStaff(int idStaff);
         public Staff UpdateStaff(int idStaff, Staff newStaff);
         public Staff DeleteStaff(int idStaff);
         public List<Staff> GetStaffs();
-        public List<Staff> GetStaffs(int idRestaurant);
-
+        public List<Staff> GetStaffs(int idCity);
 
     }
 }

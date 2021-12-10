@@ -34,9 +34,9 @@ namespace DAL
             {
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
-                    string query = "Insert into STAFF(ID_RESTAURANT,FIRSTNAME,LASTNAME,ADRESS,PHONENUMBER,USERNAME,PASSWORD) values(@ID_RESTAURANT,@FIRSTNAME,@LASTNAME,@ADRESS,@PHONENUMBER,@USERNAME,@PASSWORD); SELECT SCOPE_IDENTITY()";
+                    string query = "Insert into STAFF(IDCITY,FIRSTNAME,LASTNAME,ADRESS,PHONENUMBER,USERNAME,PASSWORD) values(@IDCITY,@FIRSTNAME,@LASTNAME,@ADRESS,@PHONENUMBER,@USERNAME,@PASSWORD); SELECT SCOPE_IDENTITY()";
                     SqlCommand cmd = new SqlCommand(query, cn);
-                    cmd.Parameters.AddWithValue("@ID_RESTAURANT", staff.ID_RESTAURANT);
+                    cmd.Parameters.AddWithValue("@IDCITY", staff.IDCITY);
                     cmd.Parameters.AddWithValue("@FIRSTNAME", staff.FIRSTNAME);
                     cmd.Parameters.AddWithValue("@LASTNAME", staff.LASTNAME);
                     cmd.Parameters.AddWithValue("@ADRESS", staff.ADRESS);
@@ -79,17 +79,18 @@ namespace DAL
 
                     using (SqlDataReader dr = cmd.ExecuteReader())
                     {
-
-                        staff = new Staff();
-                        staff.ID_STAFF = (int)dr["ID_STAFF"];
-                        staff.ID_RESTAURANT = (int)dr["ID_RESTAURANT"];
-                        staff.FIRSTNAME = (string)dr["FIRSTNAME"];
-                        staff.LASTNAME = (string)dr["LASTNAME"];
-                        staff.ADRESS = (string)dr["ADRESS"];
-                        staff.PHONENUMBER = (string)dr["PHONENUMBER"];
-                        staff.PASSWORD = (string)dr["PASSWORD"];
-                        staff.USERNAME = (string)dr["USERNAME"];
-
+                        while (dr.Read())
+                        {
+                            staff = new Staff();
+                            staff.ID_STAFF = (int)dr["ID_STAFF"];
+                            staff.IDCITY = (int)dr["IDCITY"];
+                            staff.FIRSTNAME = (string)dr["FIRSTNAME"];
+                            staff.LASTNAME = (string)dr["LASTNAME"];
+                            staff.ADRESS = (string)dr["ADRESS"];
+                            staff.PHONENUMBER = (string)dr["PHONENUMBER"];
+                            staff.PASSWORD = (string)dr["PASSWORD"];
+                            staff.USERNAME = (string)dr["USERNAME"];
+                        }
                     }
                 }
             }
@@ -115,9 +116,9 @@ namespace DAL
             {
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
-                    string query = "UPDATE RESTAURANT SET ID_RESTAURANT = @ID_RESTAURANT , FIRSTNAME= @FIRSTNAME , LASTNAME = @LASTNAME , ADRESS = @ADRESS , PHONENUMBER =@PHONENUMBER, USERNAME=@USERNAME, PASSWORD = @PASSWORD WHERE ID_STAFF = @id";
+                    string query = "UPDATE RESTAURANT SET IDCITY = @IDCITY , FIRSTNAME= @FIRSTNAME , LASTNAME = @LASTNAME , ADRESS = @ADRESS , PHONENUMBER =@PHONENUMBER, USERNAME=@USERNAME, PASSWORD = @PASSWORD WHERE ID_STAFF = @id";
                     SqlCommand cmd = new SqlCommand(query, cn);
-                    cmd.Parameters.AddWithValue("@ID_RESTAURANT", newStaff.ID_RESTAURANT);
+                    cmd.Parameters.AddWithValue("@IDCITY", newStaff.IDCITY);
                     cmd.Parameters.AddWithValue("@FIRSTNAME", newStaff.FIRSTNAME);
                     cmd.Parameters.AddWithValue("@LASTNAME", newStaff.LASTNAME);
                     cmd.Parameters.AddWithValue("@ADRESS", newStaff.ADRESS);
@@ -135,7 +136,7 @@ namespace DAL
 
                         staff = new Staff();
                         staff.ID_STAFF = (int)dr["ID_STAFF"];
-                        staff.ID_RESTAURANT = (int)dr["ID_RESTAURANT"];
+                        staff.IDCITY = (int)dr["IDCITY"];
                         staff.FIRSTNAME = (string)dr["FIRSTNAME"];
                         staff.LASTNAME = (string)dr["LASTNAME"];
                         staff.ADRESS = (string)dr["ADRESS"];
@@ -181,7 +182,7 @@ namespace DAL
 
                         staff = new Staff();
                         staff.ID_STAFF = (int)dr["ID_STAFF"];
-                        staff.ID_RESTAURANT = (int)dr["ID_RESTAURANT"];
+                        staff.IDCITY = (int)dr["IDCITY"];
                         staff.FIRSTNAME = (string)dr["FIRSTNAME"];
                         staff.LASTNAME = (string)dr["LASTNAME"];
                         staff.ADRESS = (string)dr["ADRESS"];
@@ -234,7 +235,7 @@ namespace DAL
                             Staff staff = new Staff();
 
                             staff.ID_STAFF = (int)dr["ID_STAFF"];
-                            staff.ID_RESTAURANT = (int)dr["ID_RESTAURANT"];
+                            staff.IDCITY = (int)dr["IDCITY"];
                             staff.FIRSTNAME = (string)dr["FIRSTNAME"];
                             staff.LASTNAME = (string)dr["LASTNAME"];
                             staff.ADRESS = (string)dr["ADRESS"];
@@ -255,7 +256,7 @@ namespace DAL
             return results;
         }
 
-        public List<Staff> GetStaffs(int idRestaurant)
+        public List<Staff> GetStaffs(int idCity)
         {
             List<Staff> results = null;
             string connectionString = Configuration.GetConnectionString("DefaultConnection");
@@ -264,9 +265,9 @@ namespace DAL
             {
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
-                    string query = "Select * from STAFF WHERE ID_RESTAURANT = @idRestaurant";
+                    string query = "Select * from STAFF WHERE IDCITY = @IDCITY";
                     SqlCommand cmd = new SqlCommand(query, cn);
-                    cmd.Parameters.AddWithValue("@idRestaurant", idRestaurant);
+                    cmd.Parameters.AddWithValue("@IDCITY", idCity);
                     cn.Open();
 
                     using (SqlDataReader dr = cmd.ExecuteReader())
@@ -279,7 +280,7 @@ namespace DAL
                             Staff staff = new Staff();
 
                             staff.ID_STAFF = (int)dr["ID_STAFF"];
-                            staff.ID_RESTAURANT = (int)dr["ID_RESTAURANT"];
+                            staff.IDCITY = (int)dr["IDCITY"];
                             staff.FIRSTNAME = (string)dr["FIRSTNAME"];
                             staff.LASTNAME = (string)dr["LASTNAME"];
                             staff.ADRESS = (string)dr["ADRESS"];

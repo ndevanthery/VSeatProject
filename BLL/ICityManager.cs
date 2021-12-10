@@ -14,6 +14,7 @@ namespace BLL
         public City UpdateCity(int idCityToChange, City newCity);
         public City DeleteCity(int idCity);
         public List<City> GetCities();
+        public City GetCity(string cityname);
 
     }
 }

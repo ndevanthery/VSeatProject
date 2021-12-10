@@ -34,12 +34,15 @@ namespace DAL
             {
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
-                    string query = "Insert into [dbo].[ORDER](ID_CUSTOMER,ORDERDATE,DISCOUNT,TOTALPRICE) values(@ID_CUSTOMER ,@ORDERDATE,@DISCOUNT,@TOTALPRICE); SELECT SCOPE_IDENTITY()";
+                    string query = "Insert into [dbo].[ORDER](ID_CUSTOMER,ORDERDATE,DISCOUNT,TOTALPRICE,ID_STAFF,ID_RESTAURANT) values(@ID_CUSTOMER ,@ORDERDATE,@DISCOUNT,@TOTALPRICE,@ID_STAFF,@ID_RESTAURANT); SELECT SCOPE_IDENTITY()";
                     SqlCommand cmd = new SqlCommand(query, cn);
                     cmd.Parameters.AddWithValue("@ID_CUSTOMER",order.ID_CUSTOMER);
                     cmd.Parameters.AddWithValue("@ORDERDATE", order.ORDERDATE);
                     cmd.Parameters.AddWithValue("@DISCOUNT", order.DISCOUNT);
                     cmd.Parameters.AddWithValue("@TOTALPRICE", order.TOTALPRICE);
+                    cmd.Parameters.AddWithValue("@ID_RESTAURANT", order.ID_RESTAURANT);
+                    cmd.Parameters.AddWithValue("@ID_STAFF", order.ID_STAFF);
+
 
                     cn.Open();
 
@@ -85,6 +88,8 @@ namespace DAL
                             order.ORDERDATE = (DateTime)dr["ORDERDATE"];
                             order.DISCOUNT = (int)dr["DISCOUNT"];
                             order.TOTALPRICE = (decimal)dr["TOTALPRICE"];
+                            order.ID_RESTAURANT = (int)dr["ID_RESTAURANT"];
+                            order.ID_STAFF = (int)dr["ID_STAFF"];
                         }
                     }
                 }
@@ -131,6 +136,8 @@ namespace DAL
                         order.ORDERDATE = (DateTime)dr["ORDERDATE"];
                         order.DISCOUNT = (int)dr["DISCOUNT"];
                         order.TOTALPRICE = (decimal)dr["TOTALPRICE"];
+                        order.ID_RESTAURANT = (int)dr["ID_RESTAURANT"];
+                        order.ID_STAFF = (int)dr["ID_STAFF"];
 
 
 
@@ -174,6 +181,8 @@ namespace DAL
                         order.ORDERDATE = (DateTime)dr["ORDERDATE"];
                         order.DISCOUNT = (int)dr["DISCOUNT"];
                         order.TOTALPRICE = (decimal)dr["TOTALPRICE"];
+                        order.ID_RESTAURANT = (int)dr["ID_RESTAURANT"];
+                        order.ID_STAFF = (int)dr["ID_STAFF"];
 
 
                     }
@@ -220,6 +229,8 @@ namespace DAL
                             order.ORDERDATE = (DateTime)dr["ORDERDATE"];
                             order.DISCOUNT = (int)dr["DISCOUNT"];
                             order.TOTALPRICE = (decimal)dr["TOTALPRICE"];
+                            order.ID_RESTAURANT = (int)dr["ID_RESTAURANT"];
+                            order.ID_STAFF = (int)dr["ID_STAFF"];
 
                             Console.WriteLine(order);
                             results.Add(order);
@@ -264,6 +275,8 @@ namespace DAL
                             order.ORDERDATE = (DateTime)dr["ORDERDATE"];
                             order.DISCOUNT = (int)dr["DISCOUNT"];
                             order.TOTALPRICE = (decimal)dr["TOTALPRICE"];
+                            order.ID_RESTAURANT = (int)dr["ID_RESTAURANT"];
+                            order.ID_STAFF = (int)dr["ID_STAFF"];
 
 
                             results.Add(order);
@@ -307,6 +320,8 @@ namespace DAL
                             order.ORDERDATE = (DateTime)dr["ORDERDATE"];
                             order.DISCOUNT = (int)dr["DISCOUNT"];
                             order.TOTALPRICE = (decimal)dr["TOTALPRICE"];
+                            order.ID_RESTAURANT = (int)dr["ID_RESTAURANT"];
+                            order.ID_STAFF = (int)dr["ID_STAFF"];
 
 
                             results.Add(order);
@@ -349,6 +364,8 @@ namespace DAL
                             order.ORDERDATE = (DateTime)dr["ORDERDATE"];
                             order.DISCOUNT = (int)dr["DISCOUNT"];
                             order.TOTALPRICE = (decimal)dr["TOTALPRICE"];
+                            order.ID_RESTAURANT = (int)dr["ID_RESTAURANT"];
+                            order.ID_STAFF = (int)dr["ID_STAFF"];
 
                             results.Add(order);
                         }
@@ -391,6 +408,8 @@ namespace DAL
                             order.ORDERDATE = (DateTime)dr["ORDERDATE"];
                             order.DISCOUNT = (int)dr["DISCOUNT"];
                             order.TOTALPRICE = (decimal)dr["TOTALPRICE"];
+                            order.ID_RESTAURANT = (int)dr["ID_RESTAURANT"];
+                            order.ID_STAFF = (int)dr["ID_STAFF"];
 
 
                             results.Add(order);
@@ -434,6 +453,8 @@ namespace DAL
                             order.ORDERDATE = (DateTime)dr["ORDERDATE"];
                             order.DISCOUNT = (int)dr["DISCOUNT"];
                             order.TOTALPRICE = (decimal)dr["TOTALPRICE"];
+                            order.ID_RESTAURANT = (int)dr["ID_RESTAURANT"];
+                            order.ID_STAFF = (int)dr["ID_STAFF"];
 
 
                             results.Add(order);
@@ -478,6 +499,8 @@ namespace DAL
                             order.ORDERDATE = (DateTime)dr["ORDERDATE"];
                             order.DISCOUNT = (int)dr["DISCOUNT"];
                             order.TOTALPRICE = (decimal)dr["TOTALPRICE"];
+                            order.ID_RESTAURANT = (int)dr["ID_RESTAURANT"];
+                            order.ID_STAFF = (int)dr["ID_STAFF"];
 
 
                             results.Add(order);
@@ -492,6 +515,100 @@ namespace DAL
 
             return results;
         }
+
+        public List<Order> GetOrdersByStaff(int idStaff)
+        {
+            List<Order> results = null;
+            string connectionString = Configuration.GetConnectionString("DefaultConnection");
+
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(connectionString))
+                {
+                    string query = "Select * from [dbo].[ORDER] WHERE ID_STAFF = @ID_STAFF ORDER BY ORDERDATE DESC";
+                    SqlCommand cmd = new SqlCommand(query, cn);
+                    cmd.Parameters.AddWithValue("@ID_STAFF", idStaff);
+                    cn.Open();
+
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            if (results == null)
+                                results = new List<Order>();
+
+                            Order order = new Order();
+
+                            order.ID_ORDER = (int)dr["ID_ORDER"];
+                            order.ID_CUSTOMER = (int)dr["ID_CUSTOMER"];
+                            order.ORDERDATE = (DateTime)dr["ORDERDATE"];
+                            order.DISCOUNT = (int)dr["DISCOUNT"];
+                            order.TOTALPRICE = (decimal)dr["TOTALPRICE"];
+                            order.ID_RESTAURANT = (int)dr["ID_RESTAURANT"];
+                            order.ID_STAFF = (int)dr["ID_STAFF"];
+
+
+                            results.Add(order);
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+
+            return results;
+        }
+
+        public List<Order> GetDuringOrdersForStaff(int idStaff)
+        {
+            List<Order> results = null;
+            string connectionString = Configuration.GetConnectionString("DefaultConnection");
+
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(connectionString))
+                {
+                    string query = "Select * from [dbo].[ORDER] WHERE ID_STAFF = @ID_STAFF AND DATEADD(MINUTE,30,ORDERDATE)>GETDATE() ORDER BY ORDERDATE DESC";
+                    SqlCommand cmd = new SqlCommand(query, cn);
+                    cmd.Parameters.AddWithValue("@ID_STAFF", idStaff);
+                    cn.Open();
+
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            if (results == null)
+                                results = new List<Order>();
+
+                            Order order = new Order();
+
+                            order.ID_ORDER = (int)dr["ID_ORDER"];
+                            order.ID_CUSTOMER = (int)dr["ID_CUSTOMER"];
+                            order.ORDERDATE = (DateTime)dr["ORDERDATE"];
+                            order.DISCOUNT = (int)dr["DISCOUNT"];
+                            order.TOTALPRICE = (decimal)dr["TOTALPRICE"];
+                            order.ID_RESTAURANT = (int)dr["ID_RESTAURANT"];
+                            order.ID_STAFF = (int)dr["ID_STAFF"];
+
+
+                            results.Add(order);
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+
+            return results;
+        }
+
+
+
+
 
     }
     }

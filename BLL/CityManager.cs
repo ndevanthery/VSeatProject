@@ -38,6 +38,11 @@ namespace BLL
             return CityDB.GetCity(idCity);
         }
 
+        public City GetCity(string cityname)
+        {
+            return CityDB.GetCity(cityname);
+        }
+
 
 
         //---------------------------------------------------

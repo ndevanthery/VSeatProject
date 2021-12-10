@@ -20,6 +20,10 @@ namespace DTO
 
         public decimal TOTALPRICE { get; set; }
 
+        public int ID_STAFF { get; set; }
+
+        public int ID_RESTAURANT { get; set; }
+
         // ajouter un CustomerID dans order ! 
 
         public override string ToString()

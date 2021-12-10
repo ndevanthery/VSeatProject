@@ -18,10 +18,13 @@ namespace WebApp.Controllers
         private IOrderManager OrderManager { get; }
         private ICustomerManager CustomerManager { get; }
 
-        public LoginController(IOrderManager orderManager, ICustomerManager customerManager)
+        private IStaffManager StaffManager { get; }
+
+        public LoginController(IOrderManager orderManager, ICustomerManager customerManager , IStaffManager staffManager)
         {
             OrderManager = orderManager;
             CustomerManager = customerManager;
+            StaffManager = staffManager;
         }
 
         public IActionResult Index()
@@ -73,6 +76,60 @@ namespace WebApp.Controllers
             }
             return View(newCustomer);
         }
+
+        public IActionResult LoginStaff()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult LoginStaff(UserModel userModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var staff = StaffManager.loginStaff(userModel.UserName, userModel.Password);
+                if (staff != null)
+                {
+                    HttpContext.Session.SetInt32("ID_STAFF", staff.ID_STAFF);
+                    return RedirectToAction("Index", "Staff");
+
+                }
+                ModelState.AddModelError(string.Empty, "Invalid username or password");
+
+            }
+            return View(userModel);
+        }
+
+        public IActionResult CreateStaff()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult CreateStaff(Staff newStaff)
+        {
+            if (ModelState.IsValid)
+            {
+                var staff = StaffManager.loginStaff(newStaff.USERNAME, newStaff.PASSWORD);
+                if (staff == null)
+                {
+                    StaffManager.AddStaff(newStaff);
+
+                    return RedirectToAction("LoginStaff", "Login");
+
+
+                }
+                ModelState.AddModelError(string.Empty, "this username is already used");
+
+            }
+            return View(newStaff);
+        }
+
+
+
+
 
         public IActionResult Details(Customer newCustomer)
         {

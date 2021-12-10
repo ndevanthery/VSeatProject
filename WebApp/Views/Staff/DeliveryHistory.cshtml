@@ -1,0 +1,62 @@
+﻿@model IEnumerable<OrderVM>
+@{
+    Layout = "_LayoutStaff";
+}
+@{
+    ViewData["Title"] = "DeliveryHistory";
+}
+
+<h1>Delivery History</h1>
+
+<p>
+    @*No creation allowed*@
+    @*<a asp-action="Create">Create New</a>*@
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                restaurant
+            </th>
+            <th>
+                city
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.order.ORDERDATE)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.order.DISCOUNT)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.order.TOTALPRICE)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.restaurantName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.cityName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.order.ORDERDATE)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.order.DISCOUNT)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.order.TOTALPRICE)
+                </td>
+                <td>
+                    @Html.ActionLink("Details", "OrderDetails", new { id = item.order.ID_ORDER })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -21,6 +21,7 @@ namespace DAL
 
         public City GetCity(int idCity);
 
+        public City GetCity(string cityname);
 
         //update City
 

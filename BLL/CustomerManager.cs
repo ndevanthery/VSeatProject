@@ -29,14 +29,7 @@ namespace BLL
                 if (customer.USERNAME == username && customer.PASSWORD == password )
                 {
                     Console.WriteLine("customer found and logged");
-                    loggedCustomer.IDCITY = customer.IDCITY;
-                    loggedCustomer.ID_CUSTOMER = customer.ID_CUSTOMER;
-                    loggedCustomer.FIRSTNAME = customer.FIRSTNAME;
-                    loggedCustomer.LASTNAME = customer.LASTNAME;
-                    loggedCustomer.ADRESS = customer.ADRESS;
-                    loggedCustomer.PHONENUMBER = customer.PHONENUMBER;
-                    loggedCustomer.USERNAME = customer.USERNAME;
-                    loggedCustomer.EMAIL = customer.EMAIL;
+                    loggedCustomer = customer;
                     
                     return loggedCustomer;
                 }

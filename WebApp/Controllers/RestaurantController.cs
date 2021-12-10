@@ -24,7 +24,9 @@ namespace WebApp.Controllers
 
         private IOrderDetailsManager OrderDetailsManager { get; }
 
-        public RestaurantController(IRestaurantManager restaurantManager, ICityManager cityManager , IDishManager dishManager, IRestoTypeManager restoTypeManager, IOrderManager orderManager , IOrderDetailsManager orderDetailsManager)
+        private IStaffManager StaffManager { get; }
+
+        public RestaurantController(IRestaurantManager restaurantManager, ICityManager cityManager , IDishManager dishManager, IRestoTypeManager restoTypeManager, IOrderManager orderManager , IOrderDetailsManager orderDetailsManager, IStaffManager staffManager)
         {
             RestaurantManager = restaurantManager;
             CityManager = cityManager;
@@ -32,6 +34,7 @@ namespace WebApp.Controllers
             RestoTypeManager = restoTypeManager;
             OrderManager = orderManager;
             OrderDetailsManager = orderDetailsManager;
+            StaffManager = staffManager;
         }
 
         public IActionResult Index()
@@ -155,12 +158,47 @@ namespace WebApp.Controllers
                         somme += order.dish.PRICE * order.quantity;
                     }
                     //create one order 
+                    var idCity = CityManager.GetCity(myOrders.First().cityname).IDCITY;
+                    var staffDispo = StaffManager.GetStaffs(idCity);
+
+                    var idStaff = 0;
+                    if(staffDispo!=null)
+                    {
+                        foreach (var staff in staffDispo)
+                        {
+
+                            var Orders = OrderManager.GetDuringOrdersForStaff(staff.ID_STAFF);
+                            var nbOrders = 0;
+                            if (Orders != null)
+                            {
+                                nbOrders = Orders.Count();
+                            }
+                            if (nbOrders < 5)
+                            {
+                                idStaff = staff.ID_STAFF;
+                                break;
+                            }
+                        }
+                    }
+                    
+                    if (idStaff == 0)
+                    {
+                        ModelState.AddModelError(string.Empty, "no deliverer Disponible anymore");
+                        return View(myOrders);
+
+                    }
+
                     Order myNewOrder = new Order
                     {
                         ID_CUSTOMER = (int)HttpContext.Session.GetInt32("ID_CUSTOMER"),
                         ORDERDATE = DateTime.Now,
                         DISCOUNT = 0,
-                        TOTALPRICE = somme
+                        TOTALPRICE = somme,
+                        ID_RESTAURANT = myOrders.First().dish.ID_RESTAURANT,
+                        ID_STAFF = idStaff
+                      
+
+
 
                     };
                     Order myOrder_added = OrderManager.AddOrder(myNewOrder);

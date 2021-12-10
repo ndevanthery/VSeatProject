@@ -102,6 +102,50 @@ namespace DAL
         }
 
 
+        public City GetCity(string cityname)
+        {
+            City city = null;
+            string connectionString = Configuration.GetConnectionString("DefaultConnection");
+
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(connectionString))
+                {
+                    string query = "Select * from CITY WHERE CITYNAME = @CITYNAME";
+                    SqlCommand cmd = new SqlCommand(query, cn);
+                    cmd.Parameters.AddWithValue("@CITYNAME", cityname);
+
+
+                    cn.Open();
+
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+
+                            city = new City();
+                            city.IDCITY = (int)dr["IDCITY"];
+
+                            city.CITYNAME = (string)dr["CITYNAME"];
+
+                            city.NPA = (string)dr["NPA"];
+
+
+                        }
+
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+
+            return city;
+        }
+
+
+
         //---------------------------------------------------
         // UPDATE METHOD
         //---------------------------------------------------

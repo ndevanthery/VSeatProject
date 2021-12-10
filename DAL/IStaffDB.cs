@@ -34,8 +34,7 @@ namespace DAL
 
         public List<Staff> GetStaffs();
 
-        public List<Staff> GetStaffs(int idRestaurant);
-
+        public List<Staff> GetStaffs(int idCity);
 
 
 

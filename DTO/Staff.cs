@@ -10,7 +10,7 @@ namespace DTO
     {
         public int ID_STAFF { get; set; }
 
-        public int ID_RESTAURANT { get; set; }
+        public int IDCITY { get; set; }
 
         public string FIRSTNAME { get; set; }
 
@@ -27,7 +27,7 @@ namespace DTO
         public override string ToString()
         {
             return "ID STAFF:" + ID_STAFF +
-                   " / ID RESTAURANT:" + ID_RESTAURANT +
+                   " / ID CITY:" + IDCITY +
                    " / FIRSTNAME:" + FIRSTNAME +
                    " / LASTNAME:" + LASTNAME +
                    " / ADRESS:" + ADRESS +

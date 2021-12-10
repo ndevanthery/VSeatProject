@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace BLL
 { 
-    public class StaffManager
+    public class StaffManager : IStaffManager
     {
         private IStaffDB staffDB { get; }
 
@@ -18,6 +18,31 @@ namespace BLL
             staffDB = new StaffDB(conf);
         }
 
+
+        public Staff loginStaff(string username, string password)
+        {
+
+            Staff loggedStaff = new Staff();
+
+            var staffs = GetStaffs();
+
+            foreach (var staff in staffs)
+            {
+                if (staff.USERNAME == username && staff.PASSWORD == password)
+                {
+                    Console.WriteLine("staff found and logged");
+                    loggedStaff = staff;
+
+                    return loggedStaff;
+                }
+
+            }
+
+
+            Console.WriteLine("staff username or password incorrect");
+            return null;
+
+        }
 
         // add method
         public Staff AddStaff(Staff staff)
@@ -55,9 +80,9 @@ namespace BLL
             return staffDB.GetStaffs();
         }
 
-        public List<Staff> GetStaffs(int idRestaurant)
+        public List<Staff> GetStaffs(int idCity)
         {
-            return staffDB.GetStaffs(idRestaurant);
+            return staffDB.GetStaffs(idCity);
         }
 
 
