@@ -459,7 +459,7 @@ namespace DAL
             {
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
-                    string query = "Select * from [dbo].[ORDER] WHERE ID_CUSTOMER = @idCustomer AND DATE_ADD(ORDERDATE,INTERVAL 30 MINUTE)>GETDATE() ORDER BY ORDERDATE DESC";
+                    string query = "Select * from [dbo].[ORDER] WHERE ID_CUSTOMER = @idCustomer AND DATEADD(MINUTE,30,ORDERDATE)>GETDATE() ORDER BY ORDERDATE DESC";
                     SqlCommand cmd = new SqlCommand(query, cn);
                     cmd.Parameters.AddWithValue("@idCustomer", idCustomer);
                     cn.Open();

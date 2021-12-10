@@ -1,0 +1,57 @@
+﻿@model IEnumerable<WebApp.Models.OrderDishVM>
+@{
+    Layout = "_LayoutCustomer";
+}
+@{
+    ViewData["Title"] = "CommandConfirmation";
+}
+
+<h1>command confirmation</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.dish.NAME)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.dish.PRICE)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.quantity)
+            </th>
+            <th>
+                total
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @{ decimal sommeTotal = 0;}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.dish.NAME)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.dish.PRICE)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.quantity)
+                </td>
+                @{decimal s = item.quantity * item.dish.PRICE;
+                    sommeTotal += s;}
+                <td>
+                    @Html.DisplayFor(modelItem => s)
+                </td>
+            </tr>
+        }
+    </tbody>
+
+    <tfoot>
+        <tr>
+            <td colspan="3"><span style='font-weight:bold;'>total of this order :</span></td>
+            <td><span style='font-weight:bold;'>@sommeTotal</span></td>
+        </tr>
+    </tfoot>
+</table>

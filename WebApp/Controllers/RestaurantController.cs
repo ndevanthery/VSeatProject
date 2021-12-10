@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using BLL;
 using Microsoft.AspNetCore.Http;
 using WebApp.Models;
+using DTO;
 
 namespace WebApp.Controllers
 {
@@ -19,12 +20,18 @@ namespace WebApp.Controllers
 
         private IRestoTypeManager RestoTypeManager { get; }
 
-        public RestaurantController(IRestaurantManager restaurantManager, ICityManager cityManager , IDishManager dishManager, IRestoTypeManager restoTypeManager)
+        private IOrderManager OrderManager { get; }
+
+        private IOrderDetailsManager OrderDetailsManager { get; }
+
+        public RestaurantController(IRestaurantManager restaurantManager, ICityManager cityManager , IDishManager dishManager, IRestoTypeManager restoTypeManager, IOrderManager orderManager , IOrderDetailsManager orderDetailsManager)
         {
             RestaurantManager = restaurantManager;
             CityManager = cityManager;
             DishManager = dishManager;
             RestoTypeManager = restoTypeManager;
+            OrderManager = orderManager;
+            OrderDetailsManager = orderDetailsManager;
         }
 
         public IActionResult Index()
@@ -133,24 +140,58 @@ namespace WebApp.Controllers
         }
 
 
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public IActionResult CommandPage(IEnumerable<OrderDishVM> myOrders)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        var customer = CustomerManager.loginCustomer(userModel.UserName, userModel.Password);
-        //        if (customer != null)
-        //        {
-        //            HttpContext.Session.SetInt32("ID_CUSTOMER", customer.ID_CUSTOMER);
-        //            return RedirectToAction("Index", "Customer");
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult CommandPage(IEnumerable<OrderDishVM> myOrders)
+        {
+            if (ModelState.IsValid)
+            {
+     
+                if (myOrders != null)
+                {
+                    decimal somme = 0;
+                    foreach(var order in myOrders)
+                    {
+                        somme += order.dish.PRICE * order.quantity;
+                    }
+                    //create one order 
+                    Order myNewOrder = new Order
+                    {
+                        ID_CUSTOMER = (int)HttpContext.Session.GetInt32("ID_CUSTOMER"),
+                        ORDERDATE = DateTime.Now,
+                        DISCOUNT = 0,
+                        TOTALPRICE = somme
 
-        //        }
-        //        ModelState.AddModelError(string.Empty, "Invalid username or password");
+                    };
+                    Order myOrder_added = OrderManager.AddOrder(myNewOrder);
 
-        //    }
-        //    return View(userModel);
-        //}
+                    foreach(var order in myOrders)
+                    {
+                        if(order.quantity > 0)
+                        {
+                            OrderDetails myNewOrderDetail = new OrderDetails
+                            {
+                                ID_DISH = order.dish.ID_DISH,
+                                ID_ORDER = myOrder_added.ID_ORDER,
+                                quantity = order.quantity
+                            };
+
+                            OrderDetailsManager.AddOrderDetails(myNewOrderDetail);
+                        }
+
+                    }
+
+                    // create multiple orderDetails with the same order ID
+                    // when the quantity == 0 , no order details created
+
+                    return View("~/Views/Restaurant/CommandConfirmation.cshtml" , myOrders);
+
+                }
+                ModelState.AddModelError(string.Empty, "Invalid username or password");
+
+            }
+            return View(myOrders);
+        }
 
 
 

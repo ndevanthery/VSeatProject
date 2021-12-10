@@ -1,4 +1,4 @@
-﻿@model IEnumerable<WebApp.Models.OrderDishVM>
+﻿@model IList<WebApp.Models.OrderDishVM>
 @{
     Layout = "_LayoutCustomer";
 }
@@ -7,43 +7,62 @@
 }
 
 <h1>pass your command at @Model.First().restaurantName</h1>
+<form asp-action="CommandPage">
+    <div asp-validation-summary="All" class="text-danger"></div>
 
-
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.First().dish.NAME)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.First().dish.PRICE)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
+    <table class="table">
+        <thead>
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.dish.NAME)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.dish.PRICE)
-                </td>
-                <td>
-                    @Html.EditorFor(modelItem => item.quantity)
-                    @*<input type="number" class="form-control" value="0" />*@
-                </td>
+                <th>
+                    @Html.DisplayNameFor(model => model.First().dish.NAME)
+
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.First().dish.PRICE)
+                </th>
+                <th></th>
             </tr>
-        }
+        </thead>
+        <tbody>
+            
+
+
+            @for (int i = 0; i < Model.Count(); i++)
+            {
+                
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => Model[i].dish.NAME)
+                        @Html.HiddenFor(modelItem => Model[i].dish.NAME)
+                        @Html.HiddenFor(modelItem => Model[i].dish.ID_DISH)
+                        @Html.HiddenFor(modelItem => Model[i].dish.ID_RESTAURANT)
+                        @Html.HiddenFor(modelItem => Model[i].dish.IMAGE)
+
+                    </td>
+                    <td>
+
+                        @Html.DisplayFor(modelItem => Model[i].dish.PRICE)
+                        @Html.HiddenFor(modelItem => Model[i].dish.PRICE)
+
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(m => Model[i].quantity)
+                    </td>
+                </tr>
+            }
 
 
 
 
 
 
-    </tbody>
+        </tbody>
 
-</table>
-<a asp-action="Index">confirm your order</a>
+    </table>
+    <input type="submit" value="Confirm order" class="btn btn-primary" />
+
+    @*<a asp-action="Index">confirm your order</a>*@
+</form>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
