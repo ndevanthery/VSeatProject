@@ -2,6 +2,7 @@
 
 <h4>Please login Customer </h4>
 @Html.ActionLink("login as staff?", "LoginStaff", new { })
+@Html.ActionLink("login as restaurant?", "LoginRestaurant", new { })
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -21,7 +22,7 @@
             <div class="form-group">
                 <input type="submit" value="Login" class="btn btn-primary" />
 
-                @Html.ActionLink("create account", "createAccount", new { })
+                @Html.ActionLink("create Customer", "createAccount", new { })
 
             </div>
 

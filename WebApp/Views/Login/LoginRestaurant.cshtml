@@ -1,12 +1,13 @@
 ﻿@model WebApp.Models.UserModel
 
-<h4>Please login Staff</h4>
+<h4>Please login Restaurant</h4>
 @Html.ActionLink("login as Customer ?", "Index", new { })
-@Html.ActionLink("login as Restaurant ?", "LoginRestaurant", new { })
+@Html.ActionLink("login as Staff ?", "LoginStaff", new { })
+
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="LoginStaff">
+        <form asp-action="LoginRestaurant">
             <div asp-validation-summary="All" class="text-danger"></div>
 
             <div class="form-group">
@@ -22,7 +23,7 @@
             <div class="form-group">
                 <input type="submit" value="Login" class="btn btn-primary" />
 
-                @Html.ActionLink("create Staff", "CreateStaff", new { })
+                @Html.ActionLink("create Restaurant", "CreateRestaurant", new { })
 
             </div>
 

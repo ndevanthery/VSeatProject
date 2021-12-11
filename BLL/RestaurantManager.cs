@@ -19,6 +19,32 @@ namespace BLL
 
         }
 
+        //login method
+        public Restaurant loginRestaurant(string username, string password)
+        {
+
+            Restaurant loggedRestaurant = new Restaurant();
+
+            var restaurants = GetRestaurants();
+
+            foreach (var restaurant in restaurants)
+            {
+                if (restaurant.USERNAME == username && restaurant.PASSWORD == password)
+                {
+                    Console.WriteLine("restaurant found and logged");
+                    loggedRestaurant = restaurant;
+
+                    return loggedRestaurant;
+                }
+
+            }
+
+
+            Console.WriteLine("restaurant username or password incorrect");
+            return null;
+
+        }
+
         //---------------------------------------------------
         // ADD METHOD
         //---------------------------------------------------

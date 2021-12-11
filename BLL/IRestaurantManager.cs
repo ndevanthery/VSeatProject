@@ -11,6 +11,9 @@ namespace BLL
 {
     public interface IRestaurantManager
     {
+
+        public Restaurant loginRestaurant(string username, string password);
+
         public Restaurant AddRestaurant(Restaurant restaurant);
 
         public Restaurant GetRestaurant(int idRestaurant);

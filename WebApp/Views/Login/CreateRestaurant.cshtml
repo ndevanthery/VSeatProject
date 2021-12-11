@@ -1,0 +1,81 @@
+﻿@model DTO.Restaurant
+
+@{
+    ViewData["Title"] = "CreateRestaurant";
+}
+
+<h1>CreateRestaurant</h1>
+
+<h4>Restaurant</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="CreateRestaurant">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <label asp-for="IDCITY" class="control-label"></label>
+                <select asp-for="IDCITY">
+                    <option value="3">Monthey</option>
+                    <option value="4">Sion</option>
+                    <option value="5">Sierre</option>
+                    <option value="6">Martigny</option>
+                    <option value="7">St-Maurice</option>
+                    <option value="8">Conthey</option>
+                </select>                <span asp-validation-for="IDCITY" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IDTYPE" class="control-label"></label>
+                <select asp-for="IDTYPE">
+                    <option value="1">kebab</option>
+                    <option value="2">fast-food</option>
+                    <option value="3">italien</option>
+                    <option value="4">gastronomique</option>
+                    <option value="5">burgers</option>
+                    <option value="6">grec</option>
+                    <option value="7">cafe-restaurant</option>
+                    <option value="8">asiatique</option>
+                    <option value="9">tartare</option>
+                    <option value="10">bresilien</option>
+                    <option value="11">europeen</option>
+                    <option value="12">autre</option>
+
+                </select> 
+                <span asp-validation-for="IDTYPE" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NAME" class="control-label"></label>
+                <input asp-for="NAME" class="form-control" />
+                <span asp-validation-for="NAME" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ADRESS" class="control-label"></label>
+                <input asp-for="ADRESS" class="form-control" />
+                <span asp-validation-for="ADRESS" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PHONENUMBER" class="control-label"></label>
+                <input asp-for="PHONENUMBER" class="form-control" />
+                <span asp-validation-for="PHONENUMBER" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="USERNAME" class="control-label"></label>
+                <input asp-for="USERNAME" class="form-control" />
+                <span asp-validation-for="USERNAME" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PASSWORD" class="control-label"></label>
+                <input asp-for="PASSWORD" class="form-control" />
+                <span asp-validation-for="PASSWORD" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

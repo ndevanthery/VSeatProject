@@ -20,11 +20,14 @@ namespace WebApp.Controllers
 
         private IStaffManager StaffManager { get; }
 
-        public LoginController(IOrderManager orderManager, ICustomerManager customerManager , IStaffManager staffManager)
+        private IRestaurantManager RestaurantManager { get; }
+
+        public LoginController(IOrderManager orderManager, ICustomerManager customerManager , IStaffManager staffManager, IRestaurantManager restaurantManager)
         {
             OrderManager = orderManager;
             CustomerManager = customerManager;
             StaffManager = staffManager;
+            RestaurantManager = restaurantManager;
         }
 
         public IActionResult Index()
@@ -125,6 +128,61 @@ namespace WebApp.Controllers
 
             }
             return View(newStaff);
+        }
+
+
+
+
+
+
+        public IActionResult LoginRestaurant()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult LoginRestaurant(UserModel userModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var restaurant = RestaurantManager.loginRestaurant(userModel.UserName, userModel.Password);
+                if (restaurant != null)
+                {
+                    HttpContext.Session.SetInt32("ID_RESTAURANT", restaurant.ID_RESTAURANT);
+                    return RedirectToAction("Index", "Resto");
+
+                }
+                ModelState.AddModelError(string.Empty, "Invalid username or password");
+
+            }
+            return View(userModel);
+        }
+
+        public IActionResult CreateRestaurant()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult CreateRestaurant(Restaurant newRestaurant)
+        {
+            if (ModelState.IsValid)
+            {
+                var staff = RestaurantManager.loginRestaurant(newRestaurant.USERNAME, newRestaurant.PASSWORD);
+                if (staff == null)
+                {
+                    RestaurantManager.AddRestaurant(newRestaurant);
+
+                    return RedirectToAction("LoginRestaurant", "Login");
+
+
+                }
+                ModelState.AddModelError(string.Empty, "this username is already used");
+
+            }
+            return View(newRestaurant);
         }
 
 
