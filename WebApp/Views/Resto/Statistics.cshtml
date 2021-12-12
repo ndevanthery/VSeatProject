@@ -1,73 +1,59 @@
 ﻿@model IEnumerable<OrderQuantityVM>
-@using System.Web.Helpers;
-
+@{
+    Layout = "_LayoutRestaurant";
+}
 @{
     ViewData["Title"] = "Statistics";
 }
+<h1>dishes statistics</h1>
 
-<html>
-<head>
-    <script src="https://www.gstatic.com/charts/loader.js"></script>
-    <script>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                dish name
+            </th>
+            <th>
+                quantity sold
+            </th>
+            <th>
+                CA
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @{decimal sommeCA = 0;
+          int sommeQuantity = 0;
+         }
 
-        google.charts.load('current', { 'packages': ['corechart'] });
+        @foreach (var item in Model)
+        {
+            sommeCA += item.CA;
+            sommeQuantity += item.quantity;
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.dish.NAME)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.quantity)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CA)
+                    
 
-        google.charts.setOnLoadCallback(drawChart);
+                </td>
 
-        function drawChart() {
-
-            var data = new google.visualization.DataTable();
-
-            data.addColumn('string', 'Dish');
-            data.addColumn('number', 'Quantity');
-
-            @foreach (var item in Model)
-            {
-            <text>
-            let mavar = '@item.dish.NAME';
-            data.addRow(['salut', @item.quantity]);
-            </text>
-
-
-            }
-
-
-
-
-
-
-
-            //data.addRows([
-            //    ['Mar 14', 43],
-            //    ['Nov 14', 39],
-            //    ['Jan 15', 42],
-            //    ['Mar 15', 37],
-            //    ['Dec 15', 34],
-            //    ['Feb 16', 40]
-            //]);
-
-            var options = {
-                title: "Gold Prices",
-                width: 600,
-                height: 400,
-                vAxis: { title: 'USD/kg' },
-                legend: { position: "none" }
-            };
-
-            var chart = new google.visualization.PieChart(document.getElementById('mychart'));
-            chart.draw(data, options);
+            </tr>
         }
-    </script>
-</head>
 
-<body>
-    <h1>myChart</h1>
-    <div id="mychart"></div>
-</body>
-
-</html>
-
-
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="1"><span style='font-weight:bold;'>general stats </span></td>
+            <td><span style='font-weight:bold;'>@sommeQuantity</span></td>
+            <td><span style='font-weight:bold;'>@sommeCA</span></td>
+        </tr>
+    </tfoot>
 
 
-
+</table>

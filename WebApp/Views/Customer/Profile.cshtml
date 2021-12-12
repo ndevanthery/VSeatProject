@@ -1,0 +1,60 @@
+﻿@model DTO.Customer
+
+@{
+    ViewData["Title"] = "Profile";
+}
+
+<h1>Profile</h1>
+
+<div>
+    <h4>Customer</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.FIRSTNAME)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.FIRSTNAME)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.LASTNAME)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.LASTNAME)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ADRESS)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ADRESS)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.PHONENUMBER)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.PHONENUMBER)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.USERNAME)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.USERNAME)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.PASSWORD)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.PASSWORD)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.EMAIL)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.EMAIL)
+        </dd>
+    </dl>
+</div>
+<div>
+    @Html.ActionLink("Edit password", "EditPassword", new { /* id = Model.PrimaryKey */ }) |
+    <a asp-action="Index">Back to List</a>
+</div>

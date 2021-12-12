@@ -143,5 +143,48 @@ namespace WebApp.Controllers
             return View(orders_vm);
         }
 
+        public IActionResult Profile()
+        {
+            if (HttpContext.Session.GetInt32("ID_CUSTOMER") == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
+            int id = (int)HttpContext.Session.GetInt32("ID_CUSTOMER");
+            var customer = CustomerManager.GetCustomer(id);
+            return View(customer);
+
+        }
+
+
+        public IActionResult EditPassword()
+        {
+            if (HttpContext.Session.GetInt32("ID_CUSTOMER") == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
+            int id = (int)HttpContext.Session.GetInt32("ID_CUSTOMER");
+            var customer = CustomerManager.GetCustomer(id);
+            return View(customer);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult EditPassword(Customer newPasswordCustomer)
+        {
+            if (ModelState.IsValid)
+            {
+                var customer = CustomerManager.loginCustomer(newPasswordCustomer.USERNAME, newPasswordCustomer.PASSWORD);
+                if (customer == null)
+                {
+                    CustomerManager.UpdateCustomer(newPasswordCustomer.ID_CUSTOMER, newPasswordCustomer);
+                    return RedirectToAction("Profile", "Customer");
+
+                }
+                ModelState.AddModelError(string.Empty, "password unchanged");
+
+            }
+            return View(newPasswordCustomer);
+        }
+
     }
 }
