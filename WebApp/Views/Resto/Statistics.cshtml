@@ -1,0 +1,73 @@
+﻿@model IEnumerable<OrderQuantityVM>
+@using System.Web.Helpers;
+
+@{
+    ViewData["Title"] = "Statistics";
+}
+
+<html>
+<head>
+    <script src="https://www.gstatic.com/charts/loader.js"></script>
+    <script>
+
+        google.charts.load('current', { 'packages': ['corechart'] });
+
+        google.charts.setOnLoadCallback(drawChart);
+
+        function drawChart() {
+
+            var data = new google.visualization.DataTable();
+
+            data.addColumn('string', 'Dish');
+            data.addColumn('number', 'Quantity');
+
+            @foreach (var item in Model)
+            {
+            <text>
+            let mavar = '@item.dish.NAME';
+            data.addRow(['salut', @item.quantity]);
+            </text>
+
+
+            }
+
+
+
+
+
+
+
+            //data.addRows([
+            //    ['Mar 14', 43],
+            //    ['Nov 14', 39],
+            //    ['Jan 15', 42],
+            //    ['Mar 15', 37],
+            //    ['Dec 15', 34],
+            //    ['Feb 16', 40]
+            //]);
+
+            var options = {
+                title: "Gold Prices",
+                width: 600,
+                height: 400,
+                vAxis: { title: 'USD/kg' },
+                legend: { position: "none" }
+            };
+
+            var chart = new google.visualization.PieChart(document.getElementById('mychart'));
+            chart.draw(data, options);
+        }
+    </script>
+</head>
+
+<body>
+    <h1>myChart</h1>
+    <div id="mychart"></div>
+</body>
+
+</html>
+
+
+
+
+

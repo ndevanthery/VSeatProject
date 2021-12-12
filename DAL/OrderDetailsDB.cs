@@ -169,6 +169,7 @@ namespace DAL
 
                             orderDetails.ID_DISH = (int)dr["ID_DISH"];
                             orderDetails.ID_ORDER = (int)dr["ID_ORDER"];
+                            orderDetails.quantity = (int)dr["quantity"];
 
                             results.Add(orderDetails);
                         }

@@ -103,6 +103,17 @@ namespace BLL
             return orderDB.GetDuringOrdersForStaff(idStaff);
         }
 
+        public List<Order> GetOrdersByRestaurant(int idRestaurant)
+        {
+            return orderDB.GetOrdersByRestaurant(idRestaurant);
+        }
+
+        public List<Order> GetDuringOrdersForRestaurant(int idRestaurant)
+        {
+            return orderDB.GetDuringOrdersForRestaurant(idRestaurant);
+        }
+
+
 
 
 

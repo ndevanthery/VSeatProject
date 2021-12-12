@@ -45,6 +45,9 @@ namespace DAL
         public List<Order> GetOrdersByStaff(int idStaff);
         public List<Order> GetDuringOrdersForStaff(int idStaff);
 
+        public List<Order> GetOrdersByRestaurant(int idStaff);
+
+        public List<Order> GetDuringOrdersForRestaurant(int idStaff);
 
 
 

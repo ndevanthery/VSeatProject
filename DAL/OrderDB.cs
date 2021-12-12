@@ -607,6 +607,97 @@ namespace DAL
         }
 
 
+        public List<Order> GetOrdersByRestaurant(int idRestaurant)
+        {
+            List<Order> results = null;
+            string connectionString = Configuration.GetConnectionString("DefaultConnection");
+
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(connectionString))
+                {
+                    string query = "Select * from [dbo].[ORDER] WHERE ID_RESTAURANT = @ID_RESTAURANT ORDER BY ORDERDATE DESC";
+                    SqlCommand cmd = new SqlCommand(query, cn);
+                    cmd.Parameters.AddWithValue("@ID_RESTAURANT", idRestaurant);
+                    cn.Open();
+
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            if (results == null)
+                                results = new List<Order>();
+
+                            Order order = new Order();
+
+                            order.ID_ORDER = (int)dr["ID_ORDER"];
+                            order.ID_CUSTOMER = (int)dr["ID_CUSTOMER"];
+                            order.ORDERDATE = (DateTime)dr["ORDERDATE"];
+                            order.DISCOUNT = (int)dr["DISCOUNT"];
+                            order.TOTALPRICE = (decimal)dr["TOTALPRICE"];
+                            order.ID_RESTAURANT = (int)dr["ID_RESTAURANT"];
+                            order.ID_STAFF = (int)dr["ID_STAFF"];
+
+
+                            results.Add(order);
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+
+            return results;
+        }
+
+        public List<Order> GetDuringOrdersForRestaurant(int idRestaurant)
+        {
+            List<Order> results = null;
+            string connectionString = Configuration.GetConnectionString("DefaultConnection");
+
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(connectionString))
+                {
+                    string query = "Select * from [dbo].[ORDER] WHERE ID_RESTAURANT = @ID_RESTAURANT AND DATEADD(MINUTE,30,ORDERDATE)>GETDATE() ORDER BY ORDERDATE DESC";
+                    SqlCommand cmd = new SqlCommand(query, cn);
+                    cmd.Parameters.AddWithValue("@ID_RESTAURANT", idRestaurant);
+                    cn.Open();
+
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            if (results == null)
+                                results = new List<Order>();
+
+                            Order order = new Order();
+
+                            order.ID_ORDER = (int)dr["ID_ORDER"];
+                            order.ID_CUSTOMER = (int)dr["ID_CUSTOMER"];
+                            order.ORDERDATE = (DateTime)dr["ORDERDATE"];
+                            order.DISCOUNT = (int)dr["DISCOUNT"];
+                            order.TOTALPRICE = (decimal)dr["TOTALPRICE"];
+                            order.ID_RESTAURANT = (int)dr["ID_RESTAURANT"];
+                            order.ID_STAFF = (int)dr["ID_STAFF"];
+
+
+                            results.Add(order);
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+
+            return results;
+        }
+
+
 
 
 

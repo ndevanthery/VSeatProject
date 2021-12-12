@@ -1,0 +1,59 @@
+﻿@model IEnumerable<OrderDetailsVM>
+@{
+    Layout = "_LayoutRestaurant";
+}
+@{
+    ViewData["Title"] = "OrderDetails";
+}
+<h1>order details</h1>
+<h2>restaurant : @Model.First().restaurantname</h2>
+<h2>date : @Model.First().orderDate.ToShortDateString()</h2>
+<h2>hour :  @Model.First().orderDate.ToShortTimeString()</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                dish name
+            </th>
+            <th>
+                unit price
+            </th>
+            <th>
+                quantity
+            </th>
+            <th>
+                total price
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @{decimal somme = (decimal)0.00;}
+        @foreach (var item in Model)
+        {
+            somme += item.totalPrice;
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.dish.NAME)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.dish.PRICE)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.orderDetail.quantity)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.totalPrice)
+                </td>
+            </tr>
+        }
+
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="3"><span style='font-weight:bold;'>total of this order :</span></td>
+            <td><span style='font-weight:bold;'>@somme</span></td>
+        </tr>
+    </tfoot>
+
+</table>
