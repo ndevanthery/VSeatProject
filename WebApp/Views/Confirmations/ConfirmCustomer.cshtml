@@ -1,0 +1,11 @@
+﻿@model DTO.Customer
+
+@if (Model != null)
+{
+    <h1>congratulations, your account @Model.FIRSTNAME @Model.LASTNAME</h1>
+    <h1>is now validated</h1>
+}
+else
+{
+    <h1> this Customer doesn't exist</h1>
+}

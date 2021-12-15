@@ -157,33 +157,33 @@ namespace DAL
                 {
                     string query = "UPDATE RESTAURANT SET IDTYPE = @IDTYPE , IDCITY= @IDCITY , NAME = @NAME , ADRESS = @ADRESS , PHONENUMBER =@PHONENUMBER, USERNAME=@USERNAME, PASSWORD = @PASSWORD, confirmed = @confirmed , image_url=@image_url WHERE ID_RESTAURANT = @id";
                     SqlCommand cmd = new SqlCommand(query, cn);
-                    cmd.Parameters.AddWithValue("@IDTYPE", restaurant.IDTYPE);
+                    cmd.Parameters.AddWithValue("@IDTYPE", newRestaurant.IDTYPE);
 
-                    cmd.Parameters.AddWithValue("@IDCITY", restaurant.IDCITY);
-                    cmd.Parameters.AddWithValue("@NAME", restaurant.NAME);
-                    cmd.Parameters.AddWithValue("@ADRESS", restaurant.ADRESS);
-                    if (restaurant.PHONENUMBER == null)
+                    cmd.Parameters.AddWithValue("@IDCITY", newRestaurant.IDCITY);
+                    cmd.Parameters.AddWithValue("@NAME", newRestaurant.NAME);
+                    cmd.Parameters.AddWithValue("@ADRESS", newRestaurant.ADRESS);
+                    if (newRestaurant.PHONENUMBER == null)
                     {
                         cmd.Parameters.AddWithValue("@PHONENUMBER", DBNull.Value);
 
                     }
                     else
                     {
-                        cmd.Parameters.AddWithValue("@PHONENUMBER", restaurant.PHONENUMBER);
+                        cmd.Parameters.AddWithValue("@PHONENUMBER", newRestaurant.PHONENUMBER);
 
                     }
-                    cmd.Parameters.AddWithValue("@USERNAME", restaurant.USERNAME);
-                    cmd.Parameters.AddWithValue("@PASSWORD", restaurant.PASSWORD);
-                    cmd.Parameters.AddWithValue("@confirmed", restaurant.confirmed);
+                    cmd.Parameters.AddWithValue("@USERNAME", newRestaurant.USERNAME);
+                    cmd.Parameters.AddWithValue("@PASSWORD", newRestaurant.PASSWORD);
+                    cmd.Parameters.AddWithValue("@confirmed", newRestaurant.confirmed);
 
-                    if (restaurant.image_url == null)
+                    if (newRestaurant.image_url == null)
                     {
                         cmd.Parameters.AddWithValue("@image_url", DBNull.Value);
 
                     }
                     else
                     {
-                        cmd.Parameters.AddWithValue("@image_url", restaurant.image_url);
+                        cmd.Parameters.AddWithValue("@image_url", newRestaurant.image_url);
 
                     }
 

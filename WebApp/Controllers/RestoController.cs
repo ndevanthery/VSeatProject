@@ -1,4 +1,5 @@
 ﻿using BLL;
+using DTO;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -219,11 +220,82 @@ namespace WebApp.Controllers
             return View(dishes_vm);
         }
 
+
         public IActionResult EditDish(int id)
         {
             var dish = DishManager.GetDish(id);
             return View(dish);
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult EditDish(Dish newDish)
+        {
+            if (ModelState.IsValid)
+            {
+                DishManager.UpdateDish(newDish.ID_DISH, newDish);
+                return RedirectToAction("EditMenu", "Resto");
+
+
+            }
+            ModelState.AddModelError(string.Empty, "unvalid model");
+
+            return View(newDish);
+        }
+
+        public IActionResult CreateDish()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult CreateDish(Dish newDish)
+        {
+            if (ModelState.IsValid)
+            {
+                newDish.ID_RESTAURANT = (int)HttpContext.Session.GetInt32("ID_RESTAURANT");
+                DishManager.AddDish(newDish);
+                return RedirectToAction("EditMenu", "Resto");
+
+
+            }
+            ModelState.AddModelError(string.Empty, "unvalid model");
+
+            return View(newDish);
+        }
+
+
+        public IActionResult EditPassword()
+        {
+            if (HttpContext.Session.GetInt32("ID_RESTAURANT") == null)
+            {
+                return RedirectToAction("LoginRestaurant", "Login");
+            }
+            int id = (int)HttpContext.Session.GetInt32("ID_RESTAURANT");
+            var resto = RestaurantManager.GetRestaurant(id);
+            return View(resto);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult EditPassword(Restaurant newResto)
+        {
+            if (ModelState.IsValid)
+            {
+                var staff = RestaurantManager.loginRestaurant(newResto.USERNAME, newResto.PASSWORD);
+                if (staff == null)
+                {
+                    RestaurantManager.UpdateRestaurant(newResto.ID_RESTAURANT, newResto);
+                    return RedirectToAction("Profile", "Resto");
+
+                }
+                ModelState.AddModelError(string.Empty, "password unchanged");
+
+            }
+            return View(newResto);
+        }
+
 
 
 

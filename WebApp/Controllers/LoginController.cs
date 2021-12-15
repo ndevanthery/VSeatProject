@@ -70,7 +70,7 @@ namespace WebApp.Controllers
                 if (customer == null)
                 {
                     newCustomer = CustomerManager.AddCustomer(newCustomer);
-                    sendEmail(newCustomer);
+                    ConfirmationsController.sendEmailCustomer(newCustomer);
                     return RedirectToAction("Index", "Login");
                     
 
@@ -81,23 +81,7 @@ namespace WebApp.Controllers
             return View(newCustomer);
         }
 
-        public void sendEmail(Customer receiver)
-        {
-            var smtpClient = new SmtpClient("smtp.gmail.com")
-            {
-                Port = 587,
-                Credentials = new NetworkCredential("vseat.noreply@gmail.com", "AdminHevs01"),
-                EnableSsl = true,
-            };
 
-            ///////////////////////////////////////////////////////
-            ///add a link to confirm EMAIL
-            ///////////////////////////////////////////////////////
-
-
-
-            smtpClient.Send("vseat.noreply@gmail.com", receiver.EMAIL, "Confirmation of account creation", "Bonjour " + receiver.FIRSTNAME + " " + receiver.LASTNAME + "\n Merci de confirmer votre adresse e - mail en appuyant sur le lien ci - dessous.");
-        }
 
         public IActionResult LoginStaff()
         {

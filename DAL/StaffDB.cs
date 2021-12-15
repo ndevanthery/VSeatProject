@@ -163,47 +163,47 @@ namespace DAL
             {
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
-                    string query = "UPDATE RESTAURANT SET IDCITY = @IDCITY , FIRSTNAME= @FIRSTNAME , LASTNAME = @LASTNAME , ADRESS = @ADRESS , PHONENUMBER =@PHONENUMBER, USERNAME=@USERNAME, PASSWORD = @PASSWORD, image_url = @image_url , confirmed = @confirmed WHERE ID_STAFF = @id";
+                    string query = "UPDATE STAFF SET IDCITY = @IDCITY , FIRSTNAME= @FIRSTNAME , LASTNAME = @LASTNAME , ADRESS = @ADRESS , PHONENUMBER =@PHONENUMBER, USERNAME=@USERNAME, PASSWORD = @PASSWORD, image_url = @image_url , confirmed = @confirmed WHERE ID_STAFF = @id";
                     SqlCommand cmd = new SqlCommand(query, cn);
-                    cmd.Parameters.AddWithValue("@IDCITY", staff.IDCITY);
-                    cmd.Parameters.AddWithValue("@FIRSTNAME", staff.FIRSTNAME);
-                    cmd.Parameters.AddWithValue("@LASTNAME", staff.LASTNAME);
+                    cmd.Parameters.AddWithValue("@IDCITY", newStaff.IDCITY);
+                    cmd.Parameters.AddWithValue("@FIRSTNAME", newStaff.FIRSTNAME);
+                    cmd.Parameters.AddWithValue("@LASTNAME", newStaff.LASTNAME);
 
-                    if (staff.ADRESS == null)
+                    if (newStaff.ADRESS == null)
                     {
                         cmd.Parameters.AddWithValue("@ADRESS", DBNull.Value);
 
                     }
                     else
                     {
-                        cmd.Parameters.AddWithValue("@ADRESS", staff.ADRESS);
+                        cmd.Parameters.AddWithValue("@ADRESS", newStaff.ADRESS);
 
                     }
-                    if (staff.PHONENUMBER == null)
+                    if (newStaff.PHONENUMBER == null)
                     {
                         cmd.Parameters.AddWithValue("@PHONENUMBER", DBNull.Value);
 
                     }
                     else
                     {
-                        cmd.Parameters.AddWithValue("@PHONENUMBER", staff.PHONENUMBER);
+                        cmd.Parameters.AddWithValue("@PHONENUMBER", newStaff.PHONENUMBER);
 
                     }
-                    cmd.Parameters.AddWithValue("@USERNAME", staff.USERNAME);
-                    cmd.Parameters.AddWithValue("@PASSWORD", staff.PASSWORD);
+                    cmd.Parameters.AddWithValue("@USERNAME", newStaff.USERNAME);
+                    cmd.Parameters.AddWithValue("@PASSWORD", newStaff.PASSWORD);
 
-                    if (staff.image_url == null)
+                    if (newStaff.image_url == null)
                     {
                         cmd.Parameters.AddWithValue("@image_url", DBNull.Value);
 
                     }
                     else
                     {
-                        cmd.Parameters.AddWithValue("@image_url", staff.image_url);
+                        cmd.Parameters.AddWithValue("@image_url", newStaff.image_url);
 
                     }
 
-                    cmd.Parameters.AddWithValue("@confirmed", staff.confirmed);
+                    cmd.Parameters.AddWithValue("@confirmed", newStaff.confirmed);
 
                     cmd.Parameters.AddWithValue("@id", idStaff);
 

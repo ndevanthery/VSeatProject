@@ -1,4 +1,5 @@
 ﻿using BLL;
+using DTO;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -160,6 +161,37 @@ namespace WebApp.Controllers
             var staff = StaffManager.GetStaff(id);
             return View(staff);
 
+        }
+
+
+        public IActionResult EditPassword()
+        {
+            if (HttpContext.Session.GetInt32("ID_STAFF") == null)
+            {
+                return RedirectToAction("LoginStaff", "Login");
+            }
+            int id = (int)HttpContext.Session.GetInt32("ID_STAFF");
+            var staff = StaffManager.GetStaff(id);
+            return View(staff);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult EditPassword(Staff newStaff)
+        {
+            if (ModelState.IsValid)
+            {
+                var staff = StaffManager.loginStaff(newStaff.USERNAME, newStaff.PASSWORD);
+                if (staff == null)
+                {
+                    StaffManager.UpdateStaff(newStaff.ID_STAFF, newStaff);
+                    return RedirectToAction("Profile", "Staff");
+
+                }
+                ModelState.AddModelError(string.Empty, "password unchanged");
+
+            }
+            return View(newStaff);
         }
 
 

@@ -140,7 +140,11 @@ namespace DAL
                     SqlCommand cmd = new SqlCommand(query, cn);
 
                     cmd.Parameters.AddWithValue("@ID_RESTAURANT", newDish.ID_RESTAURANT);
-                    cmd.Parameters.AddWithValue("@image_url", newDish.image_url);
+                    if (newDish.image_url == null)
+                    {
+                        cmd.Parameters.AddWithValue("@image_url", DBNull.Value);
+
+                    }
                     cmd.Parameters.AddWithValue("@NAME", newDish.NAME);
                     cmd.Parameters.AddWithValue("@PRICE", newDish.PRICE);
 
