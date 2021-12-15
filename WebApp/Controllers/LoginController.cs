@@ -9,7 +9,8 @@ using WebApp.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using DTO;
-
+using System.Net.Mail;
+using System.Net;
 
 namespace WebApp.Controllers
 {
@@ -68,8 +69,8 @@ namespace WebApp.Controllers
                 var customer = CustomerManager.loginCustomer(newCustomer.USERNAME, newCustomer.PASSWORD);
                 if (customer == null)
                 {
-                    CustomerManager.AddCustomer(newCustomer);
-
+                    newCustomer = CustomerManager.AddCustomer(newCustomer);
+                    sendEmail(newCustomer);
                     return RedirectToAction("Index", "Login");
                     
 
@@ -78,6 +79,24 @@ namespace WebApp.Controllers
 
             }
             return View(newCustomer);
+        }
+
+        public void sendEmail(Customer receiver)
+        {
+            var smtpClient = new SmtpClient("smtp.gmail.com")
+            {
+                Port = 587,
+                Credentials = new NetworkCredential("vseat.noreply@gmail.com", "AdminHevs01"),
+                EnableSsl = true,
+            };
+
+            ///////////////////////////////////////////////////////
+            ///add a link to confirm EMAIL
+            ///////////////////////////////////////////////////////
+
+
+
+            smtpClient.Send("vseat.noreply@gmail.com", receiver.EMAIL, "Confirmation of account creation", "Bonjour " + receiver.FIRSTNAME + " " + receiver.LASTNAME + "\n Merci de confirmer votre adresse e - mail en appuyant sur le lien ci - dessous.");
         }
 
         public IActionResult LoginStaff()

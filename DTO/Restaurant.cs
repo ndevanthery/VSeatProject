@@ -24,6 +24,10 @@ namespace DTO
 
         public string PASSWORD { get; set; }
 
+        public bool confirmed { get; set; }
+
+        public string image_url { get; set; }
+
         public override string ToString()
         {
             return "ID RESTAURANT:" + ID_RESTAURANT +

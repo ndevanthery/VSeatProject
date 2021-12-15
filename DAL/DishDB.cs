@@ -32,12 +32,22 @@ namespace DAL
             {
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
-                    string query = "Insert into DISH(ID_RESTAURANT,NAME,PRICE,IMAGE) values(@ID_RESTAURANT,@NAME,@PRICE,@IMAGE); SELECT SCOPE_IDENTITY()";
+                    string query = "Insert into DISH(ID_RESTAURANT,NAME,PRICE,image_url) values(@ID_RESTAURANT,@NAME,@PRICE,@image_url); SELECT SCOPE_IDENTITY()";
                     SqlCommand cmd = new SqlCommand(query, cn);
                     cmd.Parameters.AddWithValue("@ID_RESTAURANT", dish.ID_RESTAURANT);
                     cmd.Parameters.AddWithValue("@NAME", dish.NAME);
                     cmd.Parameters.AddWithValue("@PRICE", dish.PRICE);
-                    cmd.Parameters.AddWithValue("@IMAGE", dish.IMAGE);
+
+                    if(dish.image_url==null)
+                    {
+                        cmd.Parameters.AddWithValue("@image_url", DBNull.Value);
+
+                    }
+                    else
+                    {
+                        cmd.Parameters.AddWithValue("@image_url", dish.image_url);
+
+                    }
 
 
                     cn.Open();
@@ -94,8 +104,11 @@ namespace DAL
 
                             dish.PRICE = (decimal)dr["PRICE"];
 
+                            if(dr["image_url"]!=DBNull.Value)
+                            {
+                                dish.image_url = (string)dr["image_url"];
+                            }
 
-                            dish.IMAGE = (ImageFormat)dr["IMAGE"];
 
                         }
                     }
@@ -123,11 +136,11 @@ namespace DAL
             {
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
-                    string query = "UPDATE DISH SET ID_RESTAURANT = @ID_RESTAURANT, NAME = @NAME, PRICE = @PRICE, IMAGE = @IMAGE WHERE ID_DISH = @id";
+                    string query = "UPDATE DISH SET ID_RESTAURANT = @ID_RESTAURANT, NAME = @NAME, PRICE = @PRICE, image_url = @image_url WHERE ID_DISH = @id";
                     SqlCommand cmd = new SqlCommand(query, cn);
 
                     cmd.Parameters.AddWithValue("@ID_RESTAURANT", newDish.ID_RESTAURANT);
-                    cmd.Parameters.AddWithValue("@IMAGE", newDish.IMAGE);
+                    cmd.Parameters.AddWithValue("@image_url", newDish.image_url);
                     cmd.Parameters.AddWithValue("@NAME", newDish.NAME);
                     cmd.Parameters.AddWithValue("@PRICE", newDish.PRICE);
 
@@ -140,13 +153,25 @@ namespace DAL
                     using (SqlDataReader dr = cmd.ExecuteReader())
                     {
 
-                        dish = new Dish();
+                        while (dr.Read())
+                        {
+                            dish = new Dish();
 
-                        dish.ID_DISH = (int)dr["ID_DISH"];
-                        dish.ID_RESTAURANT = (int)dr["ID_RESTAURANT"];
-                        dish.NAME = (string)dr["NAME"];
-                        dish.PRICE = (decimal)dr["PRICE"];
-                        dish.IMAGE = (ImageFormat)dr["IMAGE"];
+                            dish.ID_DISH = (int)dr["ID_DISH"];
+
+                            dish.ID_RESTAURANT = (int)dr["ID_RESTAURANT"];
+
+                            dish.NAME = (string)dr["NAME"];
+
+                            dish.PRICE = (decimal)dr["PRICE"];
+
+                            if (dr["image_url"] != DBNull.Value)
+                            {
+                                dish.image_url = (string)dr["image_url"];
+                            }
+
+
+                        }
 
                     }
                 }
@@ -184,13 +209,26 @@ namespace DAL
 
                     using (SqlDataReader dr = cmd.ExecuteReader())
                     {
-                        dish = new Dish();
-                        dish.ID_DISH = (int)dr["ID_DISH"];
-                        dish.ID_RESTAURANT = (int)dr["ID_RESTAURANT"];
-                        dish.NAME = (string)dr["NAME"];
-                        dish.PRICE = (decimal)dr["PRICE"];
-                        dish.IMAGE = (ImageFormat)dr["IMAGE"];
-                        
+                        while (dr.Read())
+                        {
+                            dish = new Dish();
+
+                            dish.ID_DISH = (int)dr["ID_DISH"];
+
+                            dish.ID_RESTAURANT = (int)dr["ID_RESTAURANT"];
+
+                            dish.NAME = (string)dr["NAME"];
+
+                            dish.PRICE = (decimal)dr["PRICE"];
+
+                            if (dr["image_url"] != DBNull.Value)
+                            {
+                                dish.image_url = (string)dr["image_url"];
+                            }
+
+
+                        }
+
                     }
                 }
             }
@@ -230,15 +268,19 @@ namespace DAL
 
                             Dish dish = new Dish();
 
+
                             dish.ID_DISH = (int)dr["ID_DISH"];
 
                             dish.ID_RESTAURANT = (int)dr["ID_RESTAURANT"];
 
-                            dish.IMAGE = (ImageFormat)dr["IMAGE"];
-
                             dish.NAME = (string)dr["NAME"];
 
                             dish.PRICE = (decimal)dr["PRICE"];
+
+                            if (dr["image_url"] != DBNull.Value)
+                            {
+                                dish.image_url = (string)dr["image_url"];
+                            }
 
                             results.Add(dish);
                         }
@@ -278,15 +320,19 @@ namespace DAL
 
                             Dish dish = new Dish();
 
+
                             dish.ID_DISH = (int)dr["ID_DISH"];
 
                             dish.ID_RESTAURANT = (int)dr["ID_RESTAURANT"];
 
-                            dish.IMAGE = null;
-
                             dish.NAME = (string)dr["NAME"];
 
                             dish.PRICE = (decimal)dr["PRICE"];
+
+                            if (dr["image_url"] != DBNull.Value)
+                            {
+                                dish.image_url = (string)dr["image_url"];
+                            }
 
                             results.Add(dish);
                         }
@@ -325,19 +371,19 @@ namespace DAL
 
                             Dish dish = new Dish();
 
+
                             dish.ID_DISH = (int)dr["ID_DISH"];
 
                             dish.ID_RESTAURANT = (int)dr["ID_RESTAURANT"];
 
-                            if (dr["IMAGE"] != null)
-                            {
-                                dish.IMAGE = (ImageFormat)dr["IMAGE"];
-                            }
-                            
-
                             dish.NAME = (string)dr["NAME"];
 
                             dish.PRICE = (decimal)dr["PRICE"];
+
+                            if (dr["image_url"] != DBNull.Value)
+                            {
+                                dish.image_url = (string)dr["image_url"];
+                            }
 
                             results.Add(dish);
                         }

@@ -34,10 +34,11 @@ namespace DAL
             {
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
-                    string query = "Insert into CITY(CITYNAME,NPA) values(@cityName,@npa); SELECT SCOPE_IDENTITY()";
+                    string query = "Insert into CITY(CITYNAME,NPA,image_url) values(@cityName,@npa,@image_url); SELECT SCOPE_IDENTITY()";
                     SqlCommand cmd = new SqlCommand(query, cn);
                     cmd.Parameters.AddWithValue("@cityName", city.CITYNAME);
                     cmd.Parameters.AddWithValue("@npa", city.NPA);
+                    cmd.Parameters.AddWithValue("@image_url", city.image_url);
 
                     cn.Open();
 
@@ -87,6 +88,11 @@ namespace DAL
 
                             city.NPA = (string)dr["NPA"];
 
+                            if(dr["image_url"] != DBNull.Value)
+                            {
+                                city.image_url = (string)dr["image_url"];
+                            }
+
 
                         }
 
@@ -130,6 +136,11 @@ namespace DAL
 
                             city.NPA = (string)dr["NPA"];
 
+                            if (dr["image_url"] != DBNull.Value)
+                            {
+                                city.image_url = (string)dr["image_url"];
+                            }
+
 
                         }
 
@@ -159,10 +170,11 @@ namespace DAL
             {
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
-                    string query = "UPDATE CITY SET CITYNAME= @CITYNAME , NPA = @NPA WHERE IDCITY = @id";
+                    string query = "UPDATE CITY SET CITYNAME= @CITYNAME , NPA = @NPA, image_url = @image_url WHERE IDCITY = @id";
                     SqlCommand cmd = new SqlCommand(query, cn);
                     cmd.Parameters.AddWithValue("@CITYNAME", newCity.CITYNAME);
                     cmd.Parameters.AddWithValue("@NPA", newCity.NPA);
+                    cmd.Parameters.AddWithValue("@image_url", newCity.image_url);
 
                     cmd.Parameters.AddWithValue("@id", idCity);
 
@@ -171,10 +183,23 @@ namespace DAL
                     using (SqlDataReader dr = cmd.ExecuteReader())
                     {
 
-                        city = new City();
-                        city.IDCITY = (int)dr["IDCITY"];
-                        city.CITYNAME = (string)dr["CITYNAME"];
-                        city.NPA = (string)dr["NPA"];
+                        while (dr.Read())
+                        {
+
+                            city = new City();
+                            city.IDCITY = (int)dr["IDCITY"];
+
+                            city.CITYNAME = (string)dr["CITYNAME"];
+
+                            city.NPA = (string)dr["NPA"];
+
+                            if (dr["image_url"] != DBNull.Value)
+                            {
+                                city.image_url = (string)dr["image_url"];
+                            }
+
+
+                        }
 
                     }
                 }
@@ -209,10 +234,23 @@ namespace DAL
                     using (SqlDataReader dr = cmd.ExecuteReader())
                     {
 
-                        city = new City();
-                        city.IDCITY = (int)dr["IDCITY"];
-                        city.CITYNAME = (string)dr["CITYNAME"];
-                        city.NPA = (string)dr["NPA"];
+                        while (dr.Read())
+                        {
+
+                            city = new City();
+                            city.IDCITY = (int)dr["IDCITY"];
+
+                            city.CITYNAME = (string)dr["CITYNAME"];
+
+                            city.NPA = (string)dr["NPA"];
+
+                            if (dr["image_url"] != DBNull.Value)
+                            {
+                                city.image_url = (string)dr["image_url"];
+                            }
+
+
+                        }
 
                     }
                 }
@@ -262,6 +300,12 @@ namespace DAL
                             city.CITYNAME = (string)dr["CITYNAME"];
 
                             city.NPA = (string)dr["NPA"];
+
+                            if(dr["image_url"]!=DBNull.Value)
+                            {
+                                city.image_url = (string)dr["image_url"];
+
+                            }
 
 
                             results.Add(city);

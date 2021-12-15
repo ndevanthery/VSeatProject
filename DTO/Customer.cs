@@ -25,6 +25,11 @@ namespace DTO
         public string PASSWORD { get; set; }
 
         public string EMAIL { get; set; }
+
+        public string image_url { get; set; }
+
+        public bool confirmed { get; set; }
+
         public override string ToString()
         {
             return "ID_CUSTOMER:" + ID_CUSTOMER +

@@ -13,13 +13,11 @@ namespace DTO
 
         public int ID_RESTAURANT { get; set; }
 
-        public ImageFormat IMAGE { get; set; }
-
         public string NAME { get; set; }
 
         public decimal PRICE { get; set; }
 
-
+        public string image_url { get; set; }
 
         public override string ToString()
         {

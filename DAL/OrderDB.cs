@@ -115,12 +115,14 @@ namespace DAL
             {
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
-                    string query = "UPDATE [dbo].[ORDER] SET ID_CUSTOMER = @ID_CUSTOMER , ORDERDATE= @ORDERDATE , DISCOUNT = @DISCOUNT , TOTALPRICE =@TOTALPRICE WHERE ID_ORDER = @id";
+                    string query = "UPDATE [dbo].[ORDER] SET ID_CUSTOMER = @ID_CUSTOMER , ORDERDATE= @ORDERDATE , DISCOUNT = @DISCOUNT , TOTALPRICE =@TOTALPRICE , ID_STAFF = @ID_STAFF , ID_RESTAURANT = @ID_RESTAURANT WHERE ID_ORDER = @id";
                     SqlCommand cmd = new SqlCommand(query, cn);
                     cmd.Parameters.AddWithValue("@ID_CUSTOMER", newOrder.ID_CUSTOMER);
                     cmd.Parameters.AddWithValue("@ORDERDATE", newOrder.ORDERDATE);
                     cmd.Parameters.AddWithValue("@DISCOUNT", newOrder.DISCOUNT);
                     cmd.Parameters.AddWithValue("@TOTALPRICE", newOrder.TOTALPRICE);
+                    cmd.Parameters.AddWithValue("@ID_STAFF", newOrder.ID_STAFF);
+                    cmd.Parameters.AddWithValue("@ID_RESTAURANT", newOrder.ID_RESTAURANT);
 
                     cmd.Parameters.AddWithValue("@id", idOrder);
 
@@ -129,17 +131,17 @@ namespace DAL
 
                     using (SqlDataReader dr = cmd.ExecuteReader())
                     {
-
-                        order = new Order();
-                        order.ID_ORDER = (int)dr["ID_ORDER"];
-                        order.ID_CUSTOMER = (int)dr["ID_CUSTOMER"];
-                        order.ORDERDATE = (DateTime)dr["ORDERDATE"];
-                        order.DISCOUNT = (int)dr["DISCOUNT"];
-                        order.TOTALPRICE = (decimal)dr["TOTALPRICE"];
-                        order.ID_RESTAURANT = (int)dr["ID_RESTAURANT"];
-                        order.ID_STAFF = (int)dr["ID_STAFF"];
-
-
+                        while (dr.Read())
+                        {
+                            order = new Order();
+                            order.ID_ORDER = (int)dr["ID_ORDER"];
+                            order.ID_CUSTOMER = (int)dr["ID_CUSTOMER"];
+                            order.ORDERDATE = (DateTime)dr["ORDERDATE"];
+                            order.DISCOUNT = (int)dr["DISCOUNT"];
+                            order.TOTALPRICE = (decimal)dr["TOTALPRICE"];
+                            order.ID_RESTAURANT = (int)dr["ID_RESTAURANT"];
+                            order.ID_STAFF = (int)dr["ID_STAFF"];
+                        }
 
                     }
                 }
@@ -175,14 +177,17 @@ namespace DAL
                     using (SqlDataReader dr = cmd.ExecuteReader())
                     {
 
-                        order = new Order();
-                        order.ID_ORDER = (int)dr["ID_ORDER"];
-                        order.ID_CUSTOMER = (int)dr["ID_CUSTOMER"];
-                        order.ORDERDATE = (DateTime)dr["ORDERDATE"];
-                        order.DISCOUNT = (int)dr["DISCOUNT"];
-                        order.TOTALPRICE = (decimal)dr["TOTALPRICE"];
-                        order.ID_RESTAURANT = (int)dr["ID_RESTAURANT"];
-                        order.ID_STAFF = (int)dr["ID_STAFF"];
+                        while (dr.Read())
+                        {
+                            order = new Order();
+                            order.ID_ORDER = (int)dr["ID_ORDER"];
+                            order.ID_CUSTOMER = (int)dr["ID_CUSTOMER"];
+                            order.ORDERDATE = (DateTime)dr["ORDERDATE"];
+                            order.DISCOUNT = (int)dr["DISCOUNT"];
+                            order.TOTALPRICE = (decimal)dr["TOTALPRICE"];
+                            order.ID_RESTAURANT = (int)dr["ID_RESTAURANT"];
+                            order.ID_STAFF = (int)dr["ID_STAFF"];
+                        }
 
 
                     }

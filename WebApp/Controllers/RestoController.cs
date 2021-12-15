@@ -85,10 +85,13 @@ namespace WebApp.Controllers
             foreach (var orderDetail in orderDetails)
             {
                 var myDish = DishManager.GetDish(orderDetail.ID_DISH);
+
+                var myOrder = OrderManager.GetOrder(id);
+                myDish.PRICE = myDish.PRICE * ((decimal)1 - ((decimal)myOrder.DISCOUNT / 100));
                 var totalPrice = myDish.PRICE * orderDetail.quantity;
                 Models.OrderDetailsVM myOrderDetail = new Models.OrderDetailsVM
                 {
-                    orderDate = OrderManager.GetOrder(id).ORDERDATE,
+                    orderDate = myOrder.ORDERDATE,
                     orderDetail = orderDetail,
                     dish = myDish,
                     totalPrice = totalPrice,
@@ -173,6 +176,55 @@ namespace WebApp.Controllers
 
             return View(myList);
         }
+
+        public IActionResult Profile()
+        {
+            if (HttpContext.Session.GetInt32("ID_RESTAURANT") == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
+            int id = (int)HttpContext.Session.GetInt32("ID_RESTAURANT");
+            var customer = RestaurantManager.GetRestaurant(id);
+            return View(customer);
+
+        }
+
+        public IActionResult EditMenu()
+        {
+            if (HttpContext.Session.GetInt32("ID_RESTAURANT") == null)
+            {
+                return RedirectToAction("LoginRestaurant", "Login");
+            }
+            int id = (int)HttpContext.Session.GetInt32("ID_RESTAURANT");
+            var dishes = DishManager.GetDishes(id);
+            var dishes_vm = new List<Models.DishVM>();
+            if (dishes != null)
+            {
+                foreach (var dish in dishes)
+                {
+                    var myCityID = RestaurantManager.GetRestaurant(id).IDCITY;
+
+                    Models.DishVM myDishVM = new Models.DishVM
+                    {
+                        dish = dish,
+                        restaurantName = RestaurantManager.GetRestaurant(id).NAME,
+                        cityName = CityManager.GetCity(myCityID).CITYNAME
+
+
+                    };
+
+                    dishes_vm.Add(myDishVM);
+                }
+            }
+            return View(dishes_vm);
+        }
+
+        public IActionResult EditDish(int id)
+        {
+            var dish = DishManager.GetDish(id);
+            return View(dish);
+        }
+
 
 
 

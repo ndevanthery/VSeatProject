@@ -58,6 +58,9 @@ namespace WebApp
             services.AddScoped<IStaffManager, StaffManager>();
             services.AddScoped<IStaffDB, StaffDB>();
 
+            services.AddScoped<ICodePromoManager, CodePromoManager>();
+            services.AddScoped<ICodePromoDB, CodePromoDB>();
+
 
             services.AddSession();
 

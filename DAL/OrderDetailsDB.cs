@@ -76,11 +76,16 @@ namespace DAL
 
                     using (SqlDataReader dr = cmd.ExecuteReader())
                     {
+                        while (dr.Read())
+                        {
+                            orderDetails = new OrderDetails();
 
-                        orderDetails = new OrderDetails();
+                            orderDetails.ID_DISH = (int)dr["ID_DISH"];
+                            orderDetails.ID_ORDER = (int)dr["ID_ORDER"];
+                            orderDetails.quantity = (int)dr["quantity"];
+                        }
 
-                        orderDetails.ID_ORDER = (int)dr["ID_ORDER"];
-                        orderDetails.ID_DISH = (int)dr["ID_DISH"];
+                            
 
 
 
@@ -127,6 +132,7 @@ namespace DAL
 
                             orderDetails.ID_DISH = (int)dr["ID_DISH"];
                             orderDetails.ID_ORDER = (int)dr["ID_ORDER"];
+                            orderDetails.quantity = (int)dr["quantity"];
 
                             results.Add(orderDetails);
                         }

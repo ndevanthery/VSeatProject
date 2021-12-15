@@ -1,0 +1,49 @@
+﻿@model IEnumerable<WebApp.Models.DishVM>
+
+@{
+    ViewData["Title"] = "EditMenu";
+}
+@{
+    Layout = "_LayoutRestaurant";
+}
+
+<h1>EditMenu</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.dish.NAME)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.dish.PRICE)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.dish.image_url)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.dish.NAME)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.dish.PRICE)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.dish.image_url)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "EditDish", new {  id=item.dish.ID_DISH  })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

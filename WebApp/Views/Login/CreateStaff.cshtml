@@ -57,6 +57,14 @@
                 <span asp-validation-for="PASSWORD" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="image_url" class="control-label"></label>
+                <input asp-for="image_url" class="form-control" />
+                <span asp-validation-for="image_url" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="hidden" asp-for="confirmed" class="form-control" value="false" />
+            </div>
+            <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>

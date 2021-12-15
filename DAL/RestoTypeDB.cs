@@ -121,9 +121,16 @@ namespace DAL
                     using (SqlDataReader dr = cmd.ExecuteReader())
                     {
 
-                        restoType = new RestoType();
-                        restoType.IDTYPE = (int)dr["IDTYPE"];
-                        restoType.TYPENAME = (string)dr["TYPENAME"];
+                        while (dr.Read())
+                        {
+
+                            restoType = new RestoType();
+
+                            restoType.IDTYPE = (int)dr["IDTYPE"];
+
+                            restoType.TYPENAME = (string)dr["TYPENAME"];
+
+                        }
 
                     }
                 }
@@ -159,9 +166,16 @@ namespace DAL
 
                     using (SqlDataReader dr = cmd.ExecuteReader())
                     {
-                        restoType = new RestoType();
-                        restoType.IDTYPE = (int)dr["IDTYPE"];
-                        restoType.TYPENAME = (string)dr["TYPENAME"];
+                        while (dr.Read())
+                        {
+
+                            restoType = new RestoType();
+
+                            restoType.IDTYPE = (int)dr["IDTYPE"];
+
+                            restoType.TYPENAME = (string)dr["TYPENAME"];
+
+                        }
                     }
                 }
             }

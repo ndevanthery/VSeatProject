@@ -91,10 +91,13 @@ namespace WebApp.Controllers
             foreach(var orderDetail in orderDetails)
             {
                 var myDish = DishManager.GetDish(orderDetail.ID_DISH);
-                var totalPrice = myDish.PRICE * orderDetail.quantity;
+                
+                var myOrder = OrderManager.GetOrder(id);
+                myDish.PRICE = myDish.PRICE * ((decimal)1 - ((decimal)myOrder.DISCOUNT / 100));
+                var totalPrice = myDish.PRICE * orderDetail.quantity ;
                 Models.OrderDetailsVM myOrderDetail = new Models.OrderDetailsVM
                 {
-                    orderDate = OrderManager.GetOrder(id).ORDERDATE,
+                    orderDate = myOrder.ORDERDATE,
                     orderDetail = orderDetail,
                     dish = myDish,
                     totalPrice = totalPrice,

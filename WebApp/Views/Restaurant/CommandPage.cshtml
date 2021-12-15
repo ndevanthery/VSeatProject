@@ -1,4 +1,4 @@
-﻿@model IList<WebApp.Models.OrderDishVM>
+﻿@model OrderDishCodePromo
 @{
     Layout = "_LayoutCustomer";
 }
@@ -6,7 +6,7 @@
     ViewData["Title"] = "CommandPage";
 }
 
-<h1>pass your command at @Model.First().restaurantName</h1>
+<h1>pass your command at @Model.orderDishes.First().restaurantName</h1>
 <form asp-action="CommandPage">
     <div asp-validation-summary="All" class="text-danger"></div>
 
@@ -14,40 +14,40 @@
         <thead>
             <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.First().dish.NAME)
+                    @Html.DisplayNameFor(model => model.orderDishes.First().dish.NAME)
 
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.First().dish.PRICE)
+                    @Html.DisplayNameFor(model => model.orderDishes.First().dish.PRICE)
                 </th>
                 <th></th>
             </tr>
         </thead>
         <tbody>
-            
 
 
-            @for (int i = 0; i < Model.Count(); i++)
+
+            @for (int i = 0; i < Model.orderDishes.Count(); i++)
             {
-                
+
                 <tr>
                     <td>
-                        @Html.DisplayFor(modelItem => Model[i].dish.NAME)
-                        @Html.HiddenFor(modelItem => Model[i].dish.NAME)
-                        @Html.HiddenFor(modelItem => Model[i].dish.ID_DISH)
-                        @Html.HiddenFor(modelItem => Model[i].dish.ID_RESTAURANT)
-                        @Html.HiddenFor(modelItem => Model[i].dish.IMAGE)
-                        @Html.HiddenFor(modelItem => Model[i].cityname)
+                        @Html.DisplayFor(modelItem => Model.orderDishes[i].dish.NAME)
+                        @Html.HiddenFor(modelItem => Model.orderDishes[i].dish.NAME)
+                        @Html.HiddenFor(modelItem => Model.orderDishes[i].dish.ID_DISH)
+                        @Html.HiddenFor(modelItem => Model.orderDishes[i].dish.ID_RESTAURANT)
+                        @Html.HiddenFor(modelItem => Model.orderDishes[i].dish.image_url)
+                        @Html.HiddenFor(modelItem => Model.orderDishes[i].cityname)
 
                     </td>
                     <td>
 
-                        @Html.DisplayFor(modelItem => Model[i].dish.PRICE)
-                        @Html.HiddenFor(modelItem => Model[i].dish.PRICE)
+                        @Html.DisplayFor(modelItem => Model.orderDishes[i].dish.PRICE)
+                        @Html.HiddenFor(modelItem => Model.orderDishes[i].dish.PRICE)
 
                     </td>
                     <td>
-                        @Html.TextBoxFor(m => Model[i].quantity)
+                        @Html.TextBoxFor(m => Model.orderDishes[i].quantity)
                     </td>
                 </tr>
             }
@@ -61,6 +61,9 @@
 
     </table>
     <input type="submit" value="Confirm order" class="btn btn-primary" />
+    <br/>
+    @Html.DisplayNameFor(model => model.codePromo)
+    @Html.TextBoxFor(m => Model.codePromo)
 
     @*<a asp-action="Index">confirm your order</a>*@
 </form>

@@ -6,9 +6,18 @@
     ViewData["Title"] = "DishesList";
 }
 
-<h1>Dishes of @Model.First().restaurantName in @Model.First().cityName</h1>
+@if (Model != null && Model.Count() > 0)
+{
+    <h1>Dishes of @Model.First().restaurantName in @Model.First().cityName</h1>
 
-<h1>@Html.ActionLink("Command", "CommandPage", new { idRestaurant = Model.First().dish.ID_RESTAURANT })</h1>
+    <h1>@Html.ActionLink("Command", "CommandPage", new { idRestaurant = Model.First().dish.ID_RESTAURANT })</h1>
+
+
+}
+@if(Model.Count()==0)
+{
+    <h1>there is no dishes in this restaurant</h1>
+}
 
 
 <table class="table">
@@ -21,7 +30,7 @@
                 @Html.DisplayNameFor(model => model.dish.PRICE)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.dish.IMAGE)
+                @Html.DisplayNameFor(model => model.dish.image_url)
             </th>
         </tr>
     </thead>
@@ -40,7 +49,7 @@
                         @Html.DisplayFor(modelItem => item.dish.PRICE)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.dish.IMAGE)
+                        @Html.DisplayFor(modelItem => item.dish.image_url)
                     </td>
                 </tr>
             }

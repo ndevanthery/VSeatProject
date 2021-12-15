@@ -92,10 +92,13 @@ namespace WebApp.Controllers
             foreach (var orderDetail in orderDetails)
             {
                 var myDish = DishManager.GetDish(orderDetail.ID_DISH);
+
+                var myOrder = OrderManager.GetOrder(id);
+                myDish.PRICE = myDish.PRICE * ((decimal)1 - ((decimal)myOrder.DISCOUNT / 100));
                 var totalPrice = myDish.PRICE * orderDetail.quantity;
                 Models.OrderDetailsVM myOrderDetail = new Models.OrderDetailsVM
                 {
-                    orderDate = OrderManager.GetOrder(id).ORDERDATE,
+                    orderDate = myOrder.ORDERDATE,
                     orderDetail = orderDetail,
                     dish = myDish,
                     totalPrice = totalPrice,
@@ -145,6 +148,18 @@ namespace WebApp.Controllers
 
 
             return View(orders_vm);
+        }
+
+        public IActionResult Profile()
+        {
+            if (HttpContext.Session.GetInt32("ID_STAFF") == null)
+            {
+                return RedirectToAction("LoginStaff", "Login");
+            }
+            int id = (int)HttpContext.Session.GetInt32("ID_STAFF");
+            var staff = StaffManager.GetStaff(id);
+            return View(staff);
+
         }
 
 

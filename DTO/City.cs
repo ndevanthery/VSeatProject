@@ -14,6 +14,8 @@ namespace DTO
 
         public string NPA { get; set; }
 
+        public string image_url { get; set; }
+
         public override string ToString()
         {
             return "ID_CITY:" + IDCITY +

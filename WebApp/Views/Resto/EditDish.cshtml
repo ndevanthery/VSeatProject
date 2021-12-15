@@ -1,0 +1,51 @@
+﻿@model DTO.Dish
+
+@{
+    ViewData["Title"] = "EditDish";
+}
+@{
+    Layout = "_LayoutRestaurant";
+}
+
+<h1>EditDish</h1>
+
+<h4>Dish</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="EditDish">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <input type="hidden" asp-for="ID_DISH" class="form-control" />
+                <span asp-validation-for="ID_DISH" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="hidden" asp-for="ID_RESTAURANT" class="form-control" />
+                <span asp-validation-for="ID_RESTAURANT" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NAME" class="control-label"></label>
+                <input asp-for="NAME" class="form-control"  />
+                <span asp-validation-for="NAME" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PRICE" class="control-label"></label>
+                <input asp-for="PRICE" class="form-control" />
+                <span asp-validation-for="PRICE" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="image_url" class="control-label"></label>
+                <input asp-for="image_url" class="form-control"/>
+                <span asp-validation-for="image_url" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<WebApp.Models.OrderDishVM>
+﻿@model OrderDishCodePromo
 @{
     Layout = "_LayoutCustomer";
 }
@@ -12,13 +12,13 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.dish.NAME)
+                @Html.DisplayNameFor(model => model.orderDishes.First().dish.NAME)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.dish.PRICE)
+                @Html.DisplayNameFor(model => model.orderDishes.First().dish.PRICE)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.quantity)
+                @Html.DisplayNameFor(model => model.orderDishes.First().quantity)
             </th>
             <th>
                 total
@@ -27,19 +27,20 @@
     </thead>
     <tbody>
         @{ decimal sommeTotal = 0;}
-        @foreach (var item in Model)
+        @foreach (var item in Model.orderDishes)
         {
             <tr>
                 <td>
                     @Html.DisplayFor(modelItem => item.dish.NAME)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.dish.PRICE)
+                    @{var price = item.dish.PRICE * ((decimal)1 - ((decimal)Model.discount / 100));}
+                    @price
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.quantity)
                 </td>
-                @{decimal s = item.quantity * item.dish.PRICE;
+                @{decimal s = item.quantity * item.dish.PRICE * ((decimal)1 - ((decimal)Model.discount / 100));
                     sommeTotal += s;}
                 <td>
                     @Html.DisplayFor(modelItem => s)

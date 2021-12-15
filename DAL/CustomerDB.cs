@@ -38,17 +38,38 @@ namespace DAL
             {
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
-                    string query = "Insert into CUSTOMER(IDCITY,FIRSTNAME,LASTNAME,ADRESS,PHONENUMBER,USERNAME,PASSWORD,EMAIL) values(@IDCITY,@FIRSTNAME,@LASTNAME,@ADRESS,@PHONENUMBER,@USERNAME,@PASSWORD,@EMAIL); SELECT SCOPE_IDENTITY()";
+                    string query = "Insert into CUSTOMER(IDCITY,FIRSTNAME,LASTNAME,ADRESS,PHONENUMBER,USERNAME,PASSWORD,EMAIL,image_url,confirmed) values(@IDCITY,@FIRSTNAME,@LASTNAME,@ADRESS,@PHONENUMBER,@USERNAME,@PASSWORD,@EMAIL,@image_url,@confirmed); SELECT SCOPE_IDENTITY()";
                     SqlCommand cmd = new SqlCommand(query, cn);
                     cmd.Parameters.AddWithValue("@IDCITY", customer.IDCITY);
                     cmd.Parameters.AddWithValue("@FIRSTNAME", customer.FIRSTNAME);
                     cmd.Parameters.AddWithValue("@LASTNAME", customer.LASTNAME);
                     cmd.Parameters.AddWithValue("@ADRESS", customer.ADRESS);
-                    cmd.Parameters.AddWithValue("@PHONENUMBER", customer.PHONENUMBER);
+                    if(customer.PHONENUMBER == null)
+                    {
+                        cmd.Parameters.AddWithValue("@PHONENUMBER", DBNull.Value);
+
+                    }
+                    else
+                    {
+                        cmd.Parameters.AddWithValue("@PHONENUMBER", customer.PHONENUMBER);
+
+                    }
+
                     cmd.Parameters.AddWithValue("@USERNAME", customer.USERNAME);
                     cmd.Parameters.AddWithValue("@PASSWORD", customer.PASSWORD);
                     cmd.Parameters.AddWithValue("@EMAIL", customer.EMAIL);
-                   
+                    if(customer.image_url == null)
+                    {
+                        cmd.Parameters.AddWithValue("@image_url", DBNull.Value);
+
+                    }
+                    else
+                    {
+                        cmd.Parameters.AddWithValue("@image_url", customer.image_url);
+
+                    }
+                    cmd.Parameters.AddWithValue("@confirmed", false);
+
                     cn.Open();
 
                     customer.ID_CUSTOMER = Convert.ToInt32(cmd.ExecuteScalar());
@@ -98,11 +119,21 @@ namespace DAL
                             customer.FIRSTNAME = (string)dr["FIRSTNAME"];
                             customer.LASTNAME = (string)dr["LASTNAME"];
                             customer.ADRESS = (string)dr["ADRESS"];
-                            customer.PHONENUMBER = (string)dr["PHONENUMBER"];
+
+                            if(dr["PHONENUMBER"]!=DBNull.Value)
+                            {
+                                customer.PHONENUMBER = (string)dr["PHONENUMBER"];
+
+                            }
                             customer.USERNAME = (string)dr["USERNAME"];
                             customer.PASSWORD = (string)dr["PASSWORD"];
 
                             customer.EMAIL = (string)dr["EMAIL"];
+                            if(dr["image_url"]!=DBNull.Value)
+                            {
+                                customer.image_url = (string)dr["image_url"];
+                            }
+                            customer.confirmed = (bool)dr["confirmed"];
                         }
                         
 
@@ -123,25 +154,45 @@ namespace DAL
         // UPDATE METHOD
         //---------------------------------------------------
 
-        public Customer UpdateCustomer(int id_customer , Customer newCustomer)
+        public Customer UpdateCustomer(int id_customer , Customer customer)
         {
-            Customer customer = null;
             string connectionString = Configuration.GetConnectionString("DefaultConnection");
 
             try
             {
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
-                    string query = "UPDATE CUSTOMER SET IDCITY = @IDCITY , FIRSTNAME= @FIRSTNAME , LASTNAME = @LASTNAME , ADRESS = @ADRESS , PHONENUMBER =@PHONENUMBER, USERNAME=@USERNAME, PASSWORD = @PASSWORD , EMAIL=@EMAIL WHERE ID_CUSTOMER = @id";
+                    string query = "UPDATE CUSTOMER SET IDCITY = @IDCITY , FIRSTNAME= @FIRSTNAME , LASTNAME = @LASTNAME , ADRESS = @ADRESS , PHONENUMBER =@PHONENUMBER, USERNAME=@USERNAME, PASSWORD = @PASSWORD , EMAIL=@EMAIL, image_url = @image_url , confirmed = @confirmed WHERE ID_CUSTOMER = @id";
                     SqlCommand cmd = new SqlCommand(query, cn);
-                    cmd.Parameters.AddWithValue("@IDCITY", newCustomer.IDCITY );
-                    cmd.Parameters.AddWithValue("@FIRSTNAME", newCustomer.FIRSTNAME);
-                    cmd.Parameters.AddWithValue("@LASTNAME", newCustomer.LASTNAME);
-                    cmd.Parameters.AddWithValue("@ADRESS", newCustomer.ADRESS);
-                    cmd.Parameters.AddWithValue("@PHONENUMBER", newCustomer.PHONENUMBER);
-                    cmd.Parameters.AddWithValue("@USERNAME", newCustomer.USERNAME);
-                    cmd.Parameters.AddWithValue("@PASSWORD", newCustomer.PASSWORD);
-                    cmd.Parameters.AddWithValue("@EMAIL", newCustomer.EMAIL);
+                    cmd.Parameters.AddWithValue("@IDCITY", customer.IDCITY);
+                    cmd.Parameters.AddWithValue("@FIRSTNAME", customer.FIRSTNAME);
+                    cmd.Parameters.AddWithValue("@LASTNAME", customer.LASTNAME);
+                    cmd.Parameters.AddWithValue("@ADRESS", customer.ADRESS);
+                    if (customer.PHONENUMBER == null)
+                    {
+                        cmd.Parameters.AddWithValue("@PHONENUMBER", DBNull.Value);
+
+                    }
+                    else
+                    {
+                        cmd.Parameters.AddWithValue("@PHONENUMBER", customer.PHONENUMBER);
+
+                    }
+
+                    cmd.Parameters.AddWithValue("@USERNAME", customer.USERNAME);
+                    cmd.Parameters.AddWithValue("@PASSWORD", customer.PASSWORD);
+                    cmd.Parameters.AddWithValue("@EMAIL", customer.EMAIL);
+                    if (customer.image_url == null)
+                    {
+                        cmd.Parameters.AddWithValue("@image_url", DBNull.Value);
+
+                    }
+                    else
+                    {
+                        cmd.Parameters.AddWithValue("@image_url", customer.image_url);
+
+                    }
+                    cmd.Parameters.AddWithValue("@confirmed", customer.confirmed);
 
                     cmd.Parameters.AddWithValue("@id", id_customer);
 
@@ -151,17 +202,30 @@ namespace DAL
                     using (SqlDataReader dr = cmd.ExecuteReader())
                     {
 
-                        customer = new Customer();
-                        customer.ID_CUSTOMER = (int)dr["ID_CUSTOMER"];
-                        customer.IDCITY = (int)dr["IDCITY"];
-                        customer.FIRSTNAME = (string)dr["FIRSTNAME"];
-                        customer.LASTNAME = (string)dr["LASTNAME"];
-                        customer.ADRESS = (string)dr["ADRESS"];
-                        customer.PHONENUMBER = (string)dr["PHONENUMBER"];
-                        customer.USERNAME = (string)dr["USERNAME"];
-                        customer.PASSWORD = (string)dr["PASSWORD"];
+                        while (dr.Read())
+                        {
+                            customer = new Customer();
+                            customer.ID_CUSTOMER = (int)dr["ID_CUSTOMER"];
+                            customer.IDCITY = (int)dr["IDCITY"];
+                            customer.FIRSTNAME = (string)dr["FIRSTNAME"];
+                            customer.LASTNAME = (string)dr["LASTNAME"];
+                            customer.ADRESS = (string)dr["ADRESS"];
 
-                        customer.EMAIL = (string)dr["EMAIL"];
+                            if (dr["PHONENUMBER"] != DBNull.Value)
+                            {
+                                customer.PHONENUMBER = (string)dr["PHONENUMBER"];
+
+                            }
+                            customer.USERNAME = (string)dr["USERNAME"];
+                            customer.PASSWORD = (string)dr["PASSWORD"];
+
+                            customer.EMAIL = (string)dr["EMAIL"];
+                            if (dr["image_url"] != DBNull.Value)
+                            {
+                                customer.image_url = (string)dr["image_url"];
+                            }
+                            customer.confirmed = (bool)dr["confirmed"];
+                        }
 
 
                     }
@@ -198,17 +262,30 @@ namespace DAL
                     using (SqlDataReader dr = cmd.ExecuteReader())
                     {
 
-                        customer = new Customer();
-                        customer.ID_CUSTOMER = (int)dr["ID_CUSTOMER"];
-                        customer.IDCITY = (int)dr["IDCITY"];
-                        customer.FIRSTNAME = (string)dr["FIRSTNAME"];
-                        customer.LASTNAME = (string)dr["LASTNAME"];
-                        customer.ADRESS = (string)dr["ADRESS"];
-                        customer.PHONENUMBER = (string)dr["PHONENUMBER"];
-                        customer.USERNAME = (string)dr["USERNAME"];
-                        customer.PASSWORD = (string)dr["PASSWORD"];
+                        while (dr.Read())
+                        {
+                            customer = new Customer();
+                            customer.ID_CUSTOMER = (int)dr["ID_CUSTOMER"];
+                            customer.IDCITY = (int)dr["IDCITY"];
+                            customer.FIRSTNAME = (string)dr["FIRSTNAME"];
+                            customer.LASTNAME = (string)dr["LASTNAME"];
+                            customer.ADRESS = (string)dr["ADRESS"];
 
-                        customer.EMAIL = (string)dr["EMAIL"];
+                            if (dr["PHONENUMBER"] != DBNull.Value)
+                            {
+                                customer.PHONENUMBER = (string)dr["PHONENUMBER"];
+
+                            }
+                            customer.USERNAME = (string)dr["USERNAME"];
+                            customer.PASSWORD = (string)dr["PASSWORD"];
+
+                            customer.EMAIL = (string)dr["EMAIL"];
+                            if (dr["image_url"] != DBNull.Value)
+                            {
+                                customer.image_url = (string)dr["image_url"];
+                            }
+                            customer.confirmed = (bool)dr["confirmed"];
+                        }
 
 
                     }
@@ -250,17 +327,26 @@ namespace DAL
 
                             Customer customer = new Customer();
 
-                            customer = new Customer();
                             customer.ID_CUSTOMER = (int)dr["ID_CUSTOMER"];
                             customer.IDCITY = (int)dr["IDCITY"];
                             customer.FIRSTNAME = (string)dr["FIRSTNAME"];
                             customer.LASTNAME = (string)dr["LASTNAME"];
                             customer.ADRESS = (string)dr["ADRESS"];
-                            customer.PHONENUMBER = (string)dr["PHONENUMBER"];
+
+                            if (dr["PHONENUMBER"] != DBNull.Value)
+                            {
+                                customer.PHONENUMBER = (string)dr["PHONENUMBER"];
+
+                            }
                             customer.USERNAME = (string)dr["USERNAME"];
                             customer.PASSWORD = (string)dr["PASSWORD"];
 
                             customer.EMAIL = (string)dr["EMAIL"];
+                            if (dr["image_url"] != DBNull.Value)
+                            {
+                                customer.image_url = (string)dr["image_url"];
+                            }
+                            customer.confirmed = (bool)dr["confirmed"];
 
                             results.Add(customer);
                         }
@@ -304,11 +390,21 @@ namespace DAL
                                 customer.FIRSTNAME = (string)dr["FIRSTNAME"];
                                 customer.LASTNAME = (string)dr["LASTNAME"];
                                 customer.ADRESS = (string)dr["ADRESS"];
-                                customer.PHONENUMBER = (string)dr["PHONENUMBER"];
+
+                                if (dr["PHONENUMBER"] != DBNull.Value)
+                                {
+                                    customer.PHONENUMBER = (string)dr["PHONENUMBER"];
+
+                                }
                                 customer.USERNAME = (string)dr["USERNAME"];
                                 customer.PASSWORD = (string)dr["PASSWORD"];
 
                                 customer.EMAIL = (string)dr["EMAIL"];
+                                if (dr["image_url"] != DBNull.Value)
+                                {
+                                    customer.image_url = (string)dr["image_url"];
+                                }
+                                customer.confirmed = (bool)dr["confirmed"];
                                 results.Add(customer);
                             }
                         }

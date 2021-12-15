@@ -34,15 +34,48 @@ namespace DAL
             {
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
-                    string query = "Insert into STAFF(IDCITY,FIRSTNAME,LASTNAME,ADRESS,PHONENUMBER,USERNAME,PASSWORD) values(@IDCITY,@FIRSTNAME,@LASTNAME,@ADRESS,@PHONENUMBER,@USERNAME,@PASSWORD); SELECT SCOPE_IDENTITY()";
+                    string query = "Insert into STAFF(IDCITY,FIRSTNAME,LASTNAME,ADRESS,PHONENUMBER,USERNAME,PASSWORD,image_url,confirmed) values(@IDCITY,@FIRSTNAME,@LASTNAME,@ADRESS,@PHONENUMBER,@USERNAME,@PASSWORD,@image_url,@confirmed); SELECT SCOPE_IDENTITY()";
                     SqlCommand cmd = new SqlCommand(query, cn);
                     cmd.Parameters.AddWithValue("@IDCITY", staff.IDCITY);
                     cmd.Parameters.AddWithValue("@FIRSTNAME", staff.FIRSTNAME);
                     cmd.Parameters.AddWithValue("@LASTNAME", staff.LASTNAME);
-                    cmd.Parameters.AddWithValue("@ADRESS", staff.ADRESS);
-                    cmd.Parameters.AddWithValue("@PHONENUMBER", staff.PHONENUMBER);
+
+                    if(staff.ADRESS==null)
+                    {
+                        cmd.Parameters.AddWithValue("@ADRESS", DBNull.Value);
+
+                    }
+                    else
+                    {
+                        cmd.Parameters.AddWithValue("@ADRESS", staff.ADRESS);
+
+                    }
+                    if (staff.PHONENUMBER == null)
+                    {
+                        cmd.Parameters.AddWithValue("@PHONENUMBER", DBNull.Value);
+
+                    }
+                    else
+                    {
+                        cmd.Parameters.AddWithValue("@PHONENUMBER", staff.PHONENUMBER);
+
+                    }
                     cmd.Parameters.AddWithValue("@USERNAME", staff.USERNAME);
                     cmd.Parameters.AddWithValue("@PASSWORD", staff.PASSWORD);
+
+                    if (staff.image_url == null)
+                    {
+                        cmd.Parameters.AddWithValue("@image_url", DBNull.Value);
+
+                    }
+                    else
+                    {
+                        cmd.Parameters.AddWithValue("@image_url", staff.image_url);
+
+                    }
+
+                    cmd.Parameters.AddWithValue("@confirmed", staff.confirmed);
+
 
                     cn.Open();
 
@@ -86,10 +119,24 @@ namespace DAL
                             staff.IDCITY = (int)dr["IDCITY"];
                             staff.FIRSTNAME = (string)dr["FIRSTNAME"];
                             staff.LASTNAME = (string)dr["LASTNAME"];
-                            staff.ADRESS = (string)dr["ADRESS"];
-                            staff.PHONENUMBER = (string)dr["PHONENUMBER"];
+                            if (dr["ADRESS"] != DBNull.Value)
+                            {
+                                staff.ADRESS = (string)dr["ADRESS"];
+
+                            }
+                            if (dr["PHONENUMBER"] != DBNull.Value)
+                            {
+                                staff.PHONENUMBER = (string)dr["PHONENUMBER"];
+
+                            }
                             staff.PASSWORD = (string)dr["PASSWORD"];
                             staff.USERNAME = (string)dr["USERNAME"];
+                            if(dr["image_url"]!=DBNull.Value)
+                            {
+                                staff.image_url = (string)dr["image_url"];
+
+                            }
+                            staff.confirmed = (bool)dr["confirmed"];
                         }
                     }
                 }
@@ -116,15 +163,47 @@ namespace DAL
             {
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
-                    string query = "UPDATE RESTAURANT SET IDCITY = @IDCITY , FIRSTNAME= @FIRSTNAME , LASTNAME = @LASTNAME , ADRESS = @ADRESS , PHONENUMBER =@PHONENUMBER, USERNAME=@USERNAME, PASSWORD = @PASSWORD WHERE ID_STAFF = @id";
+                    string query = "UPDATE RESTAURANT SET IDCITY = @IDCITY , FIRSTNAME= @FIRSTNAME , LASTNAME = @LASTNAME , ADRESS = @ADRESS , PHONENUMBER =@PHONENUMBER, USERNAME=@USERNAME, PASSWORD = @PASSWORD, image_url = @image_url , confirmed = @confirmed WHERE ID_STAFF = @id";
                     SqlCommand cmd = new SqlCommand(query, cn);
-                    cmd.Parameters.AddWithValue("@IDCITY", newStaff.IDCITY);
-                    cmd.Parameters.AddWithValue("@FIRSTNAME", newStaff.FIRSTNAME);
-                    cmd.Parameters.AddWithValue("@LASTNAME", newStaff.LASTNAME);
-                    cmd.Parameters.AddWithValue("@ADRESS", newStaff.ADRESS);
-                    cmd.Parameters.AddWithValue("@PHONENUMBER", newStaff.PHONENUMBER);
-                    cmd.Parameters.AddWithValue("@USERNAME", newStaff.USERNAME);
-                    cmd.Parameters.AddWithValue("@PASSWORD", newStaff.PASSWORD);
+                    cmd.Parameters.AddWithValue("@IDCITY", staff.IDCITY);
+                    cmd.Parameters.AddWithValue("@FIRSTNAME", staff.FIRSTNAME);
+                    cmd.Parameters.AddWithValue("@LASTNAME", staff.LASTNAME);
+
+                    if (staff.ADRESS == null)
+                    {
+                        cmd.Parameters.AddWithValue("@ADRESS", DBNull.Value);
+
+                    }
+                    else
+                    {
+                        cmd.Parameters.AddWithValue("@ADRESS", staff.ADRESS);
+
+                    }
+                    if (staff.PHONENUMBER == null)
+                    {
+                        cmd.Parameters.AddWithValue("@PHONENUMBER", DBNull.Value);
+
+                    }
+                    else
+                    {
+                        cmd.Parameters.AddWithValue("@PHONENUMBER", staff.PHONENUMBER);
+
+                    }
+                    cmd.Parameters.AddWithValue("@USERNAME", staff.USERNAME);
+                    cmd.Parameters.AddWithValue("@PASSWORD", staff.PASSWORD);
+
+                    if (staff.image_url == null)
+                    {
+                        cmd.Parameters.AddWithValue("@image_url", DBNull.Value);
+
+                    }
+                    else
+                    {
+                        cmd.Parameters.AddWithValue("@image_url", staff.image_url);
+
+                    }
+
+                    cmd.Parameters.AddWithValue("@confirmed", staff.confirmed);
 
                     cmd.Parameters.AddWithValue("@id", idStaff);
 
@@ -134,16 +213,32 @@ namespace DAL
                     using (SqlDataReader dr = cmd.ExecuteReader())
                     {
 
-                        staff = new Staff();
-                        staff.ID_STAFF = (int)dr["ID_STAFF"];
-                        staff.IDCITY = (int)dr["IDCITY"];
-                        staff.FIRSTNAME = (string)dr["FIRSTNAME"];
-                        staff.LASTNAME = (string)dr["LASTNAME"];
-                        staff.ADRESS = (string)dr["ADRESS"];
-                        staff.PHONENUMBER = (string)dr["PHONENUMBER"];
-                        staff.PASSWORD = (string)dr["PASSWORD"];
-                        staff.USERNAME = (string)dr["USERNAME"];
+                        while (dr.Read())
+                        {
+                            staff = new Staff();
+                            staff.ID_STAFF = (int)dr["ID_STAFF"];
+                            staff.IDCITY = (int)dr["IDCITY"];
+                            staff.FIRSTNAME = (string)dr["FIRSTNAME"];
+                            staff.LASTNAME = (string)dr["LASTNAME"];
+                            if (dr["ADRESS"] != DBNull.Value)
+                            {
+                                staff.ADRESS = (string)dr["ADRESS"];
 
+                            }
+                            if (dr["PHONENUMBER"] != DBNull.Value)
+                            {
+                                staff.PHONENUMBER = (string)dr["PHONENUMBER"];
+
+                            }
+                            staff.PASSWORD = (string)dr["PASSWORD"];
+                            staff.USERNAME = (string)dr["USERNAME"];
+                            if (dr["image_url"] != DBNull.Value)
+                            {
+                                staff.image_url = (string)dr["image_url"];
+
+                            }
+                            staff.confirmed = (bool)dr["confirmed"];
+                        }
 
 
                     }
@@ -180,15 +275,32 @@ namespace DAL
                     using (SqlDataReader dr = cmd.ExecuteReader())
                     {
 
-                        staff = new Staff();
-                        staff.ID_STAFF = (int)dr["ID_STAFF"];
-                        staff.IDCITY = (int)dr["IDCITY"];
-                        staff.FIRSTNAME = (string)dr["FIRSTNAME"];
-                        staff.LASTNAME = (string)dr["LASTNAME"];
-                        staff.ADRESS = (string)dr["ADRESS"];
-                        staff.PHONENUMBER = (string)dr["PHONENUMBER"];
-                        staff.PASSWORD = (string)dr["PASSWORD"];
-                        staff.USERNAME = (string)dr["USERNAME"];
+                        while (dr.Read())
+                        {
+                            staff = new Staff();
+                            staff.ID_STAFF = (int)dr["ID_STAFF"];
+                            staff.IDCITY = (int)dr["IDCITY"];
+                            staff.FIRSTNAME = (string)dr["FIRSTNAME"];
+                            staff.LASTNAME = (string)dr["LASTNAME"];
+                            if (dr["ADRESS"] != DBNull.Value)
+                            {
+                                staff.ADRESS = (string)dr["ADRESS"];
+
+                            }
+                            if (dr["PHONENUMBER"] != DBNull.Value)
+                            {
+                                staff.PHONENUMBER = (string)dr["PHONENUMBER"];
+
+                            }
+                            staff.PASSWORD = (string)dr["PASSWORD"];
+                            staff.USERNAME = (string)dr["USERNAME"];
+                            if (dr["image_url"] != DBNull.Value)
+                            {
+                                staff.image_url = (string)dr["image_url"];
+
+                            }
+                            staff.confirmed = (bool)dr["confirmed"];
+                        }
 
                     }
                 }
@@ -238,10 +350,24 @@ namespace DAL
                             staff.IDCITY = (int)dr["IDCITY"];
                             staff.FIRSTNAME = (string)dr["FIRSTNAME"];
                             staff.LASTNAME = (string)dr["LASTNAME"];
-                            staff.ADRESS = (string)dr["ADRESS"];
-                            staff.PHONENUMBER = (string)dr["PHONENUMBER"];
+                            if (dr["ADRESS"] != DBNull.Value)
+                            {
+                                staff.ADRESS = (string)dr["ADRESS"];
+
+                            }
+                            if (dr["PHONENUMBER"] != DBNull.Value)
+                            {
+                                staff.PHONENUMBER = (string)dr["PHONENUMBER"];
+
+                            }
                             staff.PASSWORD = (string)dr["PASSWORD"];
                             staff.USERNAME = (string)dr["USERNAME"];
+                            if (dr["image_url"] != DBNull.Value)
+                            {
+                                staff.image_url = (string)dr["image_url"];
+
+                            }
+                            staff.confirmed = (bool)dr["confirmed"];
 
                             results.Add(staff);
                         }
@@ -283,10 +409,24 @@ namespace DAL
                             staff.IDCITY = (int)dr["IDCITY"];
                             staff.FIRSTNAME = (string)dr["FIRSTNAME"];
                             staff.LASTNAME = (string)dr["LASTNAME"];
-                            staff.ADRESS = (string)dr["ADRESS"];
-                            staff.PHONENUMBER = (string)dr["PHONENUMBER"];
+                            if (dr["ADRESS"] != DBNull.Value)
+                            {
+                                staff.ADRESS = (string)dr["ADRESS"];
+
+                            }
+                            if (dr["PHONENUMBER"] != DBNull.Value)
+                            {
+                                staff.PHONENUMBER = (string)dr["PHONENUMBER"];
+
+                            }
                             staff.PASSWORD = (string)dr["PASSWORD"];
                             staff.USERNAME = (string)dr["USERNAME"];
+                            if (dr["image_url"] != DBNull.Value)
+                            {
+                                staff.image_url = (string)dr["image_url"];
+
+                            }
+                            staff.confirmed = (bool)dr["confirmed"];
 
                             results.Add(staff);
                         }

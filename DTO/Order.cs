@@ -24,8 +24,6 @@ namespace DTO
 
         public int ID_RESTAURANT { get; set; }
 
-        // ajouter un CustomerID dans order ! 
-
         public override string ToString()
         {
             return "ID ORDER:" + ID_ORDER +
