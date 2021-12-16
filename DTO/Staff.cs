@@ -28,6 +28,8 @@ namespace DTO
 
         public string image_url { get; set; }
 
+        public string email { get; set; }
+
         public override string ToString()
         {
             return "ID STAFF:" + ID_STAFF +

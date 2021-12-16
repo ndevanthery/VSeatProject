@@ -10,5 +10,8 @@ namespace WebApp.Models
         public List<OrderDishVM> orderDishes { get; set; }
         public string codePromo { get; set; }
         public int discount { get; set; }
+
+        public DateTime date{get;set;}
+
     }
 }

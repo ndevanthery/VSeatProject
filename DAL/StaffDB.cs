@@ -34,7 +34,7 @@ namespace DAL
             {
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
-                    string query = "Insert into STAFF(IDCITY,FIRSTNAME,LASTNAME,ADRESS,PHONENUMBER,USERNAME,PASSWORD,image_url,confirmed) values(@IDCITY,@FIRSTNAME,@LASTNAME,@ADRESS,@PHONENUMBER,@USERNAME,@PASSWORD,@image_url,@confirmed); SELECT SCOPE_IDENTITY()";
+                    string query = "Insert into STAFF(IDCITY,FIRSTNAME,LASTNAME,ADRESS,PHONENUMBER,USERNAME,PASSWORD,image_url,confirmed,email) values(@IDCITY,@FIRSTNAME,@LASTNAME,@ADRESS,@PHONENUMBER,@USERNAME,@PASSWORD,@image_url,@confirmed,@email); SELECT SCOPE_IDENTITY()";
                     SqlCommand cmd = new SqlCommand(query, cn);
                     cmd.Parameters.AddWithValue("@IDCITY", staff.IDCITY);
                     cmd.Parameters.AddWithValue("@FIRSTNAME", staff.FIRSTNAME);
@@ -75,6 +75,17 @@ namespace DAL
                     }
 
                     cmd.Parameters.AddWithValue("@confirmed", staff.confirmed);
+
+                    if (staff.email == null)
+                    {
+                        cmd.Parameters.AddWithValue("@email", DBNull.Value);
+
+                    }
+                    else
+                    {
+                        cmd.Parameters.AddWithValue("@email", staff.email);
+
+                    }
 
 
                     cn.Open();
@@ -137,6 +148,12 @@ namespace DAL
 
                             }
                             staff.confirmed = (bool)dr["confirmed"];
+                            if(dr["email"] != DBNull.Value)
+                            {
+                                staff.email = (string)dr["email"];
+
+                            }
+
                         }
                     }
                 }
@@ -163,7 +180,7 @@ namespace DAL
             {
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
-                    string query = "UPDATE STAFF SET IDCITY = @IDCITY , FIRSTNAME= @FIRSTNAME , LASTNAME = @LASTNAME , ADRESS = @ADRESS , PHONENUMBER =@PHONENUMBER, USERNAME=@USERNAME, PASSWORD = @PASSWORD, image_url = @image_url , confirmed = @confirmed WHERE ID_STAFF = @id";
+                    string query = "UPDATE STAFF SET IDCITY = @IDCITY , FIRSTNAME= @FIRSTNAME , LASTNAME = @LASTNAME , ADRESS = @ADRESS , PHONENUMBER =@PHONENUMBER, USERNAME=@USERNAME, PASSWORD = @PASSWORD, image_url = @image_url , confirmed = @confirmed,email=@email WHERE ID_STAFF = @id";
                     SqlCommand cmd = new SqlCommand(query, cn);
                     cmd.Parameters.AddWithValue("@IDCITY", newStaff.IDCITY);
                     cmd.Parameters.AddWithValue("@FIRSTNAME", newStaff.FIRSTNAME);
@@ -205,6 +222,18 @@ namespace DAL
 
                     cmd.Parameters.AddWithValue("@confirmed", newStaff.confirmed);
 
+                    if (newStaff.email == null)
+                    {
+                        cmd.Parameters.AddWithValue("@email", DBNull.Value);
+
+                    }
+                    else
+                    {
+                        cmd.Parameters.AddWithValue("@email", newStaff.email);
+
+                    }
+
+
                     cmd.Parameters.AddWithValue("@id", idStaff);
 
 
@@ -238,6 +267,11 @@ namespace DAL
 
                             }
                             staff.confirmed = (bool)dr["confirmed"];
+                            if (dr["email"] != DBNull.Value)
+                            {
+                                staff.email = (string)dr["email"];
+
+                            }
                         }
 
 
@@ -300,6 +334,11 @@ namespace DAL
 
                             }
                             staff.confirmed = (bool)dr["confirmed"];
+                            if (dr["email"] != DBNull.Value)
+                            {
+                                staff.email = (string)dr["email"];
+
+                            }
                         }
 
                     }
@@ -368,6 +407,11 @@ namespace DAL
 
                             }
                             staff.confirmed = (bool)dr["confirmed"];
+                            if (dr["email"] != DBNull.Value)
+                            {
+                                staff.email = (string)dr["email"];
+
+                            }
 
                             results.Add(staff);
                         }
@@ -427,6 +471,11 @@ namespace DAL
 
                             }
                             staff.confirmed = (bool)dr["confirmed"];
+                            if (dr["email"] != DBNull.Value)
+                            {
+                                staff.email = (string)dr["email"];
+
+                            }
 
                             results.Add(staff);
                         }
