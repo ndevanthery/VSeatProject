@@ -11,7 +11,10 @@ namespace WebApp.Models
         public string codePromo { get; set; }
         public int discount { get; set; }
 
-        public DateTime date{get;set;}
+        public string hour{get;set;}
+
+        public int orderId { get; set; }
+
 
     }
 }

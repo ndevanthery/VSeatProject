@@ -55,7 +55,8 @@
                         @Html.DisplayFor(modelItem => item.order.TOTALPRICE)
                     </td>
                     <td>
-                        @Html.ActionLink("Details", "OrderDetails", new { id = item.order.ID_ORDER })
+                        @*@Html.ActionLink("Details", "OrderDetails", new { id = item.order.ID_ORDER })*@
+                        @Html.ActionLink("Validate delivery" , "ValidateOrder" , new {id = item.order.ID_ORDER })
                     </td>
                 </tr>
             }

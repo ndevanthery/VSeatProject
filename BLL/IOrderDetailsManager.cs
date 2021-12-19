@@ -14,5 +14,6 @@ namespace BLL
         public List<OrderDetails> GetOrdersDetails();
         public List<OrderDetails> GetOrderDetailsByDish(int id_dish);
         public List<OrderDetails> GetOrderDetailsByOrder(int orderId);
+        public List<OrderDetails> DeleteOrderDetails(int id_order);
     }
 }

@@ -124,6 +124,7 @@ namespace WebApp.Controllers
             myModel.orderDishes = new List<OrderDishVM>();
             myModel.codePromo = "";
             myModel.discount = 0;
+            myModel.hour = "11:30" ;
             if (dishes != null)
             {
                 foreach (var dish in dishes)
@@ -198,23 +199,23 @@ namespace WebApp.Controllers
                     var idCity = CityManager.GetCity(myOrders.orderDishes.First().cityname).IDCITY;
                     var staffDispo = StaffManager.GetStaffs(idCity);
 
+                    DateTime datetimeNow = DateTime.Now;
+                    var hour = int.Parse(myOrders.hour.Split(":")[0]);
+                    var minute = int.Parse(myOrders.hour.Split(":")[1]);
+                    DateTime deliveryTime = new DateTime(datetimeNow.Year, datetimeNow.Month, datetimeNow.Day, hour, minute, 0);
+
+
                     var idStaff = 0;
                     if(staffDispo!=null)
                     {
                         foreach (var staff in staffDispo)
                         {
-
-                            var Orders = OrderManager.GetDuringOrdersForStaff(staff.ID_STAFF);
-                            var nbOrders = 0;
-                            if (Orders != null)
-                            {
-                                nbOrders = Orders.Count();
-                            }
-                            if (nbOrders < 5)
+                            if(OrderManager.nbOrderAtTimeForStaff(staff.ID_STAFF,deliveryTime)<5)
                             {
                                 idStaff = staff.ID_STAFF;
                                 break;
                             }
+                            
                         }
                     }
                     
@@ -227,10 +228,17 @@ namespace WebApp.Controllers
 
                     if(somme>0)
                     {
+                        
+                        if(deliveryTime<datetimeNow)
+                        {
+                            ModelState.AddModelError(string.Empty, "you're delivery time is already passed. please select another");
+                            return View(myOrders);
+                        }
+                        
                         Order myNewOrder = new Order
                         {
                             ID_CUSTOMER = (int)HttpContext.Session.GetInt32("ID_CUSTOMER"),
-                            ORDERDATE = DateTime.Now,
+                            ORDERDATE = deliveryTime,
                             DISCOUNT = discountToDo,
                             TOTALPRICE = somme,
                             ID_RESTAURANT = myOrders.orderDishes.First().dish.ID_RESTAURANT,
@@ -241,7 +249,7 @@ namespace WebApp.Controllers
 
                         };
                         Order myOrder_added = OrderManager.AddOrder(myNewOrder);
-
+                        myOrders.orderId = myOrder_added.ID_ORDER;
                         foreach (var order in myOrders.orderDishes)
                         {
                             if (order.quantity > 0)

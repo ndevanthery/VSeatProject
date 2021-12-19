@@ -157,11 +157,15 @@ namespace WebApp.Controllers
                 int somme = 0;
                 decimal CA = 0;
                 var ordersDetails = OrderDetailsManager.GetOrderDetailsByDish(myDish.ID_DISH);
-                foreach(var or in ordersDetails)
+                if(ordersDetails!=null)
                 {
-                    somme += or.quantity;
-                    CA += or.quantity*((100 - OrderManager.GetOrder(or.ID_ORDER).DISCOUNT) / 100 )* myDish.PRICE;
+                    foreach (var or in ordersDetails)
+                    {
+                        somme += or.quantity;
+                        CA += or.quantity * ((100 - OrderManager.GetOrder(or.ID_ORDER).DISCOUNT) / 100) * myDish.PRICE;
+                    }
                 }
+
                 Models.OrderQuantityVM myOrderQuantity = new Models.OrderQuantityVM
                 {
                     dish = myDish,

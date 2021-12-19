@@ -27,5 +27,7 @@ namespace BLL
 
         public List<Order> GetDuringOrdersForRestaurant(int idRestaurant);
 
+        public int nbOrderAtTimeForStaff(int idStaff, DateTime time);
+
     }
 }

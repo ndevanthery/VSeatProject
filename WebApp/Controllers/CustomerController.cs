@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using BLL;
 using DTO;
 using Microsoft.AspNetCore.Http;
+using WebApp.Models;
 
 namespace WebApp.Controllers
 {
@@ -188,6 +189,90 @@ namespace WebApp.Controllers
             }
             return View(newPasswordCustomer);
         }
+
+        public IActionResult OrderAnnulation()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult OrderAnnulation(AnnulationVM annulationVM)
+        {
+            var order = OrderManager.GetOrder(annulationVM.orderId);
+            if(order!=null)
+            {
+                var date3h = DateTime.Now.AddHours(3);
+                if (order.isDelivered == false)
+                {
+
+
+                    if (order.ORDERDATE.CompareTo(date3h) > 0)
+                    {
+                        var customer = CustomerManager.GetCustomer(order.ID_CUSTOMER);
+                        if (customer.FIRSTNAME.ToLower() == annulationVM.firstName.ToLower())
+                        {
+                            if (customer.LASTNAME.ToLower() == annulationVM.lastName.ToLower())
+                            {
+                                //3 hours before, first name correct, lastname correct, order id exists
+
+                                //delete orderDetails and order
+                                var orderDetails = OrderDetailsManager.GetOrderDetailsByOrder(order.ID_ORDER);
+
+                                OrderDetailsManager.DeleteOrderDetails(order.ID_ORDER);
+                                OrderManager.DeleteOrder(order.ID_ORDER);
+
+
+                                //map to annulation confirmation
+                                //List<OrderDishVM> myOrders = new List<OrderDishVM>();
+
+                                //foreach(var orderDetail in orderDetails)
+                                //{
+                                //    var dish = DishManager.GetDish(orderDetail.ID_DISH);
+                                //    var restaurant = RestaurantManager.GetRestaurant(dish.ID_RESTAURANT);
+                                //    var city = CityManager.GetCity(restaurant.IDCITY);
+                                //    var myOrder = new OrderDishVM
+                                //    {
+                                //        dish = dish,
+                                //        restaurantName = restaurant.NAME,
+                                //        cityname = city.CITYNAME,
+                                //        quantity = orderDetail.quantity
+                                //    };
+                                //    myOrders.Add(myOrder);
+                                //}
+
+                                return View("~/Views/Customer/CancelConfirmation.cshtml", order.ID_ORDER);
+
+
+                            }
+                        }
+                        ModelState.AddModelError(string.Empty, "you are not the good person to delete this");
+                        return View();
+
+                    }
+                    else
+                    {
+                        if (order.ORDERDATE < DateTime.Now)
+                        {
+                            ModelState.AddModelError(string.Empty, "this order has already been delivered!!!");
+                        }
+                        else
+                        {
+                            ModelState.AddModelError(string.Empty, "this is too late to cancel. you have to do it 3 hours before delivery time");
+                        }
+                        return View();
+                    }
+                }
+                ModelState.AddModelError(string.Empty, "this order is already delivered");
+                return View();
+
+
+            }
+            ModelState.AddModelError(string.Empty, "this order doesn't exist");
+
+            return View();
+        }
+
 
     }
 }

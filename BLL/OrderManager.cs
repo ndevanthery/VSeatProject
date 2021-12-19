@@ -113,6 +113,28 @@ namespace BLL
             return orderDB.GetDuringOrdersForRestaurant(idRestaurant);
         }
 
+        public int nbOrderAtTimeForStaff(int idStaff, DateTime time)
+        {
+            var myDuringOrders = orderDB.GetDuringOrdersForStaff(idStaff);
+            var minus15 = time.AddMinutes(-15);
+            var plus15 = time.AddMinutes(15);
+            int number = 0;
+            if(myDuringOrders!=null)
+            {
+                foreach (var order in myDuringOrders)
+                {
+                    if (order.ORDERDATE.CompareTo(minus15) >= 0)
+                    {
+                        if (order.ORDERDATE.CompareTo(plus15) <= 0)
+                        {
+                            number++;
+                        }
+                    }
+                }
+            }
+            
+            return number;
+        }
 
 
 

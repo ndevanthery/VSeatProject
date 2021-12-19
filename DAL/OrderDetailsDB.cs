@@ -52,6 +52,52 @@ namespace DAL
             return orderDetails;
         }
 
+        public List<OrderDetails> DeleteOrderDetails(int id_order)
+        {
+            List<OrderDetails> results = null;
+
+            string connectionString = Configuration.GetConnectionString("DefaultConnection");
+
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(connectionString))
+                {
+                    string query = "DELETE FROM ORDERDETAILS WHERE ID_ORDER = @id";
+                    SqlCommand cmd = new SqlCommand(query, cn);
+                    cmd.Parameters.AddWithValue("@id", id_order);
+
+
+                    cn.Open();
+
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+
+                        while (dr.Read())
+                        {
+                            if (results == null)
+                                results = new List<OrderDetails>();
+
+                            OrderDetails orderDetails = new OrderDetails();
+
+                            orderDetails.ID_DISH = (int)dr["ID_DISH"];
+                            orderDetails.ID_ORDER = (int)dr["ID_ORDER"];
+                            orderDetails.quantity = (int)dr["quantity"];
+
+                            results.Add(orderDetails);
+                        }
+
+
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+
+            return results;
+        }
+
 
         //---------------------------------------------------
         // GET ONE METHOD
@@ -59,7 +105,9 @@ namespace DAL
 
         public OrderDetails GetOrderDetail(int orderId , int id_dish)
         {
+            List<OrderDetails> results = null;
             OrderDetails orderDetails = null;
+
             string connectionString = Configuration.GetConnectionString("DefaultConnection");
 
             try
@@ -78,14 +126,19 @@ namespace DAL
                     {
                         while (dr.Read())
                         {
+                            if (results == null)
+                                results = new List<OrderDetails>();
+
                             orderDetails = new OrderDetails();
 
                             orderDetails.ID_DISH = (int)dr["ID_DISH"];
                             orderDetails.ID_ORDER = (int)dr["ID_ORDER"];
                             orderDetails.quantity = (int)dr["quantity"];
+
+                            results.Add(orderDetails);
                         }
 
-                            
+
 
 
 

@@ -34,7 +34,7 @@ namespace DAL
             {
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
-                    string query = "Insert into [dbo].[ORDER](ID_CUSTOMER,ORDERDATE,DISCOUNT,TOTALPRICE,ID_STAFF,ID_RESTAURANT) values(@ID_CUSTOMER ,@ORDERDATE,@DISCOUNT,@TOTALPRICE,@ID_STAFF,@ID_RESTAURANT); SELECT SCOPE_IDENTITY()";
+                    string query = "Insert into [dbo].[ORDER](ID_CUSTOMER,ORDERDATE,DISCOUNT,TOTALPRICE,ID_STAFF,ID_RESTAURANT,isDelivered) values(@ID_CUSTOMER ,@ORDERDATE,@DISCOUNT,@TOTALPRICE,@ID_STAFF,@ID_RESTAURANT,@isDelivered); SELECT SCOPE_IDENTITY()";
                     SqlCommand cmd = new SqlCommand(query, cn);
                     cmd.Parameters.AddWithValue("@ID_CUSTOMER",order.ID_CUSTOMER);
                     cmd.Parameters.AddWithValue("@ORDERDATE", order.ORDERDATE);
@@ -42,6 +42,8 @@ namespace DAL
                     cmd.Parameters.AddWithValue("@TOTALPRICE", order.TOTALPRICE);
                     cmd.Parameters.AddWithValue("@ID_RESTAURANT", order.ID_RESTAURANT);
                     cmd.Parameters.AddWithValue("@ID_STAFF", order.ID_STAFF);
+                    cmd.Parameters.AddWithValue("@isDelivered", order.isDelivered);
+
 
 
                     cn.Open();
@@ -90,6 +92,7 @@ namespace DAL
                             order.TOTALPRICE = (decimal)dr["TOTALPRICE"];
                             order.ID_RESTAURANT = (int)dr["ID_RESTAURANT"];
                             order.ID_STAFF = (int)dr["ID_STAFF"];
+                            order.isDelivered = (bool)dr["isDelivered"];
                         }
                     }
                 }
@@ -115,7 +118,7 @@ namespace DAL
             {
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
-                    string query = "UPDATE [dbo].[ORDER] SET ID_CUSTOMER = @ID_CUSTOMER , ORDERDATE= @ORDERDATE , DISCOUNT = @DISCOUNT , TOTALPRICE =@TOTALPRICE , ID_STAFF = @ID_STAFF , ID_RESTAURANT = @ID_RESTAURANT WHERE ID_ORDER = @id";
+                    string query = "UPDATE [dbo].[ORDER] SET ID_CUSTOMER = @ID_CUSTOMER , ORDERDATE= @ORDERDATE , DISCOUNT = @DISCOUNT , TOTALPRICE =@TOTALPRICE , ID_STAFF = @ID_STAFF , ID_RESTAURANT = @ID_RESTAURANT , isDelivered =@isDelivered WHERE ID_ORDER = @id";
                     SqlCommand cmd = new SqlCommand(query, cn);
                     cmd.Parameters.AddWithValue("@ID_CUSTOMER", newOrder.ID_CUSTOMER);
                     cmd.Parameters.AddWithValue("@ORDERDATE", newOrder.ORDERDATE);
@@ -123,6 +126,8 @@ namespace DAL
                     cmd.Parameters.AddWithValue("@TOTALPRICE", newOrder.TOTALPRICE);
                     cmd.Parameters.AddWithValue("@ID_STAFF", newOrder.ID_STAFF);
                     cmd.Parameters.AddWithValue("@ID_RESTAURANT", newOrder.ID_RESTAURANT);
+                    cmd.Parameters.AddWithValue("@isDelivered", newOrder.isDelivered);
+
 
                     cmd.Parameters.AddWithValue("@id", idOrder);
 
@@ -141,6 +146,8 @@ namespace DAL
                             order.TOTALPRICE = (decimal)dr["TOTALPRICE"];
                             order.ID_RESTAURANT = (int)dr["ID_RESTAURANT"];
                             order.ID_STAFF = (int)dr["ID_STAFF"];
+                            order.isDelivered = (bool)dr["isDelivered"];
+
                         }
 
                     }
@@ -187,6 +194,8 @@ namespace DAL
                             order.TOTALPRICE = (decimal)dr["TOTALPRICE"];
                             order.ID_RESTAURANT = (int)dr["ID_RESTAURANT"];
                             order.ID_STAFF = (int)dr["ID_STAFF"];
+                            order.isDelivered = (bool)dr["isDelivered"];
+
                         }
 
 
@@ -236,6 +245,8 @@ namespace DAL
                             order.TOTALPRICE = (decimal)dr["TOTALPRICE"];
                             order.ID_RESTAURANT = (int)dr["ID_RESTAURANT"];
                             order.ID_STAFF = (int)dr["ID_STAFF"];
+                            order.isDelivered = (bool)dr["isDelivered"];
+
 
                             Console.WriteLine(order);
                             results.Add(order);
@@ -282,6 +293,8 @@ namespace DAL
                             order.TOTALPRICE = (decimal)dr["TOTALPRICE"];
                             order.ID_RESTAURANT = (int)dr["ID_RESTAURANT"];
                             order.ID_STAFF = (int)dr["ID_STAFF"];
+                            order.isDelivered = (bool)dr["isDelivered"];
+
 
 
                             results.Add(order);
@@ -327,6 +340,8 @@ namespace DAL
                             order.TOTALPRICE = (decimal)dr["TOTALPRICE"];
                             order.ID_RESTAURANT = (int)dr["ID_RESTAURANT"];
                             order.ID_STAFF = (int)dr["ID_STAFF"];
+                            order.isDelivered = (bool)dr["isDelivered"];
+
 
 
                             results.Add(order);
@@ -371,6 +386,8 @@ namespace DAL
                             order.TOTALPRICE = (decimal)dr["TOTALPRICE"];
                             order.ID_RESTAURANT = (int)dr["ID_RESTAURANT"];
                             order.ID_STAFF = (int)dr["ID_STAFF"];
+                            order.isDelivered = (bool)dr["isDelivered"];
+
 
                             results.Add(order);
                         }
@@ -415,6 +432,8 @@ namespace DAL
                             order.TOTALPRICE = (decimal)dr["TOTALPRICE"];
                             order.ID_RESTAURANT = (int)dr["ID_RESTAURANT"];
                             order.ID_STAFF = (int)dr["ID_STAFF"];
+                            order.isDelivered = (bool)dr["isDelivered"];
+
 
 
                             results.Add(order);
@@ -460,6 +479,8 @@ namespace DAL
                             order.TOTALPRICE = (decimal)dr["TOTALPRICE"];
                             order.ID_RESTAURANT = (int)dr["ID_RESTAURANT"];
                             order.ID_STAFF = (int)dr["ID_STAFF"];
+                            order.isDelivered = (bool)dr["isDelivered"];
+
 
 
                             results.Add(order);
@@ -485,7 +506,8 @@ namespace DAL
             {
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
-                    string query = "Select * from [dbo].[ORDER] WHERE ID_CUSTOMER = @idCustomer AND DATEADD(MINUTE,30,ORDERDATE)>GETDATE() ORDER BY ORDERDATE DESC";
+                    //string query = "Select * from [dbo].[ORDER] WHERE ID_CUSTOMER = @idCustomer AND ORDERDATE>GETDATE() ORDER BY ORDERDATE DESC";
+                    string query = "Select * from [dbo].[ORDER] WHERE ID_CUSTOMER = @idCustomer AND isDelivered=0 ORDER BY ORDERDATE DESC";
                     SqlCommand cmd = new SqlCommand(query, cn);
                     cmd.Parameters.AddWithValue("@idCustomer", idCustomer);
                     cn.Open();
@@ -506,6 +528,8 @@ namespace DAL
                             order.TOTALPRICE = (decimal)dr["TOTALPRICE"];
                             order.ID_RESTAURANT = (int)dr["ID_RESTAURANT"];
                             order.ID_STAFF = (int)dr["ID_STAFF"];
+                            order.isDelivered = (bool)dr["isDelivered"];
+
 
 
                             results.Add(order);
@@ -551,6 +575,8 @@ namespace DAL
                             order.TOTALPRICE = (decimal)dr["TOTALPRICE"];
                             order.ID_RESTAURANT = (int)dr["ID_RESTAURANT"];
                             order.ID_STAFF = (int)dr["ID_STAFF"];
+                            order.isDelivered = (bool)dr["isDelivered"];
+
 
 
                             results.Add(order);
@@ -575,7 +601,8 @@ namespace DAL
             {
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
-                    string query = "Select * from [dbo].[ORDER] WHERE ID_STAFF = @ID_STAFF AND DATEADD(MINUTE,30,ORDERDATE)>GETDATE() ORDER BY ORDERDATE DESC";
+                    //string query = "Select * from [dbo].[ORDER] WHERE ID_STAFF = @ID_STAFF AND DATEADD(MINUTE,30,ORDERDATE)>GETDATE() ORDER BY ORDERDATE DESC";
+                    string query = "Select * from [dbo].[ORDER] WHERE ID_STAFF = @ID_STAFF AND isDelivered=0 ORDER BY ORDERDATE DESC";
                     SqlCommand cmd = new SqlCommand(query, cn);
                     cmd.Parameters.AddWithValue("@ID_STAFF", idStaff);
                     cn.Open();
@@ -596,6 +623,8 @@ namespace DAL
                             order.TOTALPRICE = (decimal)dr["TOTALPRICE"];
                             order.ID_RESTAURANT = (int)dr["ID_RESTAURANT"];
                             order.ID_STAFF = (int)dr["ID_STAFF"];
+                            order.isDelivered = (bool)dr["isDelivered"];
+
 
 
                             results.Add(order);
@@ -610,7 +639,6 @@ namespace DAL
 
             return results;
         }
-
 
         public List<Order> GetOrdersByRestaurant(int idRestaurant)
         {
@@ -642,6 +670,8 @@ namespace DAL
                             order.TOTALPRICE = (decimal)dr["TOTALPRICE"];
                             order.ID_RESTAURANT = (int)dr["ID_RESTAURANT"];
                             order.ID_STAFF = (int)dr["ID_STAFF"];
+                            order.isDelivered = (bool)dr["isDelivered"];
+
 
 
                             results.Add(order);
@@ -687,6 +717,8 @@ namespace DAL
                             order.TOTALPRICE = (decimal)dr["TOTALPRICE"];
                             order.ID_RESTAURANT = (int)dr["ID_RESTAURANT"];
                             order.ID_STAFF = (int)dr["ID_STAFF"];
+                            order.isDelivered = (bool)dr["isDelivered"];
+
 
 
                             results.Add(order);

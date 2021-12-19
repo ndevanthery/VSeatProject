@@ -119,6 +119,7 @@ namespace WebApp.Controllers
             {
                 return RedirectToAction("LoginStaff", "Login");
             }
+
             int id = (int)HttpContext.Session.GetInt32("ID_STAFF");
             var myOrders = OrderManager.GetDuringOrdersForStaff(id);
             var orders_vm = new List<Models.OrderVM>();
@@ -149,6 +150,15 @@ namespace WebApp.Controllers
 
 
             return View(orders_vm);
+        }
+
+        public RedirectToActionResult ValidateOrder(int id)
+        {
+            var order = OrderManager.GetOrder(id);
+            order.isDelivered = true;
+            OrderManager.UpdaterOrder(id,order);
+            return RedirectToAction("ToDeliver");
+
         }
 
         public IActionResult Profile()

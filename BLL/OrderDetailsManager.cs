@@ -40,6 +40,12 @@ namespace BLL
         }
 
 
+        //delete
+        public List<OrderDetails> DeleteOrderDetails(int id_order)
+        {
+            return orderDetailsDB.DeleteOrderDetails(id_order);
+        }
+
         //---------------------------------------------------
         // get list METHODS
         //---------------------------------------------------

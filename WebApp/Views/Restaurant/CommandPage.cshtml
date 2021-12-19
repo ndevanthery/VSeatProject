@@ -9,34 +9,34 @@
 <h1>pass your command at @Model.orderDishes.First().restaurantName</h1>
 <form asp-action="CommandPage">
     <div asp-validation-summary="All" class="text-danger"></div>
-    <label asp-for="date" class="control-label">delivery time</label>
-    <select asp-for="date">
+    <label asp-for="hour" class="control-label">delivery time</label>
+    <select asp-for="hour">
         <option disabled>Lunch</option>
-        <option value="1">11:30</option>
-        <option value="2">11:45</option>
-        <option value="3">12:00</option>
-        <option value="4">12:15</option>
-        <option value="5">12:30</option>
-        <option value="8">12:45</option>
-        <option value="8">13:00</option>
-        <option value="8">13:15</option>
-        <option value="8">13:30</option>
+        <option value="11:30">11:30</option>
+        <option value="11:45">11:45</option>
+        <option value="12:00">12:00</option>
+        <option value="12:15">12:15</option>
+        <option value="12:30">12:30</option>
+        <option value="12:45">12:45</option>
+        <option value="13:00">13:00</option>
+        <option value="13:15">13:15</option>
+        <option value="13:30">13:30</option>
         <option disabled>Dinner</option>
-        <option value="8">18:00</option>
-        <option value="8">18:15</option>
-        <option value="8">18:30</option>
-        <option value="8">18:45</option>
-        <option value="8">19:00</option>
-        <option value="8">19:15</option>
-        <option value="8">19:30</option>
-        <option value="8">19:45</option>
-        <option value="8">20:00</option>
-        <option value="8">20:15</option>
-        <option value="8">20:30</option>
-        <option value="8">20:45</option>
-        <option value="8">21:00</option>
-        <option value="8">21:15</option>
-        <option value="8">21:30</option>
+        <option value="18:00">18:00</option>
+        <option value="18:15">18:15</option>
+        <option value="18:30">18:30</option>
+        <option value="18:45">18:45</option>
+        <option value="19:00">19:00</option>
+        <option value="19:15">19:15</option>
+        <option value="19:30">19:30</option>
+        <option value="19:45">19:45</option>
+        <option value="20:00">20:00</option>
+        <option value="20:15">20:15</option>
+        <option value="20:30">20:30</option>
+        <option value="20:45">20:45</option>
+        <option value="21:00">21:00</option>
+        <option value="21:15">21:15</option>
+        <option value="21:30">21:30</option>
 
 
 
@@ -53,6 +53,9 @@
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.orderDishes.First().dish.PRICE)
+                </th>
+                <th>
+                    image
                 </th>
                 <th></th>
             </tr>
@@ -79,6 +82,9 @@
                         @Html.DisplayFor(modelItem => Model.orderDishes[i].dish.PRICE)
                         @Html.HiddenFor(modelItem => Model.orderDishes[i].dish.PRICE)
 
+                    </td>
+                    <td>
+                        <img src="~/Images/DISH/@Model.orderDishes[i].dish.image_url" height="200" width="200" />
                     </td>
                     <td>
                         @Html.TextBoxFor(m => Model.orderDishes[i].quantity)

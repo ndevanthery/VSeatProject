@@ -30,7 +30,7 @@
                 @Html.DisplayNameFor(model => model.dish.PRICE)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.dish.image_url)
+                image
             </th>
         </tr>
     </thead>
@@ -49,7 +49,7 @@
                         @Html.DisplayFor(modelItem => item.dish.PRICE)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.dish.image_url)
+                        <img src="~/Images/DISH/@item.dish.image_url" width="200" height="200" />
                     </td>
                 </tr>
             }

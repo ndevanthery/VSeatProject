@@ -24,13 +24,13 @@
                 </th>
 
                 <th>
-                    @Html.DisplayNameFor(model => model.order.ORDERDATE)
+                   time
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.order.DISCOUNT)
+                    discount
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.order.TOTALPRICE)
+                    total Price
                 </th>
                 <th></th>
             </tr>
@@ -46,7 +46,10 @@
                         @Html.DisplayFor(modelItem => item.cityName)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.order.ORDERDATE)
+                        @{ string hour = string.Format("{0:D2}:{1:D2}", item.order.ORDERDATE.Hour , item.order.ORDERDATE.Minute);}
+                        @hour
+
+                       
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.order.DISCOUNT)

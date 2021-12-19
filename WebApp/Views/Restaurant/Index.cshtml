@@ -8,7 +8,6 @@
 }
 
 <h1>list of citys</h1>
-<img src="C://Monthey.jpg" alt="cant be loaded" width="500" height="600" />
 <table class="table">
     <thead>
         <tr>
@@ -35,7 +34,7 @@
                     @Html.DisplayFor(modelItem => item.NPA)
                 </td>
                 <td>
-                    
+                    <img src="~/Images/CITY/@item.image_url" width="200" height="200" />
                 </td>
                 <td>
                     @Html.ActionLink("view more", "RestaurantsList", new { idCity = item.IDCITY })
