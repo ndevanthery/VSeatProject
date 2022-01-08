@@ -27,22 +27,8 @@ namespace DAL
 
 
 
-        //delete customer
-
-        public Customer DeleteCustomer(int id_customer);
-
-
-
         //get Lists
-
         public List<Customer> GetCustomers();
-
-        public List<Customer> GetCustomers(int id_city);
-
-
-
-
-
 
     }
 }

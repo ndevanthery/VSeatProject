@@ -17,27 +17,28 @@ namespace BLL
         {
             customerDB = new CustomerDB(conf);
         }
+
         //login method
         public Customer loginCustomer(string username,string password) {
             
             Customer loggedCustomer = new Customer();
 
+            //get all customers
             var customers = GetCustomers();
 
             foreach (var customer in customers)
             {
+                //test if one of them's username and password combination is working
                 if (customer.USERNAME == username && customer.PASSWORD == password )
                 {
-                    Console.WriteLine("customer found and logged");
                     loggedCustomer = customer;
                     
                     return loggedCustomer;
                 }
                 
             }
-            
+            //if no one was found, send null back
 
-            Console.WriteLine("customer username or password incorrect");
             return null;
                  
         }
@@ -63,12 +64,6 @@ namespace BLL
         }
 
 
-        //delete method
-        public Customer DeleteCustomer(int id_customer)
-        {
-            return customerDB.DeleteCustomer(id_customer);
-        }
-
         //get Lists methods
 
         public List<Customer> GetCustomers()
@@ -76,10 +71,6 @@ namespace BLL
             return customerDB.GetCustomers();
         }
 
-        public List<Customer> GetCustomers(int id_city)
-        {
-            return customerDB.GetCustomers(id_city);
-        }
 
 
 

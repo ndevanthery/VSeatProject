@@ -62,27 +62,6 @@ namespace BLL
             return orderDB.GetOrders();
         }
 
-        public List<Order> GetOrders(DateTime orderDate)
-        {
-            return orderDB.GetOrders(orderDate);
-        }
-
-        public List<Order> GetOrdersByDiscount(int discount)
-        {
-            return orderDB.GetOrdersByDiscount(discount);
-        }
-
-        public List<Order> GetOrdersByMinTotalPrice(double totalPrice)
-        {
-            return orderDB.GetOrdersByMinTotalPrice(totalPrice);
-        }
-
-        public List<Order> GetOrdersByMaxTotalPrice(double totalPrice)
-        {
-            return orderDB.GetOrdersByMaxTotalPrice(totalPrice);
-        }
-
-
         public List<Order> GetOrdersByCustomer(int idCustomer)
         {
             return orderDB.GetOrdersByCustomer(idCustomer);

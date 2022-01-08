@@ -17,15 +17,6 @@ namespace BLL
             CodePromoDB = codePromoDB;
         }
 
-        public CodePromo AddCodePromo(CodePromo codePromo)
-        {
-            return CodePromoDB.AddCodePromo(codePromo);
-        }
-
-        public List<CodePromo> GetCodes(int idRestaurant)
-        {
-            return CodePromoDB.GetCodes(idRestaurant);
-        }
         public CodePromo GetCode(string codeString)
         {
             return CodePromoDB.GetCode(codeString);

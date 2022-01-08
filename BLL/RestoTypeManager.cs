@@ -19,14 +19,6 @@ namespace BLL
         }
 
 
-        //---------------------------------------------------
-        // ADD METHOD
-        //---------------------------------------------------
-        public RestoType AddRestoType(RestoType restoType)
-        {
-            return restoTypeDB.AddRestoType(restoType);
-        }
-
 
         //---------------------------------------------------
         // GET ONE METHOD
@@ -34,29 +26,6 @@ namespace BLL
         public RestoType GetRestoType(int idType)
         {
             return restoTypeDB.GetRestoType(idType);
-        }
-        //---------------------------------------------------
-        // UPDATE METHOD
-        //---------------------------------------------------
-        public RestoType UpdateRestoType(int idType, RestoType newRestoType)
-        {
-            return restoTypeDB.UpdateRestoType(idType, newRestoType);
-        }
-        //---------------------------------------------------
-        // DELETE METHOD
-        //---------------------------------------------------
-        public RestoType DeleteRestoType(int idType)
-        {
-            return restoTypeDB.DeleteRestotype(idType);
-        }
-        //---------------------------------------------------
-        // GET LIST METHODS
-        //---------------------------------------------------
-        
-
-        public List<RestoType> GetRestoTypes()
-        {
-            return restoTypeDB.GetRestoTypes();
         }
 
     }

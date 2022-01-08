@@ -30,18 +30,6 @@ namespace DTO
 
         public bool confirmed { get; set; }
 
-        public override string ToString()
-        {
-            return "ID_CUSTOMER:" + ID_CUSTOMER +
-                    " / IDCITY:" + IDCITY +
-                    " / firstname:" + FIRSTNAME +
-                    " / LASTNAME:" + LASTNAME +
-                    " / ADRESS:" + ADRESS +
-                    " / phone number:" + PHONENUMBER +
-                    " / USERNAME:" + USERNAME+
-                    " / password:" + PASSWORD+
-                    " / EMAIL:" + EMAIL;
-        }
 
     }
 }

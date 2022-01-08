@@ -25,14 +25,7 @@ namespace DTO
         public int ID_RESTAURANT { get; set; }
 
         public bool isDelivered { get; set; }
-        public override string ToString()
-        {
-            return "ID ORDER:" + ID_ORDER +
-                    " / ID CUSTOMER:" + ID_CUSTOMER +
-                   " / ORDER DATE:" + ORDERDATE +
-                   " / DISCOUNT:" + DISCOUNT +
-                   " / TOTAL PRICE:" + TOTALPRICE;
-        }
+
 
     }
 }

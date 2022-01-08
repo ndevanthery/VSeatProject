@@ -24,22 +24,24 @@ namespace BLL
 
             Staff loggedStaff = new Staff();
 
+
+            //get list of all staffs
             var staffs = GetStaffs();
 
             foreach (var staff in staffs)
             {
                 if (staff.USERNAME == username && staff.PASSWORD == password)
                 {
-                    Console.WriteLine("staff found and logged");
+                    //if one staff username and password combinaison matches
+                    //return the staff
                     loggedStaff = staff;
 
                     return loggedStaff;
                 }
 
             }
+            //if not, return null
 
-
-            Console.WriteLine("staff username or password incorrect");
             return null;
 
         }

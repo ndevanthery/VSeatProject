@@ -12,12 +12,5 @@ namespace DTO
 
         public string TYPENAME { get; set; }
 
-
-        public override string ToString()
-        {
-            return "ID TYPE:" + IDTYPE +
-                   " / TYPE NAME:" + TYPENAME;
-
-        }
 }
 }

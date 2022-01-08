@@ -84,14 +84,10 @@ namespace DAL
 
         }
 
-
-
-
-
         //---------------------------------------------------
         // GET by one METHOD
         //---------------------------------------------------
-
+        //get a customer by its ID
         public Customer GetCustomer(int idCustomer)
         {
             Customer customer = null;
@@ -241,66 +237,6 @@ namespace DAL
 
 
         //---------------------------------------------------
-        // DELETE METHOD
-        //---------------------------------------------------
-        public Customer DeleteCustomer(int id_customer)
-        {
-            Customer customer = null;
-            string connectionString = Configuration.GetConnectionString("DefaultConnection");
-
-            try
-            {
-                using (SqlConnection cn = new SqlConnection(connectionString))
-                {
-                    string query = "DELETE FROM CUSTOMER WHERE ID_CUSTOMER = @id";
-                    SqlCommand cmd = new SqlCommand(query, cn);
-                    cmd.Parameters.AddWithValue("@id", id_customer);
-
-
-                    cn.Open();
-
-                    using (SqlDataReader dr = cmd.ExecuteReader())
-                    {
-
-                        while (dr.Read())
-                        {
-                            customer = new Customer();
-                            customer.ID_CUSTOMER = (int)dr["ID_CUSTOMER"];
-                            customer.IDCITY = (int)dr["IDCITY"];
-                            customer.FIRSTNAME = (string)dr["FIRSTNAME"];
-                            customer.LASTNAME = (string)dr["LASTNAME"];
-                            customer.ADRESS = (string)dr["ADRESS"];
-
-                            if (dr["PHONENUMBER"] != DBNull.Value)
-                            {
-                                customer.PHONENUMBER = (string)dr["PHONENUMBER"];
-
-                            }
-                            customer.USERNAME = (string)dr["USERNAME"];
-                            customer.PASSWORD = (string)dr["PASSWORD"];
-
-                            customer.EMAIL = (string)dr["EMAIL"];
-                            if (dr["image_url"] != DBNull.Value)
-                            {
-                                customer.image_url = (string)dr["image_url"];
-                            }
-                            customer.confirmed = (bool)dr["confirmed"];
-                        }
-
-
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-            }
-
-            return customer;
-        }
-
-
-        //---------------------------------------------------
         // GET by Lists METHODS
         //---------------------------------------------------
 
@@ -360,66 +296,7 @@ namespace DAL
 
             return results;
         }
-        public List<Customer> GetCustomers(int id_city)
-        {
-            {
-                List<Customer> results = null;
-                string connectionString = Configuration.GetConnectionString("DefaultConnection");
 
-                try
-                {
-                    using (SqlConnection cn = new SqlConnection(connectionString))
-                    {
-                        string query = "Select * from CUSTOMER WHERE IDCITY = @id";
-                        SqlCommand cmd = new SqlCommand(query, cn);
-                        cmd.Parameters.AddWithValue("@id", id_city);
-
-                        cn.Open();
-
-                        using (SqlDataReader dr = cmd.ExecuteReader())
-                        {
-                            while (dr.Read())
-                            {
-                                if (results == null)
-                                    results = new List<Customer>();
-
-                                Customer customer = new Customer();
-
-                                customer.ID_CUSTOMER = (int)dr["ID_CUSTOMER"];
-                                customer.IDCITY = (int)dr["IDCITY"];
-                                customer.FIRSTNAME = (string)dr["FIRSTNAME"];
-                                customer.LASTNAME = (string)dr["LASTNAME"];
-                                customer.ADRESS = (string)dr["ADRESS"];
-
-                                if (dr["PHONENUMBER"] != DBNull.Value)
-                                {
-                                    customer.PHONENUMBER = (string)dr["PHONENUMBER"];
-
-                                }
-                                customer.USERNAME = (string)dr["USERNAME"];
-                                customer.PASSWORD = (string)dr["PASSWORD"];
-
-                                customer.EMAIL = (string)dr["EMAIL"];
-                                if (dr["image_url"] != DBNull.Value)
-                                {
-                                    customer.image_url = (string)dr["image_url"];
-                                }
-                                customer.confirmed = (bool)dr["confirmed"];
-                                results.Add(customer);
-                            }
-                        }
-                    }
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e.Message);
-                }
-
-                return results;
-            }
-
-
-        }
         
 }
 }

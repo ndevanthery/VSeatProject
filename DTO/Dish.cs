@@ -19,12 +19,5 @@ namespace DTO
 
         public string image_url { get; set; }
 
-        public override string ToString()
-        {
-            return "ID DISH:" + ID_DISH +
-                   " / ID RESTAURANT:" + ID_RESTAURANT +
-                   " / NAME:" + NAME +
-                   " / PRICE:" + PRICE ;
-        }
     }
 }

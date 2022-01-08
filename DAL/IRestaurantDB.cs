@@ -10,21 +10,17 @@ namespace DAL
     public interface IRestaurantDB
     {
         //add Restaurant
-
-
         public Restaurant AddRestaurant(Restaurant restaurant);
 
 
 
 
         //get Restaurant
-
         public Restaurant GetRestaurant(int idRestaurant);
 
 
 
         //update Restaurant
-
         public Restaurant UpdateRestaurant(int idRestaurant, Restaurant newRestaurant);
 
 
@@ -38,8 +34,6 @@ namespace DAL
         public List<Restaurant> GetRestaurants();
 
         public List<Restaurant> GetRestaurantsByCity(int id_city);
-
-        public List<Restaurant> GetRestaurantsByType(int id_type);
 
 
 

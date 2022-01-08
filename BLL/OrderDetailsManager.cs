@@ -30,15 +30,6 @@ namespace BLL
             return orderDetailsDB.AddOrderDetails(orderDetails);
         }
 
-        //---------------------------------------------------
-        // get one METHOD
-        //---------------------------------------------------
-
-        public OrderDetails GetOrderDetails(int orderId, int id_dish)
-        {
-            return orderDetailsDB.GetOrderDetail(orderId, id_dish);
-        }
-
 
         //delete
         public List<OrderDetails> DeleteOrderDetails(int id_order)
@@ -52,10 +43,7 @@ namespace BLL
 
 
 
-        public List<OrderDetails> GetOrdersDetails()
-        {
-            return orderDetailsDB.GetOrdersDetails();
-        }
+
 
         public List<OrderDetails> GetOrderDetailsByDish(int id_dish)
         {
@@ -66,18 +54,6 @@ namespace BLL
         {
             return orderDetailsDB.GetOrderDetailsByOrder(orderId);
         }
-
-
-
-
-
-
-
-
-
-
-
-
 
     }
 }

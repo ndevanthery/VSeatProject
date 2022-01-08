@@ -13,16 +13,9 @@ namespace DAL
 
         public OrderDetails AddOrderDetails(OrderDetails orderDetails);
 
-        // get OrderDetails
-
-        public OrderDetails GetOrderDetail(int orderId, int id_dish);
-
         // delete 
         public List<OrderDetails> DeleteOrderDetails(int id_order);
         //get Lists
-
-
-        public List<OrderDetails> GetOrdersDetails();
 
         public List<OrderDetails> GetOrderDetailsByDish(int id_dish);
 

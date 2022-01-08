@@ -357,11 +357,6 @@ namespace DAL
         // GET LISTS METHOD
         //---------------------------------------------------
 
-
-
-
-
-
         public List<Staff> GetStaffs()
         {
             List<Staff> results = null;

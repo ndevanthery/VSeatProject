@@ -42,10 +42,12 @@ namespace WebApp.Controllers
 
         public IActionResult Index()
         {
+            //if no user logged in , redirect to login page
             if (HttpContext.Session.GetInt32("ID_CUSTOMER") == null)
             {
                 return RedirectToAction("Index", "Login");
             }
+            //get list of cities
             var citys = CityManager.GetCities();
             
 
@@ -54,13 +56,17 @@ namespace WebApp.Controllers
 
         public IActionResult RestaurantsList(int idCity)
         {
+            //if no user logged in , redirect to login page
             if (HttpContext.Session.GetInt32("ID_CUSTOMER") == null)
             {
                 return RedirectToAction("Index", "Login");
             }
 
+            //get list of restaurants in a city
             var restaurants = RestaurantManager.GetRestaurantsByCity(idCity);
             var restaurants_vm = new List<Models.RestaurantVM>();
+
+            //convert the list of restaurant to vm list. more user friendly data
             if(restaurants!=null)
             {
                 foreach (var resto in restaurants)
@@ -86,12 +92,17 @@ namespace WebApp.Controllers
 
         public IActionResult DishesList(int idRestaurant)
         {
+            //if no user logged in , redirect to login page
+
             if (HttpContext.Session.GetInt32("ID_CUSTOMER") == null)
             {
                 return RedirectToAction("Index", "Login");
             }
+
+            //get list of dishes
             var dishes = DishManager.GetDishes(idRestaurant);
             var dishes_vm = new List<Models.DishVM>();
+            //convert list of dishes to vm list. more user friendly data
             if (dishes != null)
             {
                 foreach (var dish in dishes)
@@ -115,16 +126,22 @@ namespace WebApp.Controllers
 
         public IActionResult CommandPage(int idRestaurant)
         {
+            //if no user logged in , redirect to login page
+
             if (HttpContext.Session.GetInt32("ID_CUSTOMER") == null)
             {
                 return RedirectToAction("Index", "Login");
             }
+
+            //get list of dishes
             var dishes = DishManager.GetDishes(idRestaurant);
             var myModel = new OrderDishCodePromo();
             myModel.orderDishes = new List<OrderDishVM>();
             myModel.codePromo = "";
             myModel.discount = 0;
             myModel.hour = "11:30" ;
+
+            //get the list of dishes and converts it to vm list. more user friendly data
             if (dishes != null)
             {
                 foreach (var dish in dishes)
@@ -155,13 +172,19 @@ namespace WebApp.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult CommandPage(OrderDishCodePromo myOrders)
         {
+
             if (ModelState.IsValid)
             {
-     
+                
                 if (myOrders != null)
                 {
+
+                    ///////////////////////////////////////////////////////////
+                    ///             ERRORS MANAGMENT                        ///
+                    ///////////////////////////////////////////////////////////
+                   
                     var codePromo = CodePromoManager.GetCode(myOrders.codePromo);
-                    
+                    //if the code promo the user tried to use doesn't exist, add error to view
                     if(codePromo==null && myOrders.codePromo !=null)
                     {
                         ModelState.AddModelError(string.Empty, "the used promo code doesn't exist :(");
@@ -169,6 +192,7 @@ namespace WebApp.Controllers
                     }
                     else
                     {
+                        //if the code promo exists, but not for this restaurant , add error to view
                         if(myOrders.codePromo != null)
                         {
                             if (codePromo.ID_RESTAURANT != myOrders.orderDishes.First().dish.ID_RESTAURANT)
@@ -184,13 +208,15 @@ namespace WebApp.Controllers
                     decimal somme = 0;
 
                     var discountToDo = 0;
+                    //the code promo is correct if the code arrived here
+                    //if code promo is null, no discount
                     if(codePromo!=null)
                     {
                         discountToDo = codePromo.DISCOUNT;
                         myOrders.discount = discountToDo;
 
                     }
-
+                    //calculate sum of the order
                     foreach (var order in myOrders.orderDishes)
                     {
                         somme += order.dish.PRICE * order.quantity * ((decimal)1-((decimal)discountToDo/100));
@@ -248,8 +274,11 @@ namespace WebApp.Controllers
 
 
                         };
+                        //add the order to database
                         Order myOrder_added = OrderManager.AddOrder(myNewOrder);
                         myOrders.orderId = myOrder_added.ID_ORDER;
+                        // create multiple orderDetails with the same order ID
+                        // when the quantity == 0 , no order details created
                         foreach (var order in myOrders.orderDishes)
                         {
                             if (order.quantity > 0)
@@ -260,14 +289,14 @@ namespace WebApp.Controllers
                                     ID_ORDER = myOrder_added.ID_ORDER,
                                     quantity = order.quantity
                                 };
+                                //add order detail to database
 
                                 OrderDetailsManager.AddOrderDetails(myNewOrderDetail);
                             }
 
                         }
 
-                        // create multiple orderDetails with the same order ID
-                        // when the quantity == 0 , no order details created
+                        
 
                         return View("~/Views/Restaurant/CommandConfirmation.cshtml", myOrders);
                     }

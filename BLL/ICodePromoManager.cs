@@ -9,9 +9,6 @@ namespace BLL
 {
     public interface ICodePromoManager
     {
-        public CodePromo AddCodePromo(CodePromo codePromo);
-
-        public List<CodePromo> GetCodes(int idRestaurant);
         public CodePromo GetCode(string codeString);
 
     }

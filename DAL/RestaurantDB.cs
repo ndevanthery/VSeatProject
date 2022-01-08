@@ -286,8 +286,6 @@ namespace DAL
             return restaurant;
         }
 
-
-
         //---------------------------------------------------
         // GET LISTS METHOD
         //---------------------------------------------------
@@ -402,63 +400,6 @@ namespace DAL
             }
 
             return results;        }
-
-        public List<Restaurant> GetRestaurantsByType(int id_type)
-        {
-            List<Restaurant> results = null;
-            string connectionString = Configuration.GetConnectionString("DefaultConnection");
-
-            try
-            {
-                using (SqlConnection cn = new SqlConnection(connectionString))
-                {
-                    string query = "Select * from RESTAURANT WHERE IDTYPE = @idType";
-                    SqlCommand cmd = new SqlCommand(query, cn);
-                    cmd.Parameters.AddWithValue("@idType", id_type);
-
-                    cn.Open();
-
-                    using (SqlDataReader dr = cmd.ExecuteReader())
-                    {
-                        while (dr.Read())
-                        {
-                            if (results == null)
-                                results = new List<Restaurant>();
-
-                            Restaurant restaurant = new Restaurant();
-
-                            restaurant.ID_RESTAURANT = (int)dr["ID_RESTAURANT"];
-                            restaurant.IDCITY = (int)dr["IDCITY"];
-                            restaurant.IDTYPE = (int)dr["IDTYPE"];
-                            restaurant.NAME = (string)dr["NAME"];
-                            restaurant.ADRESS = (string)dr["ADRESS"];
-
-                            if (dr["PHONENUMBER"] != DBNull.Value)
-                            {
-                                restaurant.PHONENUMBER = (string)dr["PHONENUMBER"];
-
-                            }
-                            restaurant.USERNAME = (string)dr["USERNAME"];
-                            restaurant.PASSWORD = (string)dr["PASSWORD"];
-                            restaurant.confirmed = (bool)dr["confirmed"];
-                            if (dr["image_url"] != DBNull.Value)
-                            {
-                                restaurant.image_url = (string)dr["image_url"];
-                            }
-
-                            results.Add(restaurant);
-                        }
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-            }
-
-            return results;
-
-        }
 
 
     }

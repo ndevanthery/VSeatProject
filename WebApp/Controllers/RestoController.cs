@@ -30,22 +30,30 @@ namespace WebApp.Controllers
 
         public IActionResult Index()
         {
+            //if no user logged in , redirect to login page
+
             if (HttpContext.Session.GetInt32("ID_RESTAURANT") == null)
             {
                 return RedirectToAction("LoginRestaurant", "Login");
             }
+
+            //get the restaurant infos
             var myResto = RestaurantManager.GetRestaurant((int)HttpContext.Session.GetInt32("ID_RESTAURANT"));
             return View(myResto);
         }
 
         public IActionResult OrderHistory()
         {
+            //if no user logged in , redirect to login page
             if (HttpContext.Session.GetInt32("ID_RESTAURANT") == null)
             {
                 return RedirectToAction("LoginRestaurant", "Login");
             }
             int id = (int)HttpContext.Session.GetInt32("ID_RESTAURANT");
+            //get orders linked to this restaurant
             var myOrders = OrderManager.GetOrdersByRestaurant(id);
+
+            //convert orders list to vm list. more user friendly data
             var orders_vm = new List<Models.OrderVM>();
             if (myOrders != null)
             {
@@ -77,12 +85,17 @@ namespace WebApp.Controllers
 
         public IActionResult OrderDetails(int id)
         {
+            //if no user logged in , redirect to login page
             if (HttpContext.Session.GetInt32("ID_RESTAURANT") == null)
             {
                 return RedirectToAction("RestaurantLogin", "Login");
             }
+
+            //get the order details specific to the asked order
             var orderDetails = OrderDetailsManager.GetOrderDetailsByOrder(id);
             var orderDetails_vm = new List<Models.OrderDetailsVM>();
+
+            //convert orderderails list to vm list. more user friendly data
             foreach (var orderDetail in orderDetails)
             {
                 var myDish = DishManager.GetDish(orderDetail.ID_DISH);
@@ -109,14 +122,16 @@ namespace WebApp.Controllers
 
         public IActionResult OrderInbound()
         {
+            //if no user logged in , redirect to login page
             if (HttpContext.Session.GetInt32("ID_RESTAURANT") == null)
             {
                 return RedirectToAction("LoginRestaurant", "Login");
             }
             int id = (int)HttpContext.Session.GetInt32("ID_RESTAURANT");
+            //get during order list
             var myOrders = OrderManager.GetDuringOrdersForRestaurant(id);
             var orders_vm = new List<Models.OrderVM>();
-
+            //convert orders list to vm list. more user friendly data
             if (myOrders != null)
             {
                 foreach (var order in myOrders)
@@ -149,6 +164,12 @@ namespace WebApp.Controllers
 
         public IActionResult Statistics()
         {
+            //if no user logged in , redirect to login page
+            if (HttpContext.Session.GetInt32("ID_RESTAURANT") == null)
+            {
+                return RedirectToAction("LoginRestaurant", "Login");
+            }
+            //get the dishes produced by this restaurant
             var dishes = DishManager.GetDishes((int)HttpContext.Session.GetInt32("ID_RESTAURANT"));
 
             var myList = new List<Models.OrderQuantityVM>();
@@ -157,10 +178,12 @@ namespace WebApp.Controllers
                 int somme = 0;
                 decimal CA = 0;
                 var ordersDetails = OrderDetailsManager.GetOrderDetailsByDish(myDish.ID_DISH);
+                //get orderderails linked to this dish
                 if(ordersDetails!=null)
                 {
                     foreach (var or in ordersDetails)
                     {
+                        //for each orderdetails, increment the quantity buyed, and how much money was made
                         somme += or.quantity;
                         CA += or.quantity * ((100 - OrderManager.GetOrder(or.ID_ORDER).DISCOUNT) / 100) * myDish.PRICE;
                     }
@@ -184,25 +207,31 @@ namespace WebApp.Controllers
 
         public IActionResult Profile()
         {
+            //if no user logged in , redirect to login page
             if (HttpContext.Session.GetInt32("ID_RESTAURANT") == null)
             {
-                return RedirectToAction("Index", "Login");
+                return RedirectToAction("LoginRestaurant", "Login");
             }
+            //get the restaurant infos
             int id = (int)HttpContext.Session.GetInt32("ID_RESTAURANT");
-            var customer = RestaurantManager.GetRestaurant(id);
-            return View(customer);
+            var resto = RestaurantManager.GetRestaurant(id);
+            return View(resto);
 
         }
 
         public IActionResult EditMenu()
         {
+            //if no user logged in , redirect to login page
             if (HttpContext.Session.GetInt32("ID_RESTAURANT") == null)
             {
                 return RedirectToAction("LoginRestaurant", "Login");
             }
+
             int id = (int)HttpContext.Session.GetInt32("ID_RESTAURANT");
+            //get the dishes list of this restaurant
             var dishes = DishManager.GetDishes(id);
             var dishes_vm = new List<Models.DishVM>();
+            //convert dishes list to vm list. more userfriendly data
             if (dishes != null)
             {
                 foreach (var dish in dishes)
@@ -227,6 +256,7 @@ namespace WebApp.Controllers
 
         public IActionResult EditDish(int id)
         {
+            //get the dish infos
             var dish = DishManager.GetDish(id);
             return View(dish);
         }
@@ -237,6 +267,7 @@ namespace WebApp.Controllers
         {
             if (ModelState.IsValid)
             {
+                //update the dish
                 DishManager.UpdateDish(newDish.ID_DISH, newDish);
                 return RedirectToAction("EditMenu", "Resto");
 
@@ -258,6 +289,7 @@ namespace WebApp.Controllers
         {
             if (ModelState.IsValid)
             {
+                //add the new dish to the database
                 newDish.ID_RESTAURANT = (int)HttpContext.Session.GetInt32("ID_RESTAURANT");
                 DishManager.AddDish(newDish);
                 return RedirectToAction("EditMenu", "Resto");
@@ -272,10 +304,13 @@ namespace WebApp.Controllers
 
         public IActionResult EditPassword()
         {
+            //if no user logged in , redirect to login page
             if (HttpContext.Session.GetInt32("ID_RESTAURANT") == null)
             {
                 return RedirectToAction("LoginRestaurant", "Login");
             }
+
+            // get the restaurant infos
             int id = (int)HttpContext.Session.GetInt32("ID_RESTAURANT");
             var resto = RestaurantManager.GetRestaurant(id);
             return View(resto);
@@ -287,9 +322,12 @@ namespace WebApp.Controllers
         {
             if (ModelState.IsValid)
             {
+                //try to see if the combinaison is already taken
                 var staff = RestaurantManager.loginRestaurant(newResto.USERNAME, newResto.PASSWORD);
+                // if it is not ( no password changed)
                 if (staff == null)
                 {
+                    //update the restaurant in database
                     RestaurantManager.UpdateRestaurant(newResto.ID_RESTAURANT, newResto);
                     return RedirectToAction("Profile", "Resto");
 

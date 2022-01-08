@@ -13,9 +13,7 @@ namespace BLL
         public Customer AddCustomer(Customer customer);
         public Customer GetCustomer(int idCustomer);
         public Customer UpdateCustomer(int id_customer, Customer newCustomer);
-        public Customer DeleteCustomer(int id_customer);
         public List<Customer> GetCustomers();
-        public List<Customer> GetCustomers(int id_city);
 
 
 

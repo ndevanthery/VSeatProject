@@ -34,24 +34,32 @@ namespace WebApp.Controllers
         }
         public IActionResult Index()
         {
+            //if no user logged in , redirect to login page
             if (HttpContext.Session.GetInt32("ID_CUSTOMER") == null)
             {
                 return RedirectToAction("Index", "Login");
             }
+
+            //get the informations of the logged customer
             var myCustomer = CustomerManager.GetCustomer((int)HttpContext.Session.GetInt32("ID_CUSTOMER"));
             return View(myCustomer);
         }
 
         public IActionResult OrderInbound()
         {
+            //if no user logged in , redirect to login page
             if (HttpContext.Session.GetInt32("ID_CUSTOMER") == null)
             {
                 return RedirectToAction("Index", "Login");
             }
+
+            //get the id of the logged customer
             int id = (int)HttpContext.Session.GetInt32("ID_CUSTOMER");
+
+            //get his during order list
             var myOrders = OrderManager.GetDuringOrdersForCustomer(id) ;
             var orders_vm = new List<Models.OrderVM>();
-
+            //transform the Order list to OrderVM list , more user friendly data
             if (myOrders!=null)
             {
                 foreach (var order in myOrders)
@@ -83,18 +91,24 @@ namespace WebApp.Controllers
 
         public IActionResult OrderDetails(int id)
         {
+            //if no user logged in , redirect to login page
+
             if (HttpContext.Session.GetInt32("ID_CUSTOMER") == null)
             {
                 return RedirectToAction("Index", "Login");
             }
+
+            //get the orderDetails linked to an order
             var orderDetails = OrderDetailsManager.GetOrderDetailsByOrder(id);
             var orderDetails_vm = new List<Models.OrderDetailsVM>();
+
+            //transform order details list to order details VM list. more user friendly data
             foreach(var orderDetail in orderDetails)
             {
                 var myDish = DishManager.GetDish(orderDetail.ID_DISH);
                 
                 var myOrder = OrderManager.GetOrder(id);
-                myDish.PRICE = myDish.PRICE * ((decimal)1 - ((decimal)myOrder.DISCOUNT / 100));
+                myDish.PRICE = myDish.PRICE * ((decimal)1 - ((decimal)myOrder.DISCOUNT / 100));//apply the discount to the unit price
                 var totalPrice = myDish.PRICE * orderDetail.quantity ;
                 Models.OrderDetailsVM myOrderDetail = new Models.OrderDetailsVM
                 {
@@ -113,13 +127,21 @@ namespace WebApp.Controllers
         }
         public IActionResult OrderHistory()
         {
+            //if no user logged in , redirect to login page
+
             if (HttpContext.Session.GetInt32("ID_CUSTOMER") == null)
             {
                 return RedirectToAction("Index", "Login");
             }
+
+            // get the id of the logged customer
             int id = (int)HttpContext.Session.GetInt32("ID_CUSTOMER");
+
+            //get his orders list
             var myOrders = OrderManager.GetOrdersByCustomer(id);
             var orders_vm = new List<Models.OrderVM>();
+
+            //transform orders list to order VM list. more user friendly data
             if(myOrders!=null)
             {
                 foreach (var order in myOrders)
@@ -149,11 +171,17 @@ namespace WebApp.Controllers
 
         public IActionResult Profile()
         {
+            //if no user logged in , redirect to login page
+
             if (HttpContext.Session.GetInt32("ID_CUSTOMER") == null)
             {
                 return RedirectToAction("Index", "Login");
             }
+            
+            //get the id of the logged user
             int id = (int)HttpContext.Session.GetInt32("ID_CUSTOMER");
+
+            //get the infos of the logged customer
             var customer = CustomerManager.GetCustomer(id);
             return View(customer);
 
@@ -162,10 +190,12 @@ namespace WebApp.Controllers
 
         public IActionResult EditPassword()
         {
+            //if no user logged in , redirect to login page
             if (HttpContext.Session.GetInt32("ID_CUSTOMER") == null)
             {
                 return RedirectToAction("Index", "Login");
             }
+            //get the logged customer id and his infos
             int id = (int)HttpContext.Session.GetInt32("ID_CUSTOMER");
             var customer = CustomerManager.GetCustomer(id);
             return View(customer);
@@ -173,17 +203,23 @@ namespace WebApp.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        //return of the edit password view
         public IActionResult EditPassword(Customer newPasswordCustomer)
         {
             if (ModelState.IsValid)
             {
+
+                //try to login the customer to see if the password changed or not
                 var customer = CustomerManager.loginCustomer(newPasswordCustomer.USERNAME, newPasswordCustomer.PASSWORD);
+                
                 if (customer == null)
                 {
+                    //if it did change, update the password in the database and redirect to the profile page
                     CustomerManager.UpdateCustomer(newPasswordCustomer.ID_CUSTOMER, newPasswordCustomer);
                     return RedirectToAction("Profile", "Customer");
 
                 }
+                //else, add a error message to the view
                 ModelState.AddModelError(string.Empty, "password unchanged");
 
             }
@@ -197,18 +233,25 @@ namespace WebApp.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        //return of the order annulation view
         public IActionResult OrderAnnulation(AnnulationVM annulationVM)
         {
+            //get the order linked to the ID the user wrote
             var order = OrderManager.GetOrder(annulationVM.orderId);
+            //if the order with this ID exists
             if(order!=null)
             {
+                //create a new date in three hours to see if the order is still cancelable
                 var date3h = DateTime.Now.AddHours(3);
+                //if order isn't already delivered
                 if (order.isDelivered == false)
                 {
 
-
+                    //if the order is still cancelable
                     if (order.ORDERDATE.CompareTo(date3h) > 0)
                     {
+
+                        //see if the customer the client wrote is the owner of this order
                         var customer = CustomerManager.GetCustomer(order.ID_CUSTOMER);
                         if (customer.FIRSTNAME.ToLower() == annulationVM.firstName.ToLower())
                         {
@@ -222,25 +265,7 @@ namespace WebApp.Controllers
                                 OrderDetailsManager.DeleteOrderDetails(order.ID_ORDER);
                                 OrderManager.DeleteOrder(order.ID_ORDER);
 
-
-                                //map to annulation confirmation
-                                //List<OrderDishVM> myOrders = new List<OrderDishVM>();
-
-                                //foreach(var orderDetail in orderDetails)
-                                //{
-                                //    var dish = DishManager.GetDish(orderDetail.ID_DISH);
-                                //    var restaurant = RestaurantManager.GetRestaurant(dish.ID_RESTAURANT);
-                                //    var city = CityManager.GetCity(restaurant.IDCITY);
-                                //    var myOrder = new OrderDishVM
-                                //    {
-                                //        dish = dish,
-                                //        restaurantName = restaurant.NAME,
-                                //        cityname = city.CITYNAME,
-                                //        quantity = orderDetail.quantity
-                                //    };
-                                //    myOrders.Add(myOrder);
-                                //}
-
+                                //redirect to cancel confirmation view
                                 return View("~/Views/Customer/CancelConfirmation.cshtml", order.ID_ORDER);
 
 
@@ -250,6 +275,7 @@ namespace WebApp.Controllers
                         return View();
 
                     }
+                    //if the order isn't cancelable anymore
                     else
                     {
                         if (order.ORDERDATE < DateTime.Now)

@@ -25,13 +25,15 @@ namespace BLL
 
             Restaurant loggedRestaurant = new Restaurant();
 
+            //get list of restaurants
             var restaurants = GetRestaurants();
 
             foreach (var restaurant in restaurants)
             {
                 if (restaurant.USERNAME == username && restaurant.PASSWORD == password)
                 {
-                    Console.WriteLine("restaurant found and logged");
+                    //if one restaurant username and password combinaison matches
+                    //return the restaurant
                     loggedRestaurant = restaurant;
 
                     return loggedRestaurant;
@@ -39,8 +41,8 @@ namespace BLL
 
             }
 
+            //if not, return null
 
-            Console.WriteLine("restaurant username or password incorrect");
             return null;
 
         }
@@ -88,11 +90,6 @@ namespace BLL
             return restaurantDB.GetRestaurantsByCity(id_city);
         }
 
-        public List<Restaurant> GetRestaurantsByType(int id_type)
-        {
-           return restaurantDB.GetRestaurantsByType(id_type);
-
-        }
 
 
 

@@ -13,7 +13,7 @@ namespace DAL
     {
 
 
-        //configuration .
+        //configuration
         private IConfiguration Configuration { get; }
 
         public CityDB(IConfiguration conf)
@@ -21,45 +21,10 @@ namespace DAL
             Configuration =conf;
         }
 
-
-
-        //---------------------------------------------------
-        // ADD METHODS
-        //---------------------------------------------------
-
-        public City AddCity(City city)
-        {
-            string connectionString = Configuration.GetConnectionString("DefaultConnection");
-            try
-            {
-                using (SqlConnection cn = new SqlConnection(connectionString))
-                {
-                    string query = "Insert into CITY(CITYNAME,NPA,image_url) values(@cityName,@npa,@image_url); SELECT SCOPE_IDENTITY()";
-                    SqlCommand cmd = new SqlCommand(query, cn);
-                    cmd.Parameters.AddWithValue("@cityName", city.CITYNAME);
-                    cmd.Parameters.AddWithValue("@npa", city.NPA);
-                    cmd.Parameters.AddWithValue("@image_url", city.image_url);
-
-                    cn.Open();
-
-                    city.IDCITY = Convert.ToInt32(cmd.ExecuteScalar());
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-            }
-
-            return city;
-
-        }
-
-
-
         //---------------------------------------------------
         // GET by one METHOD
         //---------------------------------------------------
-
+        //get a city by its ID.
         public City GetCity(int idCity)
         {
             City city = null;
@@ -107,7 +72,7 @@ namespace DAL
             return city;
         }
 
-
+        //get a city by its name
         public City GetCity(string cityname)
         {
             City city = null;
@@ -211,62 +176,6 @@ namespace DAL
 
             return city;
         }
-
-        //---------------------------------------------------
-        // DELETE METHOD
-        //---------------------------------------------------
-
-        public City DeleteCity(int idCity)
-        {
-            City city = null;
-            string connectionString = Configuration.GetConnectionString("DefaultConnection");
-
-            try
-            {
-                using (SqlConnection cn = new SqlConnection(connectionString))
-                {
-                    string query = "DELETE FROM CITY WHERE IDCITY = @idcity";
-                    SqlCommand cmd = new SqlCommand(query, cn);
-                    cmd.Parameters.AddWithValue("@idcity", idCity);
-
-                    cn.Open();
-
-                    using (SqlDataReader dr = cmd.ExecuteReader())
-                    {
-
-                        while (dr.Read())
-                        {
-
-                            city = new City();
-                            city.IDCITY = (int)dr["IDCITY"];
-
-                            city.CITYNAME = (string)dr["CITYNAME"];
-
-                            city.NPA = (string)dr["NPA"];
-
-                            if (dr["image_url"] != DBNull.Value)
-                            {
-                                city.image_url = (string)dr["image_url"];
-                            }
-
-
-                        }
-
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-            }
-
-            return city;
-        }
-
-
-
-
-
 
         //---------------------------------------------------
         // GET by Lists METHODS

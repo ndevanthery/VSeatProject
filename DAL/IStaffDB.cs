@@ -37,6 +37,5 @@ namespace DAL
         public List<Staff> GetStaffs(int idCity);
 
 
-
     }
 }

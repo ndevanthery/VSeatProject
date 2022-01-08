@@ -20,13 +20,9 @@ namespace BLL
 
         public Restaurant UpdateRestaurant(int idRestaurant, Restaurant newRestaurant);
 
-        public Restaurant DeleteRestaurant(int idRestaurant);
-
         public List<Restaurant> GetRestaurants();
 
         public List<Restaurant> GetRestaurantsByCity(int id_city);
-
-        public List<Restaurant> GetRestaurantsByType(int id_type);
 
     }
 }

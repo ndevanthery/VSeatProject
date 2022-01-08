@@ -64,16 +64,11 @@ namespace DAL
         }
 
 
-        
-
-
-
-
         //---------------------------------------------------
         // GET one METHOD
         //---------------------------------------------------
 
-
+        //get a dish by its ID
         public Dish GetDish(int idDish)
         {
             Dish dish = null;
@@ -248,57 +243,7 @@ namespace DAL
         // GET by Lists METHODS
         //---------------------------------------------------
 
-
-        public List<Dish> GetDishes()
-        {
-            List<Dish> results = null;
-            string connectionString = Configuration.GetConnectionString("DefaultConnection");
-
-            try
-            {
-                using (SqlConnection cn = new SqlConnection(connectionString))
-                {
-                    string query = "Select * from DISH";
-                    SqlCommand cmd = new SqlCommand(query, cn);
-
-                    cn.Open();
-
-                    using (SqlDataReader dr = cmd.ExecuteReader())
-                    {
-                        while (dr.Read())
-                        {
-                            if (results == null)
-                                results = new List<Dish>();
-
-                            Dish dish = new Dish();
-
-
-                            dish.ID_DISH = (int)dr["ID_DISH"];
-
-                            dish.ID_RESTAURANT = (int)dr["ID_RESTAURANT"];
-
-                            dish.NAME = (string)dr["NAME"];
-
-                            dish.PRICE = (decimal)dr["PRICE"];
-
-                            if (dr["image_url"] != DBNull.Value)
-                            {
-                                dish.image_url = (string)dr["image_url"];
-                            }
-
-                            results.Add(dish);
-                        }
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-            }
-
-            return results;
-        }
-
+        //list of dishes from a restaurant
         public List<Dish> GetDishes(int idRestaurant)
         {
             List<Dish> results = null;
@@ -312,57 +257,6 @@ namespace DAL
 
                     SqlCommand cmd = new SqlCommand(query, cn);
                     cmd.Parameters.AddWithValue("@Id_restaurant", idRestaurant);
-
-                    cn.Open();
-
-                    using (SqlDataReader dr = cmd.ExecuteReader())
-                    {
-                        while (dr.Read())
-                        {
-                            if (results == null)
-                                results = new List<Dish>();
-
-                            Dish dish = new Dish();
-
-
-                            dish.ID_DISH = (int)dr["ID_DISH"];
-
-                            dish.ID_RESTAURANT = (int)dr["ID_RESTAURANT"];
-
-                            dish.NAME = (string)dr["NAME"];
-
-                            dish.PRICE = (decimal)dr["PRICE"];
-
-                            if (dr["image_url"] != DBNull.Value)
-                            {
-                                dish.image_url = (string)dr["image_url"];
-                            }
-
-                            results.Add(dish);
-                        }
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-            }
-
-            return results;
-        }
-
-        public List<Dish> GetDishesUnderPrice(int maxPrice)
-        {
-            List<Dish> results = null;
-            string connectionString = Configuration.GetConnectionString("DefaultConnection");
-
-            try
-            {
-                using (SqlConnection cn = new SqlConnection(connectionString))
-                {
-                    string query = "Select * from DISH WHERE PRICE <= @PRICE";
-                    SqlCommand cmd = new SqlCommand(query, cn);
-                    cmd.Parameters.AddWithValue("@PRICE", maxPrice);
 
                     cn.Open();
 

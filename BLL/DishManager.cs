@@ -55,27 +55,10 @@ namespace BLL
         //get list methods
 
 
-        public List<Dish> GetDishes()
-        {
-            return dishDB.GetDishes();
-        }
-
         public List<Dish> GetDishes(int idRestaurant)
         {
             return dishDB.GetDishes(idRestaurant);
         }
-
-         public List<Dish> GetDishesUnderPrice(int maxPrice)
-        {
-            return dishDB.GetDishesUnderPrice(maxPrice);
-        }
-
-
-
-
-
-
-
 
 
     }

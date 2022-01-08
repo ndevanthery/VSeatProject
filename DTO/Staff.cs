@@ -30,17 +30,6 @@ namespace DTO
 
         public string email { get; set; }
 
-        public override string ToString()
-        {
-            return "ID STAFF:" + ID_STAFF +
-                   " / ID CITY:" + IDCITY +
-                   " / FIRSTNAME:" + FIRSTNAME +
-                   " / LASTNAME:" + LASTNAME +
-                   " / ADRESS:" + ADRESS +
-                   " / PHONE NUMBER:" + PHONENUMBER +
-                   " / USERNAME:" + USERNAME+
-                   " / PASSWORD:" + PASSWORD;
-        }
 
     }
 }

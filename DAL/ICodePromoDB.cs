@@ -10,10 +10,8 @@ namespace DAL
     public interface ICodePromoDB
     {
 
-        public CodePromo AddCodePromo(CodePromo codePromo);
         public CodePromo GetCode(string codeString);
 
-        public List<CodePromo> GetCodes(int idRestaurant);
 
 
     }

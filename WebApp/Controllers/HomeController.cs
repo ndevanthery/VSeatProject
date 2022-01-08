@@ -21,6 +21,8 @@ namespace WebApp.Controllers
 
         public IActionResult Index()
         {
+            //reset all the users that potentially connected before
+            //this page is the one just after the disconnect button
             HttpContext.Session.Clear();
             return View();
         }

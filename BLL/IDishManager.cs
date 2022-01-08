@@ -17,9 +17,7 @@ namespace BLL
 
         public Dish DeleteDish(int idDish);
 
-        public List<Dish> GetDishes();
         public List<Dish> GetDishes(int idRestaurant);
-        public List<Dish> GetDishesUnderPrice(int maxPrice);
 
     }
 }

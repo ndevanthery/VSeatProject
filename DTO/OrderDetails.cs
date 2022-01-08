@@ -14,11 +14,6 @@ namespace DTO
 
         public int quantity { get; set; }
 
-        public override string ToString()
-        {
-            return "ID DISH:" + ID_DISH +
-                   " / ID ORDER:" + ID_ORDER;
-        }
 
 
     }

@@ -33,6 +33,7 @@ namespace WebApp.Controllers
 
         public IActionResult Index()
         {
+            //by default, the login is for customers
             return View();
         }
 
@@ -42,9 +43,13 @@ namespace WebApp.Controllers
         {
             if(ModelState.IsValid)
             {
+                // try to log the customer in
                 var customer = CustomerManager.loginCustomer(userModel.UserName, userModel.Password);
+                //if log in is successful
                 if(customer!=null)
                 {
+
+                    //set session customer id 
                     HttpContext.Session.SetInt32("ID_CUSTOMER", customer.ID_CUSTOMER);
                     return RedirectToAction("Index", "Customer");
 
@@ -55,6 +60,7 @@ namespace WebApp.Controllers
             return View(userModel);
         }
 
+        //view to create an account for a new customer
         public IActionResult createAccount()
         {
             return View();
@@ -66,15 +72,23 @@ namespace WebApp.Controllers
         {
             if (ModelState.IsValid)
             {
+
+                //try to login the customer to see if the user/password combinaison is available
                 var customer = CustomerManager.loginCustomer(newCustomer.USERNAME, newCustomer.PASSWORD);
                 if (customer == null)
                 {
+                    //add the new customer to the database
                     newCustomer = CustomerManager.AddCustomer(newCustomer);
+
+                    //send an email to the user to confirm his account
                     ConfirmationsController.sendEmailCustomer(newCustomer);
+
+                    //redirects him to the customer login
                     return RedirectToAction("Index", "Login");
                     
 
                 }
+                //if the combinaison isn't available, add an error to the view
                 ModelState.AddModelError(string.Empty, "this username is already used");
 
             }
@@ -94,9 +108,15 @@ namespace WebApp.Controllers
         {
             if (ModelState.IsValid)
             {
+
+                //try to login the staff to see if the user/password combinaison is right
+
                 var staff = StaffManager.loginStaff(userModel.UserName, userModel.Password);
+                //if log in is successful
+
                 if (staff != null)
                 {
+                    //set the session  ID_customer 
                     HttpContext.Session.SetInt32("ID_STAFF", staff.ID_STAFF);
                     return RedirectToAction("Index", "Staff");
 
@@ -118,11 +138,15 @@ namespace WebApp.Controllers
         {
             if (ModelState.IsValid)
             {
+
+                //try to login the customer to see if the user/password combinaison is available
                 var staff = StaffManager.loginStaff(newStaff.USERNAME, newStaff.PASSWORD);
                 if (staff == null)
                 {
+                    //add the new staff to the database
                     StaffManager.AddStaff(newStaff);
 
+                    //redirects him to the customer login
                     return RedirectToAction("LoginStaff", "Login");
 
 
@@ -149,9 +173,15 @@ namespace WebApp.Controllers
         {
             if (ModelState.IsValid)
             {
+
+                // try to login the restaurant to see if username/password combinaison is correct
                 var restaurant = RestaurantManager.loginRestaurant(userModel.UserName, userModel.Password);
+                //if log in is successful
+
                 if (restaurant != null)
                 {
+                    //set the session  ID restaurant 
+
                     HttpContext.Session.SetInt32("ID_RESTAURANT", restaurant.ID_RESTAURANT);
                     return RedirectToAction("Index", "Resto");
 
@@ -173,11 +203,15 @@ namespace WebApp.Controllers
         {
             if (ModelState.IsValid)
             {
+                //try to login the customer to see if the user/password combinaison is available
+
                 var staff = RestaurantManager.loginRestaurant(newRestaurant.USERNAME, newRestaurant.PASSWORD);
                 if (staff == null)
                 {
+                    //add the new staff to the database
                     RestaurantManager.AddRestaurant(newRestaurant);
 
+                    //redirects him to the customer login
                     return RedirectToAction("LoginRestaurant", "Login");
 
 

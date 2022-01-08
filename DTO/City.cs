@@ -16,12 +16,6 @@ namespace DTO
 
         public string image_url { get; set; }
 
-        public override string ToString()
-        {
-            return "ID_CITY:" + IDCITY +
-                    " / CityName:" + CITYNAME +
-                    " / NPA:" + NPA;
-        }
 
     }
 }
