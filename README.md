@@ -1,58 +1,21 @@
-# VSeatProject
+#VSeat - UberEats Clone Project
 
-## access the deployed webApp
-to connect to the deployed webApp, connect to this address:
-http://153.109.124.35:81/NicoAbdu
+## Overview
 
-## database connection
-to connect to the database, you must me connected on the HEVS vpn
+This project is an UberEats clone application that allows users to place food orders from restaurants . The application includes three login types: Staff, Customer, and Restaurant. A restaurant can add and delete dishes, a staff member is a delivery person who receives orders to deliver, and a customer can make an order from a restaurant.
 
-server name : 153.109.124.35.
+## Features
 
-login to the server with SQL server authentication
+* Restaurant Management - Restaurants can add and delete dishes from their menu using a simple user interface.
 
-username : 6231db
+* Order Placement - Customers can place food orders from restaurants in their area.
 
-password : Pwd46231.
+* Delivery Management - Staff members can view and manage delivery requests, and update order status.
 
-name of our database : NicoAbdu
+## Technologies Used
 
-## logins
-### customers
-username : ZoeP Password : ZoeP
+The UberEats clone project was developed using Asp.NET, a popular web application development framework.The Database Management was made on MySQL, hosted in HES-SO. The project uses a Model-View-Controller (MVC) architecture for separation of concerns and improved scalability.
 
-username : NicolasD Password : NicolasD
+## How to Use
 
-username : LucasD Password : LucasD
-
-other users exists, you can see all of them in the database if you need to.
-
-you can create new customers if you need to
-
-### staff
-username: monthey1 Password:monthey1
-
-username: sion1 Password: sion1
-
-username: sierre1 Password: sierre1
-
-username: monthey2 Password: monthey2
-
-username: conthey1 Password: conthey1
-
-username: stmaurice1 Password: stmaurice1
-
-username: martigny1 Password: martigny1
-
-you can create new staffs if you need to
-
-### restaurants
-username: jetPizza Password: jetPizza
-
-username: Nonna Password: Nonna
-
-username: inglewood Password: inglewood
-
-other restaurants exist, you can see all of them in the database if you need to.
-
-you can create new restaurants if you need to.
+This Application is unusable outside HES-SO Realm.
